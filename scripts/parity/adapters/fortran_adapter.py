@@ -106,7 +106,9 @@ class FortranAdapter(AmicaAdapter):
             mu = self._read_fortran(outdir / "mu", (J, n_comp))
             beta = self._read_fortran(outdir / "sbeta", (J, n_comp))
             rho = self._read_fortran(outdir / "rho", (J, n_comp))
-            S = self._read_fortran(outdir / "S", (n_comp, n_ch))
+            # Fortran writes full (n_ch, n_ch) sphere even with pcakeep
+            S_full = self._read_fortran(outdir / "S", (n_ch, n_ch))
+            S = S_full[:n_comp, :]  # extract kept components
             mean_vec = self._read_fortran(outdir / "mean", (n_ch,))
 
             return {

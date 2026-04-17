@@ -102,7 +102,8 @@ def _pairwise_metrics(results, metric_fn, *args, **kwargs):
 def level1_sphering(adapters, data, params):
     """L1: Compare sphering matrices across implementations."""
     print("\n=== Level 1: Sphering Parity ===")
-    results = _run_all(adapters, data, params, n_iters=1)
+    # Use 3 iters so Fortran has a chance to print LL output
+    results = _run_all(adapters, data, params, n_iters=3)
 
     pair_metrics = {}
     names = list(results.keys())
@@ -127,7 +128,7 @@ def level2_initial_ll(adapters, data, params, ref_result):
     ldet = ref_result["log_det_sphere"]
 
     results = _run_all(
-        adapters, data, params, n_iters=1,
+        adapters, data, params, n_iters=3,
         shared_sphere=shared_sphere, shared_mean=shared_mean,
         log_det_sphere=ldet,
     )
@@ -161,7 +162,7 @@ def level3_single_iter(adapters, data, params, ref_result):
     ldet = ref_result["log_det_sphere"]
 
     results = _run_all(
-        adapters, data, params, n_iters=1,
+        adapters, data, params, n_iters=3,
         shared_sphere=shared_sphere, shared_mean=shared_mean,
         log_det_sphere=ldet,
     )
@@ -350,7 +351,7 @@ def main():
     # Get reference sphere from amica-python for shared-sphere levels
     ref_adapter = adapters[0]  # amica-python
     print(f"\nComputing reference sphere from {ref_adapter.name}...")
-    ref_result = ref_adapter.run(data, ALIGNED_PARAMS, n_iters=1)
+    ref_result = ref_adapter.run(data, ALIGNED_PARAMS, n_iters=3)
 
     # L2: Initial LL
     if 2 in levels:

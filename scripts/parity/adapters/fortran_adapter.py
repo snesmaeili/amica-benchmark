@@ -40,8 +40,10 @@ class FortranAdapter(AmicaAdapter):
         n_ch, n_samples = data.shape
         n_comp = params.get("pcakeep", n_ch)
 
-        # Use short fixed path to avoid Fortran char buffer overflow
-        workdir = FORTRAN_WORKDIR
+        # Use short fixed path; unique subdir per call to avoid MPI state issues
+        import uuid
+        run_id = uuid.uuid4().hex[:6]
+        workdir = FORTRAN_WORKDIR / run_id
         if workdir.exists():
             shutil.rmtree(workdir)
         workdir.mkdir(parents=True)

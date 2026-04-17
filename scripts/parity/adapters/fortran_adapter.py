@@ -11,8 +11,9 @@ import numpy as np
 
 from .base import AmicaAdapter
 
-# amica15ub is statically linked (no MPI needed), works on any node
-FORTRAN_BINARY = Path("/home/sesma/refs/sccn-amica/amica15ub")
+# amica17_narval: dynamically linked, needs gcc/12.3 + openmpi/4.1.5 + flexiblas
+# Load modules before running, or use the Slurm submit script
+FORTRAN_BINARY = Path("/home/sesma/refs/sccn-amica/amica17_narval")
 # Use a short fixed path to avoid Fortran buffer overflow on long tmpdir paths
 FORTRAN_WORKDIR = Path("/tmp/amica_parity")
 

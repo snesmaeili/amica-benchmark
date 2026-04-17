@@ -1,0 +1,67 @@
+{
+  "L1_sphering": {
+    "metrics": {
+      "amica-python vs pyamica": {
+        "sphere_max_abs_diff": 1.338048605248332e-08,
+        "sphere_frobenius": 4.262758765450267e-08
+      }
+    },
+    "pass_threshold": 1e-06
+  },
+  "L2_initial_ll": {
+    "metrics": {
+      "amica-python vs pyamica": {
+        "ll_a": 10.470959534424994,
+        "ll_b": 10.47265116506481,
+        "ll_diff": 0.0016916306398169212
+      }
+    },
+    "pass_threshold": 0.01
+  },
+  "L3_single_iter": {
+    "metrics": {
+      "amica-python vs pyamica": {
+        "W_max_abs_diff": 0.005063845718558067,
+        "W_frobenius": 0.07989887199518317,
+        "W_min_row_corr": 0.9998682511676313,
+        "W_mean_row_corr": 0.9998934997895184,
+        "alpha_max_diff": 0.026402513730985455,
+        "alpha_mean_diff": 0.005540113241690877,
+        "mu_max_diff": 0.06860826115059304,
+        "mu_mean_diff": 0.018585014675955365,
+        "beta_max_diff": 0.14368720049802386,
+        "beta_mean_diff": 0.031715433605854194,
+        "rho_max_diff": 0.14689444988596279,
+        "rho_mean_diff": 0.019546930260562572
+      }
+    },
+    "pass_threshold_W_frob": 0.01
+  },
+  "L4_trajectory": {
+    "metrics": {
+      "amica-python vs pyamica": {
+        "ll_max_abs_diff": 0.0016916306398169212,
+        "ll_mean_abs_diff": 0.00013941717544119214,
+        "ll_final_diff": 3.972381351502463e-05,
+        "ll_final_rel_diff": 3.7736492139179447e-06,
+        "n_compared": 20
+      }
+    },
+    "pass_threshold": 0.1
+  },
+  "L5_convergence": {
+    "metrics": {
+      "amica-python vs pyamica": {
+        "ll_max_abs_diff": 0.0016916306398169212,
+        "ll_mean_abs_diff": 0.00011952323089142069,
+        "ll_final_diff": 0.00015704867459831462,
+        "ll_final_rel_diff": 1.4882102097840213e-05,
+        "n_compared": 200,
+        "W_max_abs_diff": 0.09294825654787481,
+        "W_frobenius": 0.27188828653884284,
+        "W_min_row_corr": 0.9838946062182475,
+        "W_mean_row_corr": 0.9987392027364933
+      }
+    }
+  }
+}

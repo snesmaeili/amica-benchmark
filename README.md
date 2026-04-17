@@ -9,7 +9,7 @@ This repo contains all scripts, Slurm job templates, and analysis pipelines used
 ### On Narval (Alliance HPC)
 
 ```bash
-git clone git@github.com:snesmaeili/amica-benchmark.git
+git clone git@github.com:snesmaeili/amica-python-benchmark.git
 cd amica-benchmark
 
 # Use existing virtual environment

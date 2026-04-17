@@ -60,10 +60,19 @@ class FortranAdapter(AmicaAdapter):
                 n_ch, n_samples, n_comp, params, n_iters,
             )
 
-            # Run Fortran binary
+            # Run Fortran binary — needs OpenMPI/flexiblas libs on Narval
             env = {**os.environ}
-            env["OMP_NUM_THREADS"] = str(params.get("omp_threads", 4))
+            env["OMP_NUM_THREADS"] = "4"
             env["OMP_STACKSIZE"] = "512M"
+            # Ensure LD_LIBRARY_PATH includes required Narval libraries
+            narval_libs = ":".join([
+                "/cvmfs/soft.computecanada.ca/easybuild/software/2023/x86-64-v3/Compiler/gcc12/openmpi/4.1.5/lib",
+                "/cvmfs/soft.computecanada.ca/easybuild/software/2023/x86-64-v3/Compiler/gcccore/hwloc/2.9.1/lib",
+                "/cvmfs/soft.computecanada.ca/easybuild/software/2023/x86-64-v3/Core/flexiblascore/3.3.1/lib64",
+                "/cvmfs/soft.computecanada.ca/gentoo/2023/x86-64-v3/lib64",
+                "/cvmfs/soft.computecanada.ca/gentoo/2023/x86-64-v3/usr/lib64",
+            ])
+            env["LD_LIBRARY_PATH"] = narval_libs + ":" + env.get("LD_LIBRARY_PATH", "")
 
             t0 = time.perf_counter()
             try:
@@ -151,20 +160,20 @@ class FortranAdapter(AmicaAdapter):
             f"invsigmin {params['invsigmin']:.2e}",
             f"invsigmax {params['invsigmax']:.2e}",
             f"max_decs {params['max_decs']}",
-            f"do_reject {'1' if params['do_reject'] else '0'}",
+            f"numrej 0",
             f"doscaling {'1' if params['doscaling'] else '0'}",
             f"fix_init 1",
             f"writestep 1",
-            f"write_nd 1",
+            f"write_nd 0",
             f"write_LLt 0",
+            f"do_history 0",
             f"do_mean 1",
             f"do_sphere 1",
             f"do_approx_sphere 1",
             f"use_grad_norm {'1' if params.get('use_grad_norm', False) else '0'}",
             f"use_min_dll 1",
             f"min_dll {params['min_dll']:.2e}",
-            f"num_samples_start 0",
-            f"num_samples_stop {n_samples}",
+            f"min_grad_norm 0.000001",
         ]
         path.write_text("\n".join(lines) + "\n")
 

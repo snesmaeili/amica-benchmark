@@ -30,7 +30,7 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 from scripts.parity.adapters import AmicaPythonAdapter, FortranAdapter, PyamicaAdapter
-from scripts.parity.datasets import make_synthetic_laplacian
+from scripts.parity.datasets import load_mne_sample, make_synthetic_laplacian
 from scripts.parity.metrics import (
     compare_ll_trajectories,
     compare_matrices,
@@ -298,9 +298,14 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--levels", default="1,2,3,4,5",
                         help="Comma-separated levels to run")
+    parser.add_argument("--dataset", default="synthetic",
+                        choices=["synthetic", "mne"],
+                        help="Dataset: 'synthetic' (6ch) or 'mne' (EEG sample)")
     parser.add_argument("--outdir", default="results/parity")
     parser.add_argument("--n-channels", type=int, default=6)
     parser.add_argument("--n-samples", type=int, default=5000)
+    parser.add_argument("--n-components", type=int, default=30,
+                        help="Number of ICA components (for MNE dataset)")
     parser.add_argument("--l5-iters", type=int, default=500)
     args = parser.parse_args()
 
@@ -323,11 +328,16 @@ def main():
                 if not (hasattr(a, "available") and not a.available)]
     print(f"Adapters: {[a.name for a in adapters]}")
 
-    # Generate synthetic data
-    data, A_true, S_true = make_synthetic_laplacian(
-        args.n_channels, args.n_samples
-    )
-    print(f"Data: {data.shape[0]} channels × {data.shape[1]} samples")
+    # Load dataset
+    if args.dataset == "mne":
+        data, n_comp = load_mne_sample(n_components=args.n_components)
+        ALIGNED_PARAMS["pcakeep"] = n_comp
+    else:
+        data, n_comp = make_synthetic_laplacian(
+            args.n_channels, args.n_samples
+        )
+    print(f"Data: {data.shape[0]} channels × {data.shape[1]} samples, "
+          f"n_components={n_comp}")
 
     all_metrics = {}
 

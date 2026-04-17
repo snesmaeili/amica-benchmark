@@ -10,7 +10,8 @@ import numpy as np
 
 from .base import AmicaAdapter
 
-FORTRAN_BINARY = Path("/home/sesma/refs/sccn-amica/amica17_narval")
+# amica15ub is statically linked (no MPI needed), works on any node
+FORTRAN_BINARY = Path("/home/sesma/refs/sccn-amica/amica15ub")
 
 
 class FortranAdapter(AmicaAdapter):
@@ -51,11 +52,14 @@ class FortranAdapter(AmicaAdapter):
 
             # Run Fortran binary
             t0 = time.perf_counter()
+            env = {**dict(__import__("os").environ)}
+            env["OMP_NUM_THREADS"] = "4"
+            env["OMP_STACKSIZE"] = "512M"
             try:
                 result = subprocess.run(
                     [str(self._binary), str(param_path)],
                     capture_output=True, text=True, timeout=600,
-                    env={"OMP_NUM_THREADS": "4"},
+                    env=env,
                 )
                 elapsed = time.perf_counter() - t0
             except (subprocess.TimeoutExpired, FileNotFoundError, OSError):
@@ -69,7 +73,7 @@ class FortranAdapter(AmicaAdapter):
             ll_history = self._parse_ll(result.stdout)
 
             # Read output files
-            n_comp = n_ch  # full-rank assumption
+            n_comp = params.get("pcakeep", n_ch)
             J = params["num_mix"]
 
             W = self._read_fortran(outdir / "W", (n_comp, n_comp))
@@ -128,7 +132,7 @@ class FortranAdapter(AmicaAdapter):
             f"write_nd 1",
             f"write_LLt 1",
             f"do_mean 1",
-            f"pcakeep {n_ch}",
+            f"pcakeep {params.get('pcakeep', n_ch)}",
             f"num_samples_start 0",
             f"num_samples_stop {n_samples}",
         ]

@@ -32,7 +32,7 @@ class PyamicaAdapter(AmicaAdapter):
             do_sphere = True
 
         model = AMICA(
-            n_components=None,
+            n_components=params.get("pcakeep"),
             n_models=1,
             n_mix=params["num_mix"],
             max_iter=n_iters,

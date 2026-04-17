@@ -21,6 +21,7 @@ class AmicaPythonAdapter(AmicaAdapter):
             num_models=1,
             num_mix_comps=params["num_mix"],
             max_iter=n_iters,
+            pcakeep=params.get("pcakeep"),
             lrate=params["lrate"],
             newtrate=params["newtrate"],
             newt_start=params["newt_start"],

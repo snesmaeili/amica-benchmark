@@ -1,8 +1,9 @@
-"""Adapter for Fortran AMICA 1.7 binary."""
+"""Adapter for Fortran AMICA binary (amica15ub — statically linked, no MPI)."""
 
+import os
 import re
+import shutil
 import subprocess
-import tempfile
 import time
 from pathlib import Path
 
@@ -12,6 +13,8 @@ from .base import AmicaAdapter
 
 # amica15ub is statically linked (no MPI needed), works on any node
 FORTRAN_BINARY = Path("/home/sesma/refs/sccn-amica/amica15ub")
+# Use a short fixed path to avoid Fortran buffer overflow on long tmpdir paths
+FORTRAN_WORKDIR = Path("/tmp/amica_parity")
 
 
 class FortranAdapter(AmicaAdapter):
@@ -34,27 +37,34 @@ class FortranAdapter(AmicaAdapter):
             return None
 
         n_ch, n_samples = data.shape
+        n_comp = params.get("pcakeep", n_ch)
 
-        with tempfile.TemporaryDirectory(prefix="amica_fortran_") as tmpdir:
-            tmpdir = Path(tmpdir)
-            outdir = tmpdir / "output"
-            outdir.mkdir()
+        # Use short fixed path to avoid Fortran char buffer overflow
+        workdir = FORTRAN_WORKDIR
+        if workdir.exists():
+            shutil.rmtree(workdir)
+        workdir.mkdir(parents=True)
+        outdir = workdir / "out"
+        outdir.mkdir()
 
-            # Write FDT file (Fortran column-major: channels contiguous)
-            fdt_path = tmpdir / "input.fdt"
+        try:
+            # Write FDT file (float32, Fortran column-major)
+            fdt_path = workdir / "data.fdt"
             data.T.astype(np.float32).tofile(fdt_path)
 
             # Write param file
-            param_path = tmpdir / "input.param"
+            param_path = workdir / "run.param"
             self._write_param_file(
-                param_path, fdt_path, outdir, n_ch, n_samples, params, n_iters
+                param_path, fdt_path, outdir,
+                n_ch, n_samples, n_comp, params, n_iters,
             )
 
             # Run Fortran binary
-            t0 = time.perf_counter()
-            env = {**dict(__import__("os").environ)}
-            env["OMP_NUM_THREADS"] = "4"
+            env = {**os.environ}
+            env["OMP_NUM_THREADS"] = str(params.get("omp_threads", 4))
             env["OMP_STACKSIZE"] = "512M"
+
+            t0 = time.perf_counter()
             try:
                 result = subprocess.run(
                     [str(self._binary), str(param_path)],
@@ -62,20 +72,26 @@ class FortranAdapter(AmicaAdapter):
                     env=env,
                 )
                 elapsed = time.perf_counter() - t0
-            except (subprocess.TimeoutExpired, FileNotFoundError, OSError):
+            except (subprocess.TimeoutExpired, FileNotFoundError, OSError) as e:
+                print(f"Fortran execution error: {e}")
                 return None
 
             if result.returncode != 0:
-                print(f"Fortran failed: {result.stderr[:500]}")
+                # Show first meaningful error line
+                err = result.stderr.strip().splitlines()
+                msg = next((l for l in err if "error" in l.lower()
+                            or "terminate" in l.lower()), err[0] if err else "unknown")
+                print(f"Fortran exit code {result.returncode}: {msg}")
                 return None
 
             # Parse LL trajectory from stdout
             ll_history = self._parse_ll(result.stdout)
+            if not ll_history:
+                print("Fortran: no LL values parsed from stdout")
+                return None
 
             # Read output files
-            n_comp = params.get("pcakeep", n_ch)
             J = params["num_mix"]
-
             W = self._read_fortran(outdir / "W", (n_comp, n_comp))
             A = self._read_fortran(outdir / "A", (n_comp, n_comp))
             c = self._read_fortran(outdir / "c", (n_comp,))
@@ -84,7 +100,6 @@ class FortranAdapter(AmicaAdapter):
             beta = self._read_fortran(outdir / "sbeta", (J, n_comp))
             rho = self._read_fortran(outdir / "rho", (J, n_comp))
             S = self._read_fortran(outdir / "S", (n_comp, n_ch))
-
             mean_vec = self._read_fortran(outdir / "mean", (n_ch,))
 
             return {
@@ -98,21 +113,31 @@ class FortranAdapter(AmicaAdapter):
                 "ll_history": np.array(ll_history),
                 "sphere": S,
                 "mean": mean_vec,
-                "log_det_sphere": 0.0,  # computed from S if needed
+                "log_det_sphere": 0.0,
                 "elapsed": elapsed,
                 "n_iter": len(ll_history),
             }
+        finally:
+            # Clean up
+            if workdir.exists():
+                shutil.rmtree(workdir, ignore_errors=True)
 
-    def _write_param_file(self, path, fdt_path, outdir, n_ch, n_samples,
-                          params, n_iters):
+    def _write_param_file(self, path, fdt_path, outdir,
+                          n_ch, n_samples, n_comp, params, n_iters):
+        """Write Fortran AMICA param file using correct field names."""
         lines = [
             f"files {fdt_path}",
             f"outdir {outdir}",
-            f"num_chans {n_ch}",
-            f"num_frames {n_samples}",
+            f"data_dim {n_ch}",
+            f"field_dim {n_samples}",
             f"num_models 1",
             f"num_mix_comps {params['num_mix']}",
+            f"pcakeep {n_comp}",
             f"max_iter {n_iters}",
+            f"max_threads 4",
+            f"dble_data 0",
+            f"block_size 256",
+            f"do_opt_block 0",
             f"lrate {params['lrate']:.6e}",
             f"newtrate {params['newtrate']:.6e}",
             f"newt_start {params['newt_start']}",
@@ -130,9 +155,13 @@ class FortranAdapter(AmicaAdapter):
             f"fix_init 1",
             f"writestep 1",
             f"write_nd 1",
-            f"write_LLt 1",
+            f"write_LLt 0",
             f"do_mean 1",
-            f"pcakeep {params.get('pcakeep', n_ch)}",
+            f"do_sphere 1",
+            f"do_approx_sphere 1",
+            f"use_grad_norm {'1' if params.get('use_grad_norm', False) else '0'}",
+            f"use_min_dll 1",
+            f"min_dll {params['min_dll']:.2e}",
             f"num_samples_start 0",
             f"num_samples_stop {n_samples}",
         ]
@@ -150,7 +179,7 @@ class FortranAdapter(AmicaAdapter):
 
     @staticmethod
     def _read_fortran(path, shape):
-        """Read Fortran binary output file."""
+        """Read Fortran binary output file (float64, column-major)."""
         if not path.exists():
             return np.zeros(shape)
         raw = np.fromfile(str(path), dtype=np.float64)

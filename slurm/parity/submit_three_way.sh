@@ -11,7 +11,7 @@ set -euo pipefail
 cd "$SLURM_SUBMIT_DIR"
 
 # Load modules for Fortran amica17_narval
-module load gcc/12.3.0 openmpi/4.1.5 flexiblas/3.3.1
+module load gcc/12.3 openmpi/4.1.5 flexiblas/3.3.1
 
 # Python environment
 source conf/narval.env

@@ -60,26 +60,17 @@ class FortranAdapter(AmicaAdapter):
                 n_ch, n_samples, n_comp, params, n_iters,
             )
 
-            # Run Fortran binary — needs OpenMPI/flexiblas libs on Narval
-            env = {**os.environ}
-            env["OMP_NUM_THREADS"] = "4"
-            env["OMP_STACKSIZE"] = "512M"
-            # Ensure LD_LIBRARY_PATH includes required Narval libraries
-            narval_libs = ":".join([
-                "/cvmfs/soft.computecanada.ca/easybuild/software/2023/x86-64-v3/Compiler/gcc12/openmpi/4.1.5/lib",
-                "/cvmfs/soft.computecanada.ca/easybuild/software/2023/x86-64-v3/Compiler/gcccore/hwloc/2.9.1/lib",
-                "/cvmfs/soft.computecanada.ca/easybuild/software/2023/x86-64-v3/Core/flexiblascore/3.3.1/lib64",
-                "/cvmfs/soft.computecanada.ca/gentoo/2023/x86-64-v3/lib64",
-                "/cvmfs/soft.computecanada.ca/gentoo/2023/x86-64-v3/usr/lib64",
-            ])
-            env["LD_LIBRARY_PATH"] = narval_libs + ":" + env.get("LD_LIBRARY_PATH", "")
+            # Run Fortran binary — relies on module load in Slurm script
+            # for LD_LIBRARY_PATH. Set OMP vars in os.environ directly
+            # (matching the working pattern from validate_parity.py).
+            os.environ["OMP_NUM_THREADS"] = "4"
+            os.environ["OMP_STACKSIZE"] = "512M"
 
             t0 = time.perf_counter()
             try:
                 result = subprocess.run(
                     [str(self._binary), str(param_path)],
                     capture_output=True, text=True, timeout=600,
-                    env=env,
                 )
                 elapsed = time.perf_counter() - t0
             except (subprocess.TimeoutExpired, FileNotFoundError, OSError) as e:
@@ -138,48 +129,38 @@ class FortranAdapter(AmicaAdapter):
 
         Based on the working param file from validate_parity.py.
         """
+        # Match the exact format from the working sub01_fortran.param
         path.write_text(f"""files {fdt_path}
 outdir {outdir}
 num_models 1
 num_mix_comps {params['num_mix']}
 data_dim {n_ch}
 field_dim {n_samples}
-num_samples 1
-field_blocksize 1
 pcakeep {n_comp}
 max_threads 4
 block_size 256
-do_opt_block 0
 max_iter {n_iters}
 writestep 1
-do_history 0
 dble_data 0
 lrate {params['lrate']}
-minlrate 1e-8
-lratefact 0.5
-rholrate {params['rholrate']}
-rholratefact 0.5
-rho0 {params['rho0']}
-minrho {params['minrho']}
-maxrho {params['maxrho']}
-newtrate {params['newtrate']}
-newt_start {params['newt_start']}
-newt_ramp {params['newt_ramp']}
-do_newton 1
-max_decs {params['max_decs']}
 use_grad_norm {'1' if params.get('use_grad_norm', False) else '0'}
 use_min_dll 1
 min_grad_norm 0.000001
 min_dll {params['min_dll']}
-do_reject 0
-do_mean 1
-do_sphere 1
 do_approx_sphere 1
-doPCA 1
-doscaling {'1' if params['doscaling'] else '0'}
-scalestep 1
-fix_init 1
-share_comps 0
+do_reject 0
+do_newton 1
+newt_start {params['newt_start']}
+minlrate 0.00000001
+lratefact 0.5
+rholrate {params['rholrate']}
+rho0 {params['rho0']}
+minrho {params['minrho']}
+maxrho {params['maxrho']}
+rholratefact 0.5
+newt_ramp {params['newt_ramp']}
+newtrate {params['newtrate']}
+max_decs {params['max_decs']}
 update_A 1
 update_c 1
 update_gm 1
@@ -189,6 +170,13 @@ update_beta 1
 do_rho 1
 invsigmax {params['invsigmax']}
 invsigmin {params['invsigmin']}
+do_mean 1
+do_sphere 1
+doPCA 1
+doscaling {'1' if params['doscaling'] else '0'}
+scalestep 1
+fix_init 0
+share_comps 0
 """)
 
     @staticmethod

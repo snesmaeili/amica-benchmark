@@ -134,48 +134,62 @@ class FortranAdapter(AmicaAdapter):
 
     def _write_param_file(self, path, fdt_path, outdir,
                           n_ch, n_samples, n_comp, params, n_iters):
-        """Write Fortran AMICA param file using correct field names."""
-        lines = [
-            f"files {fdt_path}",
-            f"outdir {outdir}",
-            f"data_dim {n_ch}",
-            f"field_dim {n_samples}",
-            f"num_models 1",
-            f"num_mix_comps {params['num_mix']}",
-            f"pcakeep {n_comp}",
-            f"max_iter {n_iters}",
-            f"max_threads 4",
-            f"dble_data 0",
-            f"block_size 256",
-            f"do_opt_block 0",
-            f"lrate {params['lrate']:.6e}",
-            f"newtrate {params['newtrate']:.6e}",
-            f"newt_start {params['newt_start']}",
-            f"newt_ramp {params['newt_ramp']}",
-            f"do_newton 1",
-            f"rho0 {params['rho0']:.2f}",
-            f"minrho {params['minrho']:.2f}",
-            f"maxrho {params['maxrho']:.2f}",
-            f"rholrate {params['rholrate']:.6e}",
-            f"invsigmin {params['invsigmin']:.2e}",
-            f"invsigmax {params['invsigmax']:.2e}",
-            f"max_decs {params['max_decs']}",
-            f"numrej 0",
-            f"doscaling {'1' if params['doscaling'] else '0'}",
-            f"fix_init 1",
-            f"writestep 1",
-            f"write_nd 0",
-            f"write_LLt 0",
-            f"do_history 0",
-            f"do_mean 1",
-            f"do_sphere 1",
-            f"do_approx_sphere 1",
-            f"use_grad_norm {'1' if params.get('use_grad_norm', False) else '0'}",
-            f"use_min_dll 1",
-            f"min_dll {params['min_dll']:.2e}",
-            f"min_grad_norm 0.000001",
-        ]
-        path.write_text("\n".join(lines) + "\n")
+        """Write Fortran AMICA param file matching the validated format.
+
+        Based on the working param file from validate_parity.py.
+        """
+        path.write_text(f"""files {fdt_path}
+outdir {outdir}
+num_models 1
+num_mix_comps {params['num_mix']}
+data_dim {n_ch}
+field_dim {n_samples}
+num_samples 1
+field_blocksize 1
+pcakeep {n_comp}
+max_threads 4
+block_size 256
+do_opt_block 0
+max_iter {n_iters}
+writestep 1
+do_history 0
+dble_data 0
+lrate {params['lrate']}
+minlrate 1e-8
+lratefact 0.5
+rholrate {params['rholrate']}
+rholratefact 0.5
+rho0 {params['rho0']}
+minrho {params['minrho']}
+maxrho {params['maxrho']}
+newtrate {params['newtrate']}
+newt_start {params['newt_start']}
+newt_ramp {params['newt_ramp']}
+do_newton 1
+max_decs {params['max_decs']}
+use_grad_norm {'1' if params.get('use_grad_norm', False) else '0'}
+use_min_dll 1
+min_grad_norm 0.000001
+min_dll {params['min_dll']}
+do_reject 0
+do_mean 1
+do_sphere 1
+do_approx_sphere 1
+doPCA 1
+doscaling {'1' if params['doscaling'] else '0'}
+scalestep 1
+fix_init 1
+share_comps 0
+update_A 1
+update_c 1
+update_gm 1
+update_alpha 1
+update_mu 1
+update_beta 1
+do_rho 1
+invsigmax {params['invsigmax']}
+invsigmin {params['invsigmin']}
+""")
 
     @staticmethod
     def _parse_ll(stdout):

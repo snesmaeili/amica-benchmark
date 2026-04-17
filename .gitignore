@@ -11,6 +11,8 @@ build/
 results/**/*.pkl
 results/**/*.fdt
 results/**/*.npy
+results/**/*.npz
+results/**/*.mat
 !results/README.md
 
 # Slurm logs

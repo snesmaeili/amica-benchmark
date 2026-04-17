@@ -83,12 +83,16 @@ class FortranAdapter(AmicaAdapter):
                 msg = next((l for l in err if "error" in l.lower()
                             or "terminate" in l.lower()), err[0] if err else "unknown")
                 print(f"Fortran exit code {result.returncode}: {msg}")
+                # Show stdout for debugging
+                if result.stdout.strip():
+                    print(f"Fortran stdout (first 300): {result.stdout[:300]}")
                 return None
 
             # Parse LL trajectory from stdout
             ll_history = self._parse_ll(result.stdout)
             if not ll_history:
-                print("Fortran: no LL values parsed from stdout")
+                print(f"Fortran: no LL values parsed. stdout (first 500):")
+                print(result.stdout[:500])
                 return None
 
             # Read output files

@@ -1,0 +1,118 @@
+           1 processor name = narval2
+           1 host_num =   1727078096
+ This is MPI process           1 of           1 ; I am process           1 of           1 on node: narval2
+           1  : node root process           1 of           1
+Processing arguments ...
+ num_files =            1
+ FILES: 
+ /home/sesma/amica-python/validation/results/post_f1_audit/sub01.fdt
+ num_dir_files =            1
+ number of models =            1
+ number of density mixture components =            3
+ data_dim =          118
+ field_dim =      1206350
+ pcakeep =           60
+ max_thrds =            4
+ initial matrix block_size =          256
+ do_opt_block =            0
+ max_iter =           20
+ write step =           50
+ do_history =            0
+ dble_data =            0
+ initial lrate =   0.10000000000000001     
+ use_grad_norm =            1
+ use_min_dll =            1
+ min grad norm =    9.9999999999999995E-007
+ min dll =    1.0000000000000001E-009
+ do_approx_sphere =            1
+ do_reject =            0
+ do_newton =            1
+ newt_start =           50
+ num_samples =            1
+ minimum lrate =    1.0000000000000000E-008
+ lrate factor =   0.50000000000000000     
+ initial rholrate =    5.0000000000000003E-002
+ rho0 =    1.5000000000000000     
+ min rho =    1.0000000000000000     
+ max rho =    2.0000000000000000     
+ rho lrate factor =   0.50000000000000000     
+ newt_ramp =           10
+ initial newton lrate =    1.0000000000000000     
+ max_decs =            3
+ update_A =            1
+ update_c =            1
+ update_gm =            1
+ update_alpha =            1
+ update_mu =            1
+ update_beta =            1
+ do_rho =            1
+ invsigmax =    100.00000000000000     
+ invsigmin =    1.0000000000000000E-008
+ do_mean =            1
+ do_sphere =            1
+ doscaling =            1
+ scalestep =            1
+ fix_init =            0
+ share_comps =            0
+mkdir: cannot create directory ‘/home/sesma/amica-python/validation/results/post_f1_audit/fortran_output’: File exists
+ output directory = /home/sesma/amica-python/validation/results/post_f1_audit/fortran_output
+           1 : setting num_thrds to            4  ...
+           1 : using           4 threads.
+           1 : node_thrds =            4
+ bytes in real =            4
+           1 : REAL nbyte =            4
+ getting segment list ...
+ blocks in sample =      1206350
+ total blocks =      1206350
+ node blocks =      1206350
+ node            1  start: file            1  sample            1  index            1
+ node            1  stop : file            1  sample            1  index      1206350
+           1 : data =    1.4371744539638876E-020  -5.9570461944643318E-021
+ getting the mean ...
+  mean =   -1.8030667203100820E-009  -3.3918056184799713E-009  -3.1690164715005673E-009
+ subtracting the mean ...
+ getting the covariance matrix ...
+ cnt =      1206350
+ getting the sphering matrix ...
+ minimum eigenvalues =    1.1910533667780117E-020   7.1900649239738012E-008   9.5622536276072277E-008
+ maximum eigenvalues =    4.4737597733883466E-004   1.9310103854797126E-004   1.3364747271233187E-004
+ num eigs kept =           60
+ sphering the data ...
+ numeigs =           60
+           1 : Allocating variables ...
+           1 : Initializing variables ...
+           1 : block size =          256
+           1 : entering the main loop ...
+ iter     1 lrate =  0.1000000000 LL =   4.3177001544 nd =  0.0881788943, D =   0.15068E-01  0.15068E-01  (  5.84 s,   0.0 h)
+ iter     2 lrate =  0.1000000000 LL =   5.4499187376 nd =  0.1643109041, D =   0.20307E-01  0.20307E-01  (  4.96 s,   0.0 h)
+ iter     3 lrate =  0.1000000000 LL =   6.0936782147 nd =  0.7089115292, D =   0.58883E+00  0.58883E+00  (  5.00 s,   0.0 h)
+ iter     4 lrate =  0.1000000000 LL =   5.5311920597 nd =  2.6831479013, D =   0.48329E+01  0.48329E+01  (  4.67 s,   0.0 h)
+ Likelihood decreasing!
+ iter     5 lrate =  0.1000000000 LL =   3.5296303523 nd = 16.9418381601, D =   0.25288E+02  0.25288E+02  (  4.73 s,   0.0 h)
+ Likelihood decreasing!
+ iter     6 lrate =  0.1000000000 LL = -40.6176816075 nd = *************, D =   0.10004E+03  0.10004E+03  (  4.88 s,   0.0 h)
+ Likelihood decreasing!
+ iter     7 lrate =  0.0500000000 LL = ************** nd = *************, D =   0.37151E+03  0.37151E+03  (  5.20 s,   0.0 h)
+ Likelihood decreasing!
+ iter     8 lrate =  0.0500000000 LL = ************** nd = *************, D =   0.89845E+03  0.89845E+03  (  4.91 s,   0.0 h)
+ Likelihood decreasing!
+ iter     9 lrate =  0.0500000000 LL = -64.5876712984 nd = *************, D =   0.19606E+04  0.19606E+04  (  5.05 s,   0.0 h)
+ iter    10 lrate =  0.0500000000 LL = ************** nd = *************, D =   0.20278E+04  0.20278E+04  (  5.01 s,   0.0 h)
+ Likelihood decreasing!
+ iter    11 lrate =  0.0250000000 LL = ************** nd =  0.1291278514, D =   0.21202E+04  0.21202E+04  (  4.83 s,   0.0 h)
+ iter    12 lrate =  0.0250000000 LL = ************** nd = *************, D =   0.21202E+04  0.21202E+04  (  5.00 s,   0.0 h)
+ Likelihood decreasing!
+ iter    13 lrate =  0.0250000000 LL = ************** nd =  0.1290994449, D =   0.20373E+04  0.20373E+04  (  4.84 s,   0.0 h)
+ iter    14 lrate =  0.0250000000 LL = ************** nd = *************, D =   0.20348E+04  0.20348E+04  (  4.92 s,   0.0 h)
+ Likelihood decreasing!
+ iter    15 lrate =  0.0250000000 LL = ************** nd =  0.1290994449, D =   0.20886E+04  0.20886E+04  (  4.78 s,   0.0 h)
+ iter    16 lrate =  0.0250000000 LL = ************** nd = *************, D =   0.20887E+04  0.20887E+04  (  4.81 s,   0.0 h)
+ Likelihood decreasing!
+ iter    17 lrate =  0.0125000000 LL = ************** nd =  0.1290994457, D =   0.21037E+04  0.21037E+04  (  4.75 s,   0.0 h)
+ iter    18 lrate =  0.0125000000 LL = ************** nd = *************, D =   0.21074E+04  0.21074E+04  (  4.84 s,   0.0 h)
+ Likelihood decreasing!
+ iter    19 lrate =  0.0125000000 LL = ************** nd =  0.1290994449, D =   0.21180E+04  0.21180E+04  (  4.98 s,   0.0 h)
+ iter    20 lrate =  0.0125000000 LL = ************** nd = *************, D =   0.21102E+04  0.21102E+04  (  5.29 s,   0.0 h)
+ Likelihood decreasing!
+... done. Execution time:   0.03 h 
+ output directory = /home/sesma/amica-python/validation/results/post_f1_audit/fortran_output

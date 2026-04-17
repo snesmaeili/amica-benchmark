@@ -1,0 +1,36 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+dist/
+build/
+*.egg
+
+# Results (large files)
+results/**/*.pkl
+results/**/*.fdt
+results/**/*.npy
+!results/README.md
+
+# Slurm logs
+logs/
+*.err
+*.out
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Environment
+.env
+*.egg-info/
+
+# JAX cache
+.cache/

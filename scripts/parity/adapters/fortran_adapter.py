@@ -142,6 +142,8 @@ num_models 1
 num_mix_comps {params['num_mix']}
 data_dim {n_ch}
 field_dim {n_samples}
+num_samples 1
+field_blocksize 1
 pcakeep {n_comp}
 max_threads 4
 block_size 256

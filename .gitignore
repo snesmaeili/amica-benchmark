@@ -20,6 +20,11 @@ logs/
 *.err
 *.out
 
+# Virtualenvs
+.venv/
+.venv-*/
+venv/
+
 # IDE
 .vscode/
 .idea/

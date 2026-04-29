@@ -22,13 +22,14 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
  && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /src
-COPY amica17_patched.f90 funmod2.f90 mkl_stubs.f90 build.sh ./
+COPY amica17_patched.f90 amica17_header.f90 funmod2.f90 mkl_stubs.f90 mkl_vml.f90 build.sh ./
 RUN chmod +x build.sh && BLAS=openblas ./build.sh
 
 FROM ubuntu:22.04
 ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && apt-get install -y --no-install-recommends \
     libgfortran5 \
+    libgomp1 \
     libopenmpi3 \
     libopenblas0 \
     openmpi-bin \
@@ -36,6 +37,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 COPY --from=build /src/amica17 /usr/local/bin/amica17
 COPY --from=build /src/amica17_patched.f90 /usr/local/share/amica/
+COPY --from=build /src/amica17_header.f90 /usr/local/share/amica/
 COPY --from=build /src/funmod2.f90 /usr/local/share/amica/
 COPY --from=build /src/mkl_stubs.f90 /usr/local/share/amica/
 COPY --from=build /src/build.sh /usr/local/share/amica/

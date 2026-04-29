@@ -121,6 +121,7 @@ class FortranAdapter(AmicaAdapter):
                 "c": c,
                 "ll_history": np.array(ll_history),
                 "sphere": S,
+                "sphere_full": S_full,  # unsliced (n_ch, n_ch) — for L1 diagnosis
                 "mean": mean_vec,
                 "log_det_sphere": 0.0,
                 "elapsed": elapsed,

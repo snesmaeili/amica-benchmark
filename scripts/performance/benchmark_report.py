@@ -25,7 +25,7 @@ chunk_size = args.chunk_size if args.chunk_size > 0 else None
 
 OUT = Path("results/benchmark_report")
 OUT.mkdir(parents=True, exist_ok=True)
-tag = f"{args.dataset}_{args.device}_seed{args.seed}_chunk{chunk_size or 'full'}"
+tag = f"{args.dataset}_{args.device}_seed{args.seed}_chunk{chunk_size or 'full'}_n{args.n_comp}"
 out_file = OUT / f"{tag}.json"
 
 import jax

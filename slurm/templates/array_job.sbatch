@@ -12,13 +12,20 @@ set -euo pipefail
 cd "$SLURM_SUBMIT_DIR"
 source conf/narval.env
 export JAX_PLATFORMS=cuda
+# Ensure `from scripts.sensitivity ...` etc. resolve when invoked as
+# `python -u <script>` (Python sets sys.path[0] to the script's dir,
+# not the project root, so package-style imports break without this).
+export PYTHONPATH="$SLURM_SUBMIT_DIR:${PYTHONPATH:-}"
 
 mkdir -p logs
 
+# run_highdens_validation.py reads SUBJECTS from env; --subject is not
+# a real argparse flag (only --iclean and --results-subdir are).
 SUBJECT=$(printf "sub-%02d" "$SLURM_ARRAY_TASK_ID")
+export SUBJECTS=$SUBJECT
 echo "=== $(date) === Job $SLURM_JOB_ID, task $SLURM_ARRAY_TASK_ID ($SUBJECT) ==="
 echo "Script: $SCRIPT"
 
-python -u "$SCRIPT" --subject "$SUBJECT" ${ARGS:-}
+python -u "$SCRIPT" ${ARGS:-}
 
 echo "=== $(date) === Done ==="

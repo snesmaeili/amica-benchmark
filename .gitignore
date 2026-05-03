@@ -15,6 +15,10 @@ results/**/*.npz
 results/**/*.mat
 !results/README.md
 
+# run_validation.py writes outputs next to the script (not under results/);
+# treat that subdir as runtime byproduct, not source.
+scripts/comparison/results/
+
 # Slurm logs
 logs/
 *.err

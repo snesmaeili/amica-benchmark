@@ -1,0 +1,4 @@
+Run mode: PILOT (cropped). DO NOT publish quality claims from this run. [PILOT • cropped • 20 min • n_subjects = 1 • κ = 20.8]
+
+Figure 4. MIR comparison.
+Bars: MIR difference vs the best-performing method on this run. Line: mean MIR (right axis). Methods sorted from highest to lowest MIR. Hardware/backend differ across methods -- see Table 2.

@@ -1,0 +1,4 @@
+Run mode: PILOT (cropped). DO NOT publish quality claims from this run. [PILOT • cropped • 20 min • n_subjects = 1 • κ = 20.8]
+
+Figure 2. Delorme 2012 style 3-panel summary.
+B: MIR (kbits/sec) vs near-dipolar component share. C: remnant pairwise mutual information vs near-dipolar share. D: fit runtime vs MIR. Each point is one method on the same input.

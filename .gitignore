@@ -15,6 +15,14 @@ results/**/*.npz
 results/**/*.mat
 !results/README.md
 
+# cc_benchmark figures are regenerable from JSON + ica.fif via the notebook;
+# keep the data (json / csv / fif / txt) but skip the figure dumps.
+scripts/cc_benchmark/results/**/*.png
+scripts/cc_benchmark/results/**/*.pdf
+scripts/cc_benchmark/results/**/*.svg
+scripts/cc_benchmark/__pycache__/
+scripts/cc_benchmark/**/__pycache__/
+
 # run_validation.py writes outputs next to the script (not under results/);
 # treat that subdir as runtime byproduct, not source.
 scripts/comparison/results/

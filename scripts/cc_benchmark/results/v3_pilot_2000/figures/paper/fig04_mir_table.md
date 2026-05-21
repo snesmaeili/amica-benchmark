@@ -1,0 +1,6 @@
+| method                 | backend   | device   |   n_iter_actual |   max_iter | converged_before_cap   |   mir_bits_per_sample |   mir_kbits_s |   remnant_pmi_percent |   iclabel_brain_percent |   fit_runtime_s |
+|:-----------------------|:----------|:---------|----------------:|-----------:|:-----------------------|----------------------:|--------------:|----------------------:|------------------------:|----------------:|
+| Infomax                | infomax   | cpu      |            5000 |       5000 | False                  |                 -1055 |        -263.8 |                 17.04 |                   23.44 |           55.4  |
+| Picard                 | picard    | cpu      |              68 |       5000 | True                   |                 -1055 |        -263.8 |                 17.02 |                   26.56 |           97.77 |
+| FastICA                | fastica   | cpu      |              91 |       5000 | True                   |                 -1077 |        -269.2 |                 17.05 |                   18.75 |           23.83 |
+| AMICA-Python (JAX-GPU) | jax       | gpu      |            1000 |       1000 | False                  |                 -1147 |        -286.9 |                 19.98 |                   29.69 |          525    |

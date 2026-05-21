@@ -1,0 +1,34 @@
+{
+  "selected_ic": 38,
+  "selected_label": "brain",
+  "selected_probability": 0.8848404288291931,
+  "projected_full_recording": true,
+  "fit_window_s": 600.0,
+  "event": "Subject_hit",
+  "baseline_s": [
+    -1.5,
+    -0.5
+  ],
+  "epoch_window_s": [
+    -2.0,
+    3.0
+  ],
+  "plot_window_s": [
+    -1.0,
+    2.0
+  ],
+  "frequency_range_hz": [
+    4.0,
+    40.0
+  ],
+  "vlim_db": [
+    -6.0,
+    6.0
+  ],
+  "sampled_events_per_condition": {
+    "cooperative": 80,
+    "competitive": 80,
+    "moving": 80,
+    "stationary": 80
+  }
+}

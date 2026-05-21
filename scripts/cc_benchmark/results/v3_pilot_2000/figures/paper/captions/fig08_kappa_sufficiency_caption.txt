@@ -1,3 +1,0 @@
-Run mode: PILOT (cropped). DO NOT publish quality claims from this run. [PILOT • cropped • 10 min • n_subjects = 1 • κ = 10.4]
-
-Figure 8. Data-sufficiency κ. κ_channels = n_samples / n_channels² (blue); κ_effective = n_samples / n_components² (red). Reference lines at κ=20, κ=30 (Delorme 2012 minimum) and κ=50 (Frank 2025 paper-grade). Below the Delorme line, ICA quality claims should be labelled preliminary.

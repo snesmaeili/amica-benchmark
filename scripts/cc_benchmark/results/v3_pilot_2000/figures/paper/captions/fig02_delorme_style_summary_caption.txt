@@ -1,5 +1,0 @@
-Run mode: PILOT (cropped). DO NOT publish quality claims from this run. [PILOT • cropped • 10 min • n_subjects = 1 • κ = 10.4]
-
-Figure 2. Delorme 2012 style 3-panel summary.
-B: MIR (kbits/sec) vs near-dipolar component share. C: remnant pairwise mutual information vs near-dipolar share. D: fit runtime vs MIR. Each point is one method on the same input.
-WARNING: dipole residual variance is not available in this run; panels B and C use the ICLabel-brain percentage as a proxy. This proxy is NOT equivalent to dipolarity and the regression statistics should be interpreted as preliminary.

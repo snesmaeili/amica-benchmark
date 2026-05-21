@@ -1,3 +1,0 @@
-Run mode: PILOT (cropped). DO NOT publish quality claims from this run. [PILOT • cropped • 52 min • n_subjects = 1 • κ = 54.5]
-
-Figure 5. Fit runtime per method, log scale. Bars annotated with (backend/device). This is an engineering benchmark -- AMICA-Python is on JAX-GPU while the comparators are on CPU; runtime comparisons across these is a systems benchmark, not a pure-algorithm one.

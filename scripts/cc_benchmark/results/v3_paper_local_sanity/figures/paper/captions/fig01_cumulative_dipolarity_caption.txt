@@ -1,5 +1,0 @@
-Run mode: PILOT (cropped). DO NOT publish quality claims from this run. [PILOT • cropped • 20 min • n_subjects = 1 • κ = 20.8]
-
-Figure 1. Cumulative percentage of ICA components with equivalent-dipole residual variance <= x, per ICA method. Lower curves climbing faster on the left indicate more near-dipolar (cortically plausible) sources. Vertical dashed lines mark 5% and 10% residual variance, the cutoffs used by Delorme 2012 and Frank 2022 respectively.
-
-Methods: ['AMICA-Python (JAX-GPU)', 'FastICA', 'Infomax', 'Picard']. Subjects: ['sub-01']. Hardware varies by method; see Table 2 / fig05.

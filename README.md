@@ -1,3 +1,10 @@
+> [!WARNING]
+> **This repository is RETIRED (2026-06-09).** All benchmarking, cluster, and
+> paper-reproduction material has been consolidated into the main
+> [`amica-python`](https://github.com/snesmaeili/amica-python) repository on the
+> **`benchmark/compute-canada-paper`** branch (under `paper_reproduction/`).
+> Do new benchmark/validation work there. This repo is kept read-only for history.
+
 # amica-benchmark
 
 Validation and benchmarking suite for [amica-python](https://github.com/snesmaeili/amica-python).

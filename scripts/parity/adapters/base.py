@@ -1,5 +1,7 @@
 """Abstract base class for AMICA implementation adapters."""
 
+from __future__ import annotations
+
 from abc import ABC, abstractmethod
 
 import numpy as np

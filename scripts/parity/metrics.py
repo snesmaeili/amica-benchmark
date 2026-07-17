@@ -83,3 +83,60 @@ def compare_spheres(S1, S2):
         "sphere_max_abs_diff": float(np.max(np.abs(diff))),
         "sphere_frobenius": float(np.linalg.norm(diff)),
     }
+
+
+def as_model_array(value):
+    """Normalise a single-model or multi-model matrix to (M, C, C)."""
+
+    array = np.asarray(value)
+    return array[None, ...] if array.ndim == 2 else array
+
+
+def match_models(reference, candidate):
+    """Align candidate models by mean Hungarian-matched row correlation."""
+
+    ref = as_model_array(reference)
+    cand = as_model_array(candidate)
+    if ref.shape != cand.shape:
+        raise ValueError(f"model matrix shape mismatch: {ref.shape} vs {cand.shape}")
+    score = np.zeros((ref.shape[0], cand.shape[0]))
+    for left in range(ref.shape[0]):
+        for right in range(cand.shape[0]):
+            _, correlations = match_and_align(ref[left], cand[right])
+            score[left, right] = correlations.mean()
+    rows, columns = linear_sum_assignment(-score)
+    if not np.array_equal(rows, np.arange(ref.shape[0])):
+        raise AssertionError("unexpected model assignment order")
+    return columns, score[rows, columns]
+
+
+def rejection_metrics(reference_mask, candidate_mask):
+    """Compare rejection masks using counts and Jaccard overlap."""
+
+    reference = np.asarray(reference_mask, dtype=bool)
+    candidate = np.asarray(candidate_mask, dtype=bool)
+    if reference.shape != candidate.shape:
+        raise ValueError("rejection mask shape mismatch")
+    ref_rejected = ~reference
+    cand_rejected = ~candidate
+    union = np.sum(ref_rejected | cand_rejected)
+    intersection = np.sum(ref_rejected & cand_rejected)
+    jaccard = 1.0 if union == 0 else float(intersection / union)
+    return {
+        "reference_rejected": int(ref_rejected.sum()),
+        "candidate_rejected": int(cand_rejected.sum()),
+        "rejected_count_difference": int(abs(ref_rejected.sum() - cand_rejected.sum())),
+        "rejection_jaccard": jaccard,
+    }
+
+
+def normalized_rmse(reference, candidate):
+    """RMSE divided by reference IQR, with a stable zero-IQR fallback."""
+
+    reference = np.asarray(reference, dtype=float)
+    candidate = np.asarray(candidate, dtype=float)
+    rmse = float(np.sqrt(np.mean((reference - candidate) ** 2)))
+    scale = float(np.subtract(*np.percentile(reference, (75, 25))))
+    if scale <= np.finfo(float).eps:
+        scale = max(float(np.std(reference)), 1.0)
+    return rmse / scale

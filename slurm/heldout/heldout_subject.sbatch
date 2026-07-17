@@ -6,7 +6,7 @@
 
 set -euo pipefail
 module purge
-module load StdEnv/2023 python/3.11 scipy-stack cuda/12.6 cudnn
+module load StdEnv/2023 python/3.11 scipy-stack cuda/12.9 cudnn
 
 : "${AMICA_BENCHMARK_ROOT:?set AMICA_BENCHMARK_ROOT}"
 : "${AMICA_PACKAGE_REPO:?set AMICA_PACKAGE_REPO}"

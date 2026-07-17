@@ -48,7 +48,8 @@ class FortranAdapter(AmicaAdapter):
         workdir = FORTRAN_WORKDIR / uuid.uuid4().hex[:10]
         workdir.mkdir(parents=True, exist_ok=False)
         outdir = workdir / "out"
-        outdir.mkdir()
+        # AMICA 1.7 creates ``outdir`` itself and aborts if it already exists.
+        # Only its parent work directory may be prepared by the adapter.
         try:
             fdt_path = workdir / "data.fdt"
             data.T.astype(np.float32).tofile(fdt_path)

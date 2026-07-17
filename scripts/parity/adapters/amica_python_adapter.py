@@ -56,7 +56,6 @@ class AmicaPythonAdapter(AmicaAdapter):
             doscaling=bool(params["doscaling"]),
             fix_init=bool(params.get("fix_init", True)),
             sphere_type=params.get("sphere_type", "pca"),
-            use_grad_norm=bool(params.get("use_grad_norm", False)),
             dtype="float64",
         )
         model = Amica(cfg, random_state=int(params.get("seed", 42)))

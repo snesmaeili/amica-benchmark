@@ -66,6 +66,15 @@ def parse_checkpoints(value: str) -> tuple[int, ...]:
     return checkpoints
 
 
+def state_snapshot(result: dict) -> dict:
+    """Persist the small fixture state needed to localise an update mismatch."""
+
+    return {
+        name: np.asarray(result[name], dtype=float).tolist()
+        for name in ("W", "alpha", "mu", "beta", "rho", "c")
+    }
+
+
 def run(args) -> dict:
     task_index = args.task_index or int(os.environ.get("SLURM_ARRAY_TASK_ID", "1"))
     cell = load_cell(args.manifest, task_index)
@@ -98,6 +107,8 @@ def run(args) -> dict:
                     reference["ll_history"], candidate["ll_history"]
                 ),
                 "final_state": compare(reference, candidate, checkpoint_cell),
+                "reference_state": state_snapshot(reference),
+                "candidate_state": state_snapshot(candidate),
             }
         )
 

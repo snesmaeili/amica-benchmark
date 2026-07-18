@@ -31,6 +31,7 @@ export OPENBLAS_NUM_THREADS="$SLURM_CPUS_PER_TASK"
 export JAX_PLATFORMS=cpu
 export JAX_PLATFORM_NAME=cpu
 export JAX_ENABLE_X64=1
+export JAX_COMPILATION_CACHE_DIR="$SLURM_TMPDIR/amica_jax_cache"
 unset XLA_FLAGS
 
 python scripts/parity/diagnose_manifest_cell.py \

@@ -3,6 +3,7 @@ import pytest
 
 from scripts.parity.diagnose_manifest_cell import (
     parse_checkpoints,
+    state_snapshot,
     trajectory_metrics,
 )
 
@@ -36,3 +37,13 @@ def test_parse_checkpoints_deduplicates_and_sorts():
 def test_parse_checkpoints_rejects_nonpositive_values():
     with pytest.raises(Exception):
         parse_checkpoints("0,1")
+
+
+def test_state_snapshot_serializes_the_compared_parameter_families():
+    result = {
+        name: np.ones((1, 2))
+        for name in ("W", "alpha", "mu", "beta", "rho", "c")
+    }
+    snapshot = state_snapshot(result)
+    assert set(snapshot) == {"W", "alpha", "mu", "beta", "rho", "c"}
+    assert snapshot["rho"] == [[1.0, 1.0]]

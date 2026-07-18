@@ -111,6 +111,17 @@ def make_fixture(cell):
     return data, outlier_indices
 
 
+def align_python_iteration_params(params, cell):
+    """Map Fortran's one-based controls to Python's zero-based iteration loop."""
+
+    aligned = dict(params)
+    if cell["do_newton"]:
+        aligned["newt_start"] = max(0, int(params["newt_start"]) - 1)
+    if cell["do_reject"]:
+        aligned["rejstart"] = max(1, int(params["rejstart"]) - 1)
+    return aligned
+
+
 def _sensor_models(result):
     models = as_model_array(result["W"])
     sphere = np.asarray(result["sphere"], dtype=float)
@@ -264,12 +275,10 @@ def run(args):
     if not fortran.available:
         raise FileNotFoundError(f"Fortran binary unavailable: {fortran._binary}")
     fortran_result = fortran.run(data, params, cell["max_iter"])
-    python_params = dict(params)
-    if cell["do_reject"]:
-        # Fortran's one-based iteration k evaluates the parameter state that is
-        # reached at Python's zero-based k-1.  This explicit mapping reproduces
-        # the validated rejection-decision comparison protocol.
-        python_params["rejstart"] = max(1, int(params["rejstart"]) - 1)
+    # Fortran evaluates these controls in a one-based loop, while Python uses
+    # ``range(max_iter)``. Align the control points without changing either
+    # solver's public semantics.
+    python_params = align_python_iteration_params(params, cell)
     python_result = AmicaPythonAdapter().run(
         data,
         python_params,
@@ -290,6 +299,8 @@ def run(args):
             "fixed_initialisation": True,
             "shared_fortran_mean_and_sphere": True,
             "python_effective_rejstart": python_params["rejstart"],
+            "fortran_newt_start": params["newt_start"],
+            "python_effective_newt_start": python_params["newt_start"],
         },
         "thresholds": THRESHOLDS,
         "metrics": metrics,

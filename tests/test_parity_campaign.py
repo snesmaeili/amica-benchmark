@@ -5,6 +5,7 @@ import numpy as np
 from scripts.parity.adapters.fortran_adapter import FortranAdapter
 from scripts.parity.metrics import match_models, rejection_metrics
 from scripts.parity.parity_manifest import manifest_rows
+from scripts.parity.run_manifest_cell import align_python_iteration_params
 
 
 def test_manifest_has_prespecified_18_unique_cells():
@@ -78,3 +79,12 @@ def test_fortran_param_file_exposes_cell_configuration(tmp_path):
     assert "do_reject 1" in text
     assert "do_newton 0" in text
     assert "write_LLt 1" in text
+
+
+def test_python_iteration_controls_align_to_fortran_one_based_loop():
+    params = {"newt_start": 50, "rejstart": 2}
+    cell = {"do_newton": True, "do_reject": True}
+    aligned = align_python_iteration_params(params, cell)
+    assert aligned["newt_start"] == 49
+    assert aligned["rejstart"] == 1
+    assert params == {"newt_start": 50, "rejstart": 2}

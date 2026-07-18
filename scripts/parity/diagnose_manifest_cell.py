@@ -20,6 +20,7 @@ import numpy as np
 from scripts.parity.adapters import AmicaPythonAdapter, FortranAdapter
 from scripts.parity.run_manifest_cell import (
     DEFAULT_PARAMS,
+    align_python_iteration_params,
     compare,
     load_cell,
     make_fixture,
@@ -90,9 +91,7 @@ def run(args) -> dict:
         checkpoint_cell = {**cell, "max_iter": int(n_iters)}
         params = {**base_params, "max_iter": int(n_iters)}
         reference = fortran.run(data, params, n_iters)
-        python_params = dict(params)
-        if cell["do_reject"]:
-            python_params["rejstart"] = max(1, int(params["rejstart"]) - 1)
+        python_params = align_python_iteration_params(params, cell)
         candidate = AmicaPythonAdapter().run(
             data,
             python_params,
@@ -123,6 +122,10 @@ def run(args) -> dict:
             "input_dtype_seen_by_both_solvers": "float32 values up-cast to float64",
             "fixed_initialisation": True,
             "shared_fortran_mean_and_sphere": True,
+            "fortran_newt_start": base_params["newt_start"],
+            "python_effective_newt_start": align_python_iteration_params(
+                base_params, cell
+            )["newt_start"],
         },
         "checkpoints": checkpoint_results,
         "provenance": collect_provenance(

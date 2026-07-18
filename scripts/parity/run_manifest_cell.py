@@ -42,6 +42,7 @@ DEFAULT_PARAMS = {
     "newt_start": 50,
     "newt_ramp": 10,
     "rho0": 1.5,
+    "pdftype": 0,
     "minrho": 1.0,
     "maxrho": 2.0,
     "rholrate": 0.05,

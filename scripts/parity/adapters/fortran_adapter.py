@@ -164,6 +164,7 @@ class FortranAdapter(AmicaAdapter):
 outdir {outdir}
 num_models {int(params.get('num_models', 1))}
 num_mix_comps {int(params['num_mix'])}
+pdftype {int(params.get('pdftype', 0))}
 data_dim {n_channels}
 field_dim {n_samples}
 num_samples 1

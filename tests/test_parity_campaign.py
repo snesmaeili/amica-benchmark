@@ -39,6 +39,7 @@ def test_fortran_param_file_exposes_cell_configuration(tmp_path):
     params = {
         "num_models": 3,
         "num_mix": 5,
+        "pdftype": 0,
         "lrate": 0.01,
         "min_dll": 1e-9,
         "do_reject": True,
@@ -73,6 +74,7 @@ def test_fortran_param_file_exposes_cell_configuration(tmp_path):
     text = output.read_text()
     assert "num_models 3" in text
     assert "num_mix_comps 5" in text
+    assert "pdftype 0" in text
     assert "do_reject 1" in text
     assert "do_newton 0" in text
     assert "write_LLt 1" in text

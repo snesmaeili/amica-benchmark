@@ -51,7 +51,7 @@ source "$VENV_PATH/bin/activate"
 
 # --- Ensure extra deps (nibabel for parcellation surface geometry, python-picard
 # for mne.preprocessing.ICA(method='picard')). Only install on compute nodes;
-# never on login nodes (global CLAUDE.md hard rule).
+# never on login nodes (Alliance usage policy).
 HOST="$(hostname)"
 if [[ "$HOST" == login* ]]; then
     for pair in "nibabel:nibabel" "picard:python-picard"; do

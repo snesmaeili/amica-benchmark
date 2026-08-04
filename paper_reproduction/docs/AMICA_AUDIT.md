@@ -1,7 +1,7 @@
 # AMICA Python — source-level audit
 
 **Audit date:** 2026-04-08
-**Auditor:** Claude (Opus 4.6, with explicit user direction)
+**Audit:** source-level review of the reference implementation
 **Scope:** `amica_python/` solver, with cross-references to the original
 Fortran AMICA at `sccn/amica@HEAD` (`amica15.f90`, `funmod2.f90`,
 `amicadefs.param`).
@@ -541,8 +541,7 @@ be parked until after F1 is validated against sub-01.
 ## 7. What I did NOT do (and why)
 
 - **Did not modify any solver code.** Per the audit constraint and
-  per the user-supplied feedback rule
-  ([feedback_validate_against_source.md](../../.claude/projects/-home-sesma/memory/feedback_validate_against_source.md)).
+  per the user-supplied feedback rule.
 - **Did not run more validation experiments on ds004505.** The audit
   used synthetic data and the existing on-disk sub-01 result only.
 - **Did not deeply audit Newton κ/λ accumulation, multi-model state,

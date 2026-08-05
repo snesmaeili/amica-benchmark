@@ -24,7 +24,10 @@
 
 set -euo pipefail
 
-REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
+# Slurm copies the submitted script into a spool directory, so BASH_SOURCE
+# points at /localscratch/spool/... and not at the repository. Use the
+# directory the job was submitted from instead.
+REPO="${SLURM_SUBMIT_DIR:-$(pwd)}"
 OUT="/scratch/${USER}/amica_reval/gpu_${SLURM_JOB_ID:-manual}"
 mkdir -p "$OUT"
 

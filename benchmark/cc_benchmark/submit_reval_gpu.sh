@@ -69,6 +69,12 @@ echo
 # --output-dir keeps the result JSON with the job rather than in the repo's
 # ./results (the runner's CWD-relative default), and the redirected stream is
 # the runner's progress log, not data -- see submit_reval_cpu.sh.
+#
+# --schema-version v3 is REQUIRED, not cosmetic. It is what sets
+# include_artifacts (runner.py:1270), and complete MIR is computed only inside
+# that block. The default is "legacy", so job 53268540 produced no MIR at all
+# and could not be compared against the paper's headline per-subject metric --
+# the published data set is v3_paper_stage1_cluster, written under this schema.
 for SUBJ in 1 2 3; do
   SUB=$(printf '%02d' "$SUBJ")
   echo "=== ds004505 sub-${SUB}, 64 PCs, 3000 iterations, JAX-GPU ==="
@@ -76,6 +82,7 @@ for SUBJ in 1 2 3; do
       --dataset ds004505 --subject "$SUBJ" \
       --device gpu --backend jax \
       --n-components 64 --n-iter 3000 --dtype float64 \
+      --schema-version v3 \
       --output-dir "${OUT}/sub-${SUB}" \
       > "${OUT}/sub-${SUB}.stdout" 2> "${OUT}/sub-${SUB}.stderr" \
     || echo "subject ${SUBJ} FAILED (see ${OUT}/sub-${SUB}.stderr)"

@@ -62,6 +62,7 @@ for CHUNK in none 1024; do
   python -m amica_python.benchmark.runner \
       --dataset mne --subject 1 --device cpu --backend numpy \
       --n-components 30 --n-iter 100 --dtype float64 \
+      --schema-version v3 \
       --output-dir "${OUT}/chunk_${CHUNK}" \
       "${ARG[@]}" \
       > "${OUT}/chunk_${CHUNK}.stdout" 2> "${OUT}/chunk_${CHUNK}.stderr" \

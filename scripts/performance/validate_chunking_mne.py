@@ -15,10 +15,24 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import mne
 
-from amica_python import fit_ica
-
-OUT = 'results/mne_chunking'
 import os
+
+# Which algorithm to exercise. The default is the copy vendored in this
+# repository -- the code that produced the published numbers -- so the archive
+# behaviour of this script is unchanged. The S6 re-validation opts in to the
+# released package explicitly, because "the release did not move the numbers"
+# can only be tested by running the release.
+if os.environ.get("AMICA_USE_RELEASE") == "1":
+    from amica import fit_ica
+else:
+    from amica_python import fit_ica
+
+# results/mne_chunking holds the PUBLISHED summary.json, whose sha256 is
+# recorded in figures/src/main_figure_stats.json. A release run must never
+# land there, so the default output directory follows the switch above.
+_default_out = 'results/mne_chunking_release' \
+    if os.environ.get("AMICA_USE_RELEASE") == "1" else 'results/mne_chunking'
+OUT = os.environ.get("AMICA_CHUNKING_OUT", _default_out)
 os.makedirs(OUT, exist_ok=True)
 
 def peak_rss_gb():

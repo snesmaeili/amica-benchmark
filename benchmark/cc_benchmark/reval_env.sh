@@ -61,7 +61,7 @@ mkdir -p "$AMICA_REVAL_BASE"
 # later job "reuses" a stub -- which is precisely how job 53097938 came to fail
 # on `import jax` twelve minutes after job 53097937 died mid-bootstrap.
 if [ -x "$VENV/bin/python" ] && \
-   "$VENV/bin/python" -c "import numpy, scipy, mne, jax, pytest" >/dev/null 2>&1; then
+   "$VENV/bin/python" -c "import numpy, scipy, mne, jax, pytest, onnxruntime" >/dev/null 2>&1; then
   source "$VENV/bin/activate"
   echo "reval env: reusing complete venv at $VENV"
 else
@@ -79,6 +79,10 @@ else
   pip install mne mne-icalabel seaborn tabulate pyyaml matplotlib scikit-learn
   # pytest runs the release's own MNE interop suite in the CPU job.
   pip install pytest
+  # mne-icalabel needs a neural-network backend at runtime; without one,
+  # test_iclabel_interop fails on ImportError rather than on anything about the
+  # release. onnxruntime is the lighter of the two options (the other is torch).
+  pip install onnxruntime
 fi
 
 if [ ! -d "$AMICA_RELEASE/amica" ]; then

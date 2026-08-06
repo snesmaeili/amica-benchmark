@@ -50,16 +50,23 @@ echo
 # Published configuration for the ds004505 single-model benchmark:
 #   64 retained PCs, 3,000-iteration cap, seed 42, M=1, K=3, float64.
 # Subjects chosen as the first three of the 25-participant cohort.
+# --output-dir keeps the result JSON with the job rather than in the repo's
+# ./results (the runner's CWD-relative default), and the redirected stream is
+# the runner's progress log, not data -- see submit_reval_cpu.sh.
 for SUBJ in 1 2 3; do
-  echo "=== ds004505 sub-$(printf '%02d' "$SUBJ"), 64 PCs, 3000 iterations, JAX-GPU ==="
+  SUB=$(printf '%02d' "$SUBJ")
+  echo "=== ds004505 sub-${SUB}, 64 PCs, 3000 iterations, JAX-GPU ==="
   python -m amica_python.benchmark.runner \
       --dataset ds004505 --subject "$SUBJ" \
       --device gpu --backend jax \
       --n-components 64 --n-iter 3000 --dtype float64 \
-      > "${OUT}/ds004505_sub-$(printf '%02d' "$SUBJ").json" \
-      2> "${OUT}/ds004505_sub-$(printf '%02d' "$SUBJ").log" \
-    || echo "subject ${SUBJ} FAILED (see log)"
+      --output-dir "${OUT}/sub-${SUB}" \
+      > "${OUT}/sub-${SUB}.stdout" 2> "${OUT}/sub-${SUB}.stderr" \
+    || echo "subject ${SUBJ} FAILED (see ${OUT}/sub-${SUB}.stderr)"
 done
+
+echo "--- result files written ---"
+ls -1 "${OUT}"/sub-*/*.json 2>/dev/null || echo "WARNING: no result JSON produced"
 
 echo
 echo "=== outputs ==="

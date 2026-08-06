@@ -49,16 +49,28 @@ echo
 #   absolute_final_ll_difference        5.91657431492365e-07
 #   unmixing_frobenius_relative_error   1.448769887359409e-04
 echo "=== full-batch vs chunked (MNE sample, 30 PCs, 100 iterations, float64) ==="
+# --output-dir MUST differ per run. The runner names its result file from
+# dataset/subject/backend/device and does NOT encode chunk size, so both runs
+# resolve to the same mne_sub-01_numpy_cpu.json. In job 53258086 the chunked
+# run silently overwrote the full-batch one, leaving nothing to compare.
+# Redirecting stdout is not a substitute: the runner prints human-readable
+# progress there and writes the result JSON itself, so the captured stream is
+# a log, not data. Hence the .stdout/.stderr names below.
 for CHUNK in none 1024; do
   ARG=()
   [ "$CHUNK" != "none" ] && ARG=(--chunk-size "$CHUNK")
   python -m amica_python.benchmark.runner \
       --dataset mne --subject 1 --device cpu --backend numpy \
       --n-components 30 --n-iter 100 --dtype float64 \
+      --output-dir "${OUT}/chunk_${CHUNK}" \
       "${ARG[@]}" \
-      > "${OUT}/chunk_${CHUNK}.json" 2> "${OUT}/chunk_${CHUNK}.log" \
-    || echo "chunk=${CHUNK} FAILED (see log)"
+      > "${OUT}/chunk_${CHUNK}.stdout" 2> "${OUT}/chunk_${CHUNK}.stderr" \
+    || echo "chunk=${CHUNK} FAILED (see ${OUT}/chunk_${CHUNK}.stderr)"
 done
+
+echo "--- result files written ---"
+ls -1 "${OUT}"/chunk_none/*.json "${OUT}"/chunk_1024/*.json 2>/dev/null || \
+  echo "WARNING: expected result JSON missing from one or both runs"
 
 # --- 2. MNE interoperability --------------------------------------------------
 # Against the RELEASE's test suite, not this repo's. ${REPO}/tests holds

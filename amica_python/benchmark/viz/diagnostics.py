@@ -240,10 +240,11 @@ def fit_amica(raw, n_components: int, max_iter: int, random_state: int):
     os.environ["AMICA_NO_JAX"] = "1"
     os.environ["JAX_PLATFORM_NAME"] = "cpu"
 
-    import amica_python.backend
+    # Installed amica package, not the vendored algorithm copy - see runner.py.
+    import amica.backend
 
-    importlib.reload(amica_python.backend)
-    from amica_python import fit_ica
+    importlib.reload(amica.backend)
+    from amica import fit_ica
 
     start = time.perf_counter()
     ica = fit_ica(raw, n_components=n_components, max_iter=max_iter, random_state=random_state)

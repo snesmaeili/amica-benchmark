@@ -31,15 +31,20 @@ REPO="${SLURM_SUBMIT_DIR:-$(pwd)}"
 OUT="/scratch/${USER}/amica_reval/gpu_${SLURM_JOB_ID:-manual}"
 mkdir -p "$OUT"
 
-source "${REPO}/benchmark/cc_benchmark/fir_env.sh"
-export PYTHONPATH="${REPO}:${PYTHONPATH:-}"
+# reval_env.sh, not fir_env.sh -- see submit_reval_cpu.sh for why.
+export AMICA_REVAL_GPU=1
+source "${REPO}/benchmark/cc_benchmark/reval_env.sh"
 
 echo "=== provenance ==="
 hostname
 nvidia-smi --query-gpu=name,memory.total --format=csv,noheader || true
 python -c "import sys; print('python', sys.version.split()[0])"
 python -c "import jax; print('jax', jax.__version__, '| devices', jax.devices())"
-git -C "$REPO" rev-parse HEAD
+# Which algorithm actually ran -- see submit_reval_cpu.sh.
+python -c "import amica; print('amica  ->', amica.__file__)"
+python -c "import amica_python.benchmark.runner as r; print('harness->', r.__file__)"
+echo "harness commit: $(git -C "$REPO" rev-parse HEAD)"
+echo "release commit: $(git -C "${AMICA_RELEASE:-/scratch/$USER/amica_release}" rev-parse HEAD)"
 echo
 
 # Published configuration for the ds004505 single-model benchmark:

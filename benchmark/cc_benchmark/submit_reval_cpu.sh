@@ -26,16 +26,22 @@ REPO="${SLURM_SUBMIT_DIR:-$(pwd)}"
 OUT="/scratch/${USER}/amica_reval/cpu_${SLURM_JOB_ID:-manual}"
 mkdir -p "$OUT"
 
-source "${REPO}/benchmark/cc_benchmark/fir_env.sh"
-export PYTHONPATH="${REPO}:${PYTHONPATH:-}"
-export OMP_NUM_THREADS="${SLURM_CPUS_PER_TASK:-2}"
+# reval_env.sh, not fir_env.sh: the harness must exercise the released `amica`,
+# not the pre-PR#17 algorithm copy vendored in this repo. It also sets
+# PYTHONPATH (appending, so scipy-stack's numpy/scipy survive).
+source "${REPO}/benchmark/cc_benchmark/reval_env.sh"
 
 echo "=== provenance ==="
 hostname
 python -c "import sys; print('python', sys.version.split()[0])"
 python -c "import numpy, scipy; print('numpy', numpy.__version__, '| scipy', scipy.__version__)"
 python -c "import mne; print('mne', mne.__version__)" || echo "mne unavailable"
-git -C "$REPO" rev-parse HEAD
+# Which algorithm actually ran. Print the resolved path, not the version
+# string: the whole point of this job is that those two can disagree.
+python -c "import amica; print('amica  ->', amica.__file__)"
+python -c "import amica_python.benchmark.runner as r; print('harness->', r.__file__)"
+echo "harness commit: $(git -C "$REPO" rev-parse HEAD)"
+echo "release commit: $(git -C "${AMICA_RELEASE:-/scratch/$USER/amica_release}" rev-parse HEAD)"
 echo
 
 # --- 1. full-batch vs chunked -------------------------------------------------
@@ -55,10 +61,30 @@ for CHUNK in none 1024; do
 done
 
 # --- 2. MNE interoperability --------------------------------------------------
-echo "=== MNE interoperability tests ==="
-python -m pytest -q "${REPO}/tests" -k "mne or interop" \
+# Against the RELEASE's test suite, not this repo's. ${REPO}/tests holds
+# benchmark-infrastructure tests only (archive bundles, aggregation, parity
+# campaigns) and contains no MNE interop tests at all, so `-k "mne or interop"`
+# there selects nothing and exits 0 -- a green result from an empty run.
+RELEASE_TESTS="${AMICA_RELEASE:-/scratch/$USER/amica_release}/tests"
+echo "=== MNE interoperability tests (${RELEASE_TESTS}) ==="
+python -m pytest -q "${RELEASE_TESTS}" -k "mne or interop" \
     --junitxml="${OUT}/mne_interop.xml" \
     > "${OUT}/mne_interop.log" 2>&1 || echo "pytest reported failures (see log)"
+
+# Guard against the vacuous pass: assert tests were actually collected.
+python - "${OUT}/mne_interop.xml" <<'PY'
+import sys, xml.etree.ElementTree as ET
+try:
+    root = ET.parse(sys.argv[1]).getroot()
+    suite = root if root.tag == "testsuite" else root.find("testsuite")
+    n = int(suite.get("tests", 0))
+    bad = int(suite.get("failures", 0)) + int(suite.get("errors", 0))
+    print(f"collected {n} test(s), {bad} failing/erroring")
+    if n == 0:
+        print("WARNING: zero tests collected -- this proves nothing.")
+except Exception as e:
+    print(f"WARNING: could not read junit xml: {e}")
+PY
 
 echo
 echo "=== outputs ==="

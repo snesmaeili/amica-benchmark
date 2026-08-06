@@ -158,8 +158,9 @@ def cmd_compare(args):
     # We additionally reuse Fortran's *computed sphere* + mean so the whitened data is
     # identical -> both implementations start from the identical state, isolating pure
     # algorithmic agreement.
-    from amica_python.config import AmicaConfig
-    from amica_python.solver import Amica
+    # Installed amica package, not the vendored algorithm copy - see runner.py.
+    from amica.config import AmicaConfig
+    from amica.solver import Amica
     hp = hyperparams(m, meta["max_iter"], meta["do_newton"])
     # Thread the FULL shared hyperparameter set so nothing relies on an
     # AmicaConfig default that could silently differ from the Fortran .param

@@ -40,6 +40,22 @@ hostname
 nvidia-smi --query-gpu=name,memory.total --format=csv,noheader || true
 python -c "import sys; print('python', sys.version.split()[0])"
 python -c "import jax; print('jax', jax.__version__, '| devices', jax.devices())"
+
+# Hard gate. Job 53258087 was allocated an H100, reported it via nvidia-smi,
+# and then ran the whole hour on CPU because JAX had no CUDA plugin and fell
+# back silently. A GPU job that is not on a GPU must fail immediately rather
+# than produce plausible numbers from the wrong device.
+python - <<'PY' || exit 1
+import sys, jax
+devs = jax.devices()
+kinds = {d.platform for d in devs}
+print("jax devices:", devs)
+if "gpu" not in kinds and "cuda" not in kinds:
+    print(f"FATAL: GPU job but JAX sees only {kinds}. Refusing to run on CPU.",
+          file=sys.stderr)
+    sys.exit(1)
+print("GPU confirmed.")
+PY
 # Which algorithm actually ran -- see submit_reval_cpu.sh.
 python -c "import amica; print('amica  ->', amica.__file__)"
 python -c "import amica_python.benchmark.runner as r; print('harness->', r.__file__)"

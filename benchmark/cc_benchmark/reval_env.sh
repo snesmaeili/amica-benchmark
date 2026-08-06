@@ -61,7 +61,7 @@ mkdir -p "$AMICA_REVAL_BASE"
 # later job "reuses" a stub -- which is precisely how job 53097938 came to fail
 # on `import jax` twelve minutes after job 53097937 died mid-bootstrap.
 if [ -x "$VENV/bin/python" ] && \
-   "$VENV/bin/python" -c "import numpy, scipy, mne, jax, pytest, onnxruntime" >/dev/null 2>&1; then
+   "$VENV/bin/python" -c "import numpy, scipy, mne, jax, pytest, onnxruntime, jax_cuda12_plugin" >/dev/null 2>&1; then
   source "$VENV/bin/activate"
   echo "reval env: reusing complete venv at $VENV"
 else
@@ -74,6 +74,13 @@ else
   # would call them satisfied and skip them, leaving the venv without its own
   # copies -- which then vanish the moment PYTHONPATH is rewritten.
   pip install --no-index --ignore-installed numpy scipy pandas jax jaxlib
+  # jax + jaxlib alone give a CPU-only JAX. Without the CUDA plugin packages
+  # jax.devices() returns [CpuDevice(id=0)] on a node holding an H100, and the
+  # job runs to its wall clock on CPU without ever erroring -- which is exactly
+  # what happened to job 53258087, an hour of H100 time spent on subject 1.
+  # Installed unconditionally so CPU and GPU jobs share one venv definition;
+  # they are inert when no GPU is present.
+  pip install --no-index jax_cuda12_plugin jax_cuda12_pjrt
   # Not mirrored in the Compute Canada wheelhouse. Compute nodes on fir do
   # reach PyPI (verified: HTTP/2 200 to pypi.org from fc30669).
   pip install mne mne-icalabel seaborn tabulate pyyaml matplotlib scikit-learn

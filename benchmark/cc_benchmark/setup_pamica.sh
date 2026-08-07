@@ -1,0 +1,85 @@
+#!/bin/bash
+# Build .venv_pamica with sccn/pAMICA, the SCCN PyTorch implementation
+# (Shirazi, Delorme, Makeig). Run ONCE per site.
+#
+#   pamica (sccn/pAMICA v0.3.1)  PyTorch NG  -> import pamica
+#
+# Why this is a separate venv from .venv_competitors: pAMICA requires Python
+# >= 3.12 and torch >= 2.12.1, while the competitors venv is built on 3.11 for
+# the older implementations. They cannot share an interpreter.
+#
+# Why the install is pinned: github.com/neuromechanist/pyAMICA was renamed and
+# transferred to github.com/sccn/pAMICA (same GitHub repository id), so the two
+# URLs resolve to one project at two very different states. Pinning the tag
+# keeps "which pAMICA did we measure" answerable; the parity and performance
+# claims in the docs are version-specific.
+#
+# git+pip needs internet, so run this on the LOGIN node — it is a one-time ENV
+# BUILD (not compute), which is the supported use of pip on a login node.
+#
+#   bash setup_pamica.sh
+set -euo pipefail
+
+HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"   # benchmark/cc_benchmark/
+REPO_ROOT="$(cd "$HERE/../.." && pwd)"
+VENV="${PAMICA_VENV_DIR:-$REPO_ROOT/.venv_pamica}"
+
+# v0.3.1 (2026-07-19). Bump tag AND sha together, and re-run the parity check in
+# scripts/paper/figures/ — the numbers are not portable across versions.
+PAMICA_TAG="v0.3.1"
+PAMICA_SHA="0e6b7f517271bc9a583ced35b3435cc689c7999c"
+
+# Caches off $HOME (Alliance quota), mirroring fir_env.sh.
+export PIP_CACHE_DIR="${PIP_CACHE_DIR:-/scratch/$USER/.cache/pip}"
+mkdir -p "$PIP_CACHE_DIR"
+
+module purge 2>/dev/null || true
+# 3.12 is the floor pamica declares; fir carries 3.12.4.
+module load StdEnv/2023 python/3.12 2>/dev/null || true
+
+if [ ! -d "$VENV" ]; then
+    echo "Creating venv at $VENV ..."
+    virtualenv --no-download "$VENV" 2>/dev/null || python -m venv "$VENV"
+fi
+source "$VENV/bin/activate"
+pip install --upgrade pip
+
+# Fail loudly rather than building an environment that cannot run pamica.
+PYV=$(python -c 'import sys; print("%d.%d" % sys.version_info[:2])')
+case "$PYV" in
+    3.1[2-9]|3.[2-9][0-9]) : ;;
+    *) echo "ERROR: pamica needs Python >= 3.12, this venv is $PYV." >&2
+       echo "       'module load python/3.12' did not take; check module avail python." >&2
+       exit 1 ;;
+esac
+echo "python $PYV OK"
+
+# torch: the Alliance wheelhouse wheel (--no-index) is CUDA-enabled and serves
+# BOTH the CPU and GPU comparisons; fall back to PyPI off-Alliance. pamica needs
+# >= 2.12.1; Alliance carries 2.12.1 and 2.13.0 for cp312.
+echo "Installing torch ..."
+pip install --no-index "torch>=2.12.1" 2>/dev/null || pip install "torch>=2.12.1"
+
+echo "Installing pamica $PAMICA_TAG ($PAMICA_SHA) ..."
+pip install "git+https://github.com/sccn/pAMICA.git@${PAMICA_SHA}"
+
+# Optional: NVML neutral cross-check for the GPU comparison (enable with AMICA_MEM_NVML=1).
+pip install nvidia-ml-py 2>/dev/null || echo "(nvidia-ml-py not installed; NVML cross-check stays off)"
+
+echo "=== verify ==="
+python - <<'PY'
+from importlib.metadata import version
+import torch
+from pamica import AMICA
+
+v = version("pamica")
+print(f"pamica {v} | torch {torch.__version__} | cuda available: {torch.cuda.is_available()}")
+# Guard the pin: a silently different version invalidates the recorded numbers.
+assert v.startswith("0.3."), f"expected pamica 0.3.x, got {v}"
+# The runner depends on all four of these existing; catch an API drift here
+# rather than three hours into an array job.
+for attr in ("fit", "get_unmixing_matrix", "ll_history_", "final_ll_"):
+    assert hasattr(AMICA, attr) or attr.endswith("_"), f"AMICA lacks {attr}"
+print("OK — pamica imports and the runner's API surface is present")
+PY
+echo "pamica venv ready: $VENV"

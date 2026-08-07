@@ -4,7 +4,11 @@
 #
 #   pyamica  (DerAndereJohannes)  PyTorch     -> import pyamica
 #   amica    (scott-huberty)      PyTorch     -> import amica
-#   pyAMICA  (neuromechanist)     pure NumPy  -> import pyAMICA
+#   pyAMICA  (sccn/pAMICA @526aa32, the March-2025 pre-rename snapshot
+#             formerly at neuromechanist/pyAMICA)  pure NumPy  -> import pyAMICA
+#
+# Current pAMICA (v0.3.1, package `pamica`) is NOT here: it needs Python >= 3.12.
+# It gets its own venv -> see setup_pamica.sh.
 #
 # git+pip needs internet, so run this on the LOGIN node — it is a one-time ENV BUILD
 # (not compute), which is the supported use of pip on a login node. On Alliance the
@@ -36,11 +40,21 @@ pip install --upgrade pip
 echo "Installing torch ..."
 pip install --no-index torch 2>/dev/null || pip install torch
 
-# The 3 competitor AMICA implementations (all pip-installable from GitHub):
-echo "Installing the 3 competitor implementations ..."
+# The competitor AMICA implementations, pinned to commits.
+#
+# The pins are not cosmetic. github.com/neuromechanist/pyAMICA was renamed and
+# transferred to github.com/sccn/pAMICA (same GitHub repository id, 301 redirect),
+# so the unpinned URL below now resolves to that project's current state: package
+# `pamica`, which provides no `import pyAMICA` and needs Python >= 3.12. Left
+# floating, this line silently stopped installing what the paper measured and
+# would fail the verify step at the bottom of this script.
+#
+# 526aa32 is the March-2025 pure-NumPy state actually benchmarked. Current pAMICA
+# is a separate environment with its own interpreter; see setup_pamica.sh.
+echo "Installing the competitor implementations (pinned) ..."
 pip install "git+https://github.com/DerAndereJohannes/pyamica.git"
 pip install "git+https://github.com/scott-huberty/amica-python.git"
-pip install "git+https://github.com/neuromechanist/pyAMICA.git"
+pip install "git+https://github.com/sccn/pAMICA.git@526aa32"
 
 # Optional: NVML neutral cross-check for the GPU comparison (enable with AMICA_MEM_NVML=1).
 pip install nvidia-ml-py 2>/dev/null || echo "(nvidia-ml-py not installed; NVML cross-check stays off)"

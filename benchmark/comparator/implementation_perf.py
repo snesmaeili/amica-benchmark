@@ -60,8 +60,16 @@ _competitors_default = (
     ROOT / ".venv_competitors" / "Scripts" / "python.exe" if _is_win
     else ROOT / ".venv_competitors" / "bin" / "python"
 )
+# pAMICA needs Python >= 3.12 and torch >= 2.12.1, so it cannot share the
+# competitors venv (built on 3.11 for the older implementations). Separate venv,
+# separate module load; see setup_pamica.sh.
+_pamica_default = (
+    ROOT / ".venv_pamica" / "Scripts" / "python.exe" if _is_win
+    else ROOT / ".venv_pamica" / "bin" / "python"
+)
 VENV_AMICA = Path(os.environ.get("AMICA_PYTHON_VENV", str(_amica_default)))
 VENV_COMPETITORS = Path(os.environ.get("COMPETITORS_VENV", str(_competitors_default)))
+VENV_PAMICA = Path(os.environ.get("PAMICA_VENV", str(_pamica_default)))
 
 # Make `import amica_python.benchmark.runner` work even when this script is run
 # without a `pip install -e .` (e.g., direct `python scripts/comparator/X.py`).
@@ -253,6 +261,11 @@ def main() -> None:
     parser.add_argument("--include-fortran", action="store_true",
                         help="Also run Fortran AMICA 1.7 (run_fortran.py) on the same projected input "
                              "for the CPU/RSS comparison. Requires AMICA17_BIN + mpirun (cluster only).")
+    parser.add_argument("--include-neuromechanist-snapshot", action="store_true",
+                        help="Also run the March-2025 pure-NumPy snapshot of neuromechanist/pyAMICA. "
+                             "That repository is now sccn/pAMICA (same GitHub repo id), which runs by "
+                             "default as pamica_torch, so this is a second point in one project's "
+                             "history rather than a separate implementation. Off by default.")
     parser.add_argument("--nvml-crosscheck", action="store_true",
                         help="On GPU runs, also sample whole-GPU 'used' VRAM via NVML (neutral "
                              "cross-check incl. the CUDA-context floor the allocator counters omit). "
@@ -350,8 +363,17 @@ def main() -> None:
         ("amica_python_numpy",       VENV_AMICA,        RUNNERS_DIR / "run_amica_python.py",   {"AMICA_NO_JAX": "1"}),
         ("pyamica_torch",            VENV_COMPETITORS,  RUNNERS_DIR / "run_pyamica.py",        _torch_env),
         ("scott_huberty_torch",      VENV_COMPETITORS,  RUNNERS_DIR / "run_scott_huberty.py",  _torch_env),
-        ("neuromechanist_numpy",     VENV_COMPETITORS,  RUNNERS_DIR / "run_neuromechanist.py", None),
+        ("pamica_torch",             VENV_PAMICA,       RUNNERS_DIR / "run_pamica.py",         _torch_env),
     ]
+    # neuromechanist_numpy is deliberately absent: that repository was renamed and
+    # transferred to sccn/pAMICA, so the pure-NumPy snapshot benchmarked under that
+    # name is a March-2025 state of the same project that pamica_torch now measures
+    # at v0.3.1. Run it with --include-neuromechanist-snapshot to compare the two
+    # points in that project's history; it is not a second implementation.
+    if args.include_neuromechanist_snapshot:
+        runs.append(
+            ("neuromechanist_numpy", VENV_COMPETITORS,  RUNNERS_DIR / "run_neuromechanist.py", None)
+        )
     # Fortran AMICA 1.7 on the same projected input (CPU/RSS only; binary on the cluster).
     if args.include_fortran:
         runs.append(

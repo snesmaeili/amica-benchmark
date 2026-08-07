@@ -1,0 +1,4 @@
+method,subject,subject_id,fit_runtime_s,peak_memory_gb,n_iter_actual,max_iter,n_components_actual,n_samples,backend,device,ll_final,seed,converged_before_cap
+amica_python_numpy,sub-04,4,20.071135299978778,0.077586432,50,50,30,15000,numpy,cpu,-1.37408866487676,,False
+neuromechanist_numpy,sub-04,4,50.956554200005485,0.087552,50,50,30,15000,numpy,cpu,698150.1212694226,,False
+scott_huberty_torch,sub-04,4,7.458774700004142,0.36397056,50,50,30,15000,torch,cpu,-1.3740429261475284,,False

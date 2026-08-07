@@ -1,0 +1,19 @@
+{
+  "subjects": {
+    "sub-04": {
+      "n_implementations": 3,
+      "implementations": [
+        "amica_python_numpy",
+        "neuromechanist_numpy",
+        "scott_huberty_torch"
+      ],
+      "n_samples": 15000,
+      "n_components": 30
+    }
+  },
+  "totals": {
+    "n_subjects": 1,
+    "n_per_impl_results": 3,
+    "n_parity_pairs": 0
+  }
+}

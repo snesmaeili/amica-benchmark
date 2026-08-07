@@ -1,0 +1,58 @@
+{
+    "method": "amica",
+    "backend": "jax",
+    "device": "gpu",
+    "runtime_s": 77.2066610030015,
+    "n_iter": 500,
+    "n_components": 64,
+    "n_channels": 120,
+    "n_samples": 1111932,
+    "sfreq": 250.0,
+    "hostname": "fc10406",
+    "slurm_job_id": "40598268",
+    "dataset": "ds004505",
+    "subject": "sub-12",
+    "input_file": "/project/rrg-kjerbi/datasets/openneuro/ds004505/raw_bids/sub-12/eeg/sub-12_task-TableTennis_eeg.set",
+    "input_level": "bids_eeglab",
+    "loaded_sfreq": 250.0,
+    "annotation_counts": {
+        "M 1": 804,
+        "boundary": 17,
+        "Subject_hit": 1312,
+        "Subject_receive": 727
+    },
+    "condition_source": "events_tsv",
+    "condition_events_file": "/project/rrg-kjerbi/datasets/openneuro/ds004505/raw_bids/sub-12/eeg/sub-12_task-TableTennis_events.tsv",
+    "events_to_merged_offset_s": 0.0,
+    "trial_type_counts": {
+        "STATUS": 131,
+        "moving_serve": 246,
+        "stationary_serve": 249,
+        "competitive": 676,
+        "cooperative": 1039,
+        "stationary_hit": 271,
+        "moving_hit": 249
+    },
+    "condition_counts": {
+        "moving": 495,
+        "stationary": 520,
+        "competitive": 676,
+        "cooperative": 1039
+    },
+    "event_value_counts": {
+        "boundary": 18,
+        "M 1": 804,
+        "Subject_hit": 1312,
+        "Subject_receive": 727
+    },
+    "channel_selection": "scalp_eeg_only_excluding_noise_emg_imu_none",
+    "n_loaded_channels": 313,
+    "n_amica_input_channels": 120,
+    "excluded_noise_channels": 120,
+    "excluded_emg_channels": 8,
+    "excluded_imu_misc_channels": 65,
+    "excluded_none_channels": 0,
+    "analysis_sfreq": 250.0,
+    "duration_used_s": 4447.728,
+    "filtering": "MNE FIR 1-100 Hz + 60 Hz notch"
+}

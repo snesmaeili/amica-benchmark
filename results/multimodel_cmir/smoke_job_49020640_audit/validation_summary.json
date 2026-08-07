@@ -1,0 +1,60 @@
+{
+  "cmir_main_figure_approval_note": "Not automated. Inspect identity, bin sensitivity, occupancy, assignment sensitivity, and likelihood relationship before approval.",
+  "cmir_main_figure_approved": false,
+  "coverage": {
+    "ds004504:none": {
+      "model_orders": [
+        1,
+        10
+      ],
+      "n_subjects": 1
+    },
+    "ds004504:phase": {
+      "model_orders": [
+        1,
+        10
+      ],
+      "n_subjects": 1
+    },
+    "ds004505:none": {
+      "model_orders": [
+        1,
+        10
+      ],
+      "n_subjects": 1
+    },
+    "ds004505:phase": {
+      "model_orders": [
+        1,
+        10
+      ],
+      "n_subjects": 1
+    },
+    "ds004621:none": {
+      "model_orders": [
+        1,
+        10
+      ],
+      "n_subjects": 1
+    },
+    "ds004621:phase": {
+      "model_orders": [
+        1,
+        10
+      ],
+      "n_subjects": 1
+    }
+  },
+  "delta_cmir_delta_ll_spearman": 1.0,
+  "fit_count": 12,
+  "low_occupancy_fit_count": 2,
+  "maximum_m1_identity_error_bits_per_sample": 5.186961971048731e-13,
+  "metric_status": "exploratory; decision rule requires scientific review",
+  "n_m1_identity_checks": 6,
+  "sensitivity_spearman_correlations": {
+    "cmir_200bins_kbits_per_sec": 1.0,
+    "cmir_50bins_kbits_per_sec": 1.0,
+    "cmir_hard_kbits_per_sec": 1.0,
+    "cmir_time_permuted_kbits_per_sec": 1.0
+  }
+}

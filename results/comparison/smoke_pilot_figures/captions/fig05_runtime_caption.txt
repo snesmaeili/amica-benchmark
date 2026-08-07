@@ -1,0 +1,3 @@
+Run mode: PILOT (cropped). DO NOT publish quality claims from this run. [PILOT • cropped • n_subjects = 1]
+
+Figure 5. Fit runtime per method, log scale. Bars show across-subject median fit runtime; whiskers show the inter-quartile range (Q1, Q3); dots are individual subjects. This is an engineering benchmark: AMICA-Python JAX-GPU uses GPU acceleration, whereas the comparator methods and NumPy AMICA are CPU runs. Per-method failed-to-converge counts and full distribution statistics are persisted alongside the figure in fig05_runtime_stats.csv.

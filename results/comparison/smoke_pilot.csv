@@ -1,0 +1,4 @@
+subject,subject_id,implementation,n_components,n_samples,max_iter,n_iter,fit_time_s,peak_rss_gb,ll_final,device,dtype,seed_used
+sub-04,4,amica_python_numpy,30,15000,50,50,20.071135299978778,0.077586432,-1.37408866487676,cpu,float64,
+sub-04,4,neuromechanist_numpy,30,15000,50,50,50.956554200005485,0.087552,698150.1212694226,cpu,float64,
+sub-04,4,scott_huberty_torch,30,15000,50,50,7.458774700004142,0.36397056,-1.3740429261475284,cpu,float64,

@@ -1,0 +1,13 @@
+dataset,subject,num_models,fit_seed,surrogate,surrogate_seed
+ds004505,1,1,0,none,0
+ds004505,1,1,0,phase,100001
+ds004505,1,10,0,none,0
+ds004505,1,10,0,phase,100001
+ds004504,37,1,0,none,0
+ds004504,37,1,0,phase,100037
+ds004504,37,10,0,none,0
+ds004504,37,10,0,phase,100037
+ds004621,1,1,0,none,0
+ds004621,1,1,0,phase,100001
+ds004621,1,10,0,none,0
+ds004621,1,10,0,phase,100001

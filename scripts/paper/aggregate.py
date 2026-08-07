@@ -26,8 +26,16 @@ def _flatten_metrics(method_result: dict) -> dict:
     """Flatten one method's nested metric dict into scalar columns."""
     flat = {
         "time": method_result.get("time", float("nan")),
+        "runtime_s": method_result.get(
+            "runtime_s", method_result.get("time", float("nan"))
+        ),
         "n_iter": method_result.get("n_iter", float("nan")),
         "n_components": method_result.get("n_components", float("nan")),
+        "backend": method_result.get("backend"),
+        "device": method_result.get("device"),
+        "converged": method_result.get("converged"),
+        "n_channels": method_result.get("n_channels", float("nan")),
+        "n_samples": method_result.get("n_samples", float("nan")),
         "recon_error": (
             method_result.get("reconstruction", {}).get("relative_error")
             if isinstance(method_result.get("reconstruction"), dict)
@@ -80,7 +88,10 @@ def load_per_subject_results(
     if not files:
         raise FileNotFoundError(f"No files matching {pattern} in {results_dir}")
 
-    fname_re = re.compile(r"benchmark_(?P<subject>sub-\d+)_hp(?P<hp>[\d.]+)hz\.json")
+    fname_re = re.compile(
+        r"benchmark_(?P<subject>sub-\d+)_hp(?P<hp>[\d.]+)hz"
+        r"(?:_(?P<suffix>[^.]+))?\.json"
+    )
     for fp in files:
         m = fname_re.match(fp.name)
         if not m:
@@ -91,6 +102,8 @@ def load_per_subject_results(
         with open(fp) as f:
             sweep = json.load(f)
         for method, res in sweep.items():
+            if str(method).startswith("_"):
+                continue
             if not isinstance(res, dict) or "error" in res:
                 rows.append({
                     "subject": subject,
@@ -109,6 +122,14 @@ def load_per_subject_results(
     other = [c for c in df.columns if c not in front]
     df = df[front + sorted(other)]
     return df
+
+
+def load_single_method_results(
+    results_dir: Path | str = "results",
+    pattern: str = "benchmark_sub-*_hp*hz_*.json",
+) -> pd.DataFrame:
+    """Load v3 single-method/backend result files into long format."""
+    return load_per_subject_results(results_dir, pattern=pattern)
 
 
 # ───────────────────────────────────────────────────────────────────────

@@ -1,0 +1,161 @@
+method,display_name,planted_source_index,estimated_component_index,signed_r,abs_r,sign_flip,source_vertex,source_hemi,source_label,selection_score,selected_for_panel_d
+amica_3000,"AMICA 3,000",0,17,-0.9835808862017206,0.9835808862017206,True,66297,rh,insula-rh,,False
+amica_3000,"AMICA 3,000",1,31,-0.9895667732509872,0.9895667732509872,True,68980,rh,transversetemporal-rh,,False
+amica_3000,"AMICA 3,000",2,6,-0.8850083077199731,0.8850083077199731,True,1492,rh,lateraloccipital-rh,,False
+amica_3000,"AMICA 3,000",3,28,-0.7023418746528944,0.7023418746528944,True,106880,lh,entorhinal-lh,,False
+amica_3000,"AMICA 3,000",4,24,-0.8066077138678813,0.8066077138678813,True,48795,lh,posteriorcingulate-lh,,False
+amica_3000,"AMICA 3,000",5,7,0.9421840402690494,0.9421840402690494,False,53054,rh,posteriorcingulate-rh,,False
+amica_3000,"AMICA 3,000",6,11,0.7785982611409934,0.7785982611409934,False,29946,lh,supramarginal-lh,,False
+amica_3000,"AMICA 3,000",7,23,-0.8071757978426694,0.8071757978426694,True,79918,lh,caudalmiddlefrontal-lh,,False
+amica_3000,"AMICA 3,000",8,21,0.7350131030427183,0.7350131030427183,False,2281,rh,pericalcarine-rh,,False
+amica_3000,"AMICA 3,000",9,12,-0.7465738746702443,0.7465738746702443,True,841,lh,superiorparietal-lh,,False
+amica_3000,"AMICA 3,000",10,5,-0.9790837842614719,0.9790837842614719,True,30467,lh,middletemporal-lh,,False
+amica_3000,"AMICA 3,000",11,13,0.7944978692074562,0.7944978692074562,False,152907,lh,frontalpole-lh,,False
+amica_3000,"AMICA 3,000",12,29,0.8765760444984527,0.8765760444984527,False,36823,lh,inferiortemporal-lh,,False
+amica_3000,"AMICA 3,000",13,2,0.8177463685916128,0.8177463685916128,False,95728,lh,caudalanteriorcingulate-lh,,False
+amica_3000,"AMICA 3,000",14,15,-0.8393219354687035,0.8393219354687035,True,19789,lh,postcentral-lh,,False
+amica_3000,"AMICA 3,000",15,9,0.6717280215199559,0.6717280215199559,False,107405,lh,parsopercularis-lh,,False
+amica_3000,"AMICA 3,000",16,19,-0.8097854871734463,0.8097854871734463,True,38908,lh,isthmuscingulate-lh,,False
+amica_3000,"AMICA 3,000",17,25,0.9046988078577124,0.9046988078577124,False,4773,rh,precuneus-rh,,False
+amica_3000,"AMICA 3,000",18,0,-0.9022542812146599,0.9022542812146599,True,154179,rh,frontalpole-rh,0.9820881081865381,True
+amica_3000,"AMICA 3,000",19,22,0.9789897018396234,0.9789897018396234,False,121283,lh,temporalpole-lh,0.9789897018396234,True
+amica_3000,"AMICA 3,000",20,4,-0.9895968309972785,0.9895968309972785,True,105454,rh,rostralmiddlefrontal-rh,,False
+amica_3000,"AMICA 3,000",21,26,0.6896770902258932,0.6896770902258932,False,66616,rh,parahippocampal-rh,,False
+amica_3000,"AMICA 3,000",22,14,0.752361344282233,0.752361344282233,False,64096,lh,insula-lh,,False
+amica_3000,"AMICA 3,000",23,20,-0.8442033576426954,0.8442033576426954,True,64498,lh,parahippocampal-lh,0.986623157963923,True
+amica_3000,"AMICA 3,000",24,16,-0.9726015479893723,0.9726015479893723,True,100052,rh,caudalanteriorcingulate-rh,,False
+amica_3000,"AMICA 3,000",25,30,0.8496846093203215,0.8496846093203215,False,55756,rh,bankssts-rh,,False
+amica_3000,"AMICA 3,000",26,27,0.9424317776213866,0.9424317776213866,False,109649,lh,medialorbitofrontal-lh,,False
+amica_3000,"AMICA 3,000",27,10,0.8236711172507892,0.8236711172507892,False,42874,rh,supramarginal-rh,,False
+amica_3000,"AMICA 3,000",28,3,-0.8561051483502171,0.8561051483502171,True,123078,lh,lateralorbitofrontal-lh,,False
+amica_3000,"AMICA 3,000",29,8,0.9967229050467001,0.9967229050467001,False,33499,rh,inferiortemporal-rh,,False
+amica_3000,"AMICA 3,000",30,18,-0.8400711032614984,0.8400711032614984,True,10118,rh,lingual-rh,,False
+amica_3000,"AMICA 3,000",31,1,-0.6459421395743964,0.6459421395743964,True,2380,lh,pericalcarine-lh,,False
+amica_10000,"AMICA 10,000",0,17,-0.9812182232077389,0.9812182232077389,True,66297,rh,insula-rh,,False
+amica_10000,"AMICA 10,000",1,31,-0.9986255861060628,0.9986255861060628,True,68980,rh,transversetemporal-rh,,False
+amica_10000,"AMICA 10,000",2,6,-0.9949076582997278,0.9949076582997278,True,1492,rh,lateraloccipital-rh,,False
+amica_10000,"AMICA 10,000",3,2,-0.9713532962600899,0.9713532962600899,True,106880,lh,entorhinal-lh,,False
+amica_10000,"AMICA 10,000",4,15,0.9907807889734853,0.9907807889734853,False,48795,lh,posteriorcingulate-lh,,False
+amica_10000,"AMICA 10,000",5,7,0.9918880267001149,0.9918880267001149,False,53054,rh,posteriorcingulate-rh,,False
+amica_10000,"AMICA 10,000",6,26,-0.9441844446469055,0.9441844446469055,True,29946,lh,supramarginal-lh,,False
+amica_10000,"AMICA 10,000",7,9,0.998183085340849,0.998183085340849,False,79918,lh,caudalmiddlefrontal-lh,,False
+amica_10000,"AMICA 10,000",8,14,0.8815244435785509,0.8815244435785509,False,2281,rh,pericalcarine-rh,,False
+amica_10000,"AMICA 10,000",9,25,-0.9679451247066526,0.9679451247066526,True,841,lh,superiorparietal-lh,,False
+amica_10000,"AMICA 10,000",10,5,-0.9921042095558612,0.9921042095558612,True,30467,lh,middletemporal-lh,,False
+amica_10000,"AMICA 10,000",11,28,-0.97957617958852,0.97957617958852,True,152907,lh,frontalpole-lh,,False
+amica_10000,"AMICA 10,000",12,29,0.9644576275815094,0.9644576275815094,False,36823,lh,inferiortemporal-lh,,False
+amica_10000,"AMICA 10,000",13,23,0.9905639382961963,0.9905639382961963,False,95728,lh,caudalanteriorcingulate-lh,,False
+amica_10000,"AMICA 10,000",14,20,0.9785559047207294,0.9785559047207294,False,19789,lh,postcentral-lh,,False
+amica_10000,"AMICA 10,000",15,1,-0.9760673163017233,0.9760673163017233,True,107405,lh,parsopercularis-lh,,False
+amica_10000,"AMICA 10,000",16,24,-0.997118316352776,0.997118316352776,True,38908,lh,isthmuscingulate-lh,,False
+amica_10000,"AMICA 10,000",17,21,0.995927028643562,0.995927028643562,False,4773,rh,precuneus-rh,,False
+amica_10000,"AMICA 10,000",18,0,-0.9778284230839438,0.9778284230839438,True,154179,rh,frontalpole-rh,0.9820881081865381,True
+amica_10000,"AMICA 10,000",19,22,0.9644863347414443,0.9644863347414443,False,121283,lh,temporalpole-lh,0.9789897018396234,True
+amica_10000,"AMICA 10,000",20,4,-0.9963329237113242,0.9963329237113242,True,105454,rh,rostralmiddlefrontal-rh,,False
+amica_10000,"AMICA 10,000",21,12,-0.9682066250304393,0.9682066250304393,True,66616,rh,parahippocampal-rh,,False
+amica_10000,"AMICA 10,000",22,3,0.9850209756779845,0.9850209756779845,False,64096,lh,insula-lh,,False
+amica_10000,"AMICA 10,000",23,19,-0.9752781640214558,0.9752781640214558,True,64498,lh,parahippocampal-lh,0.986623157963923,True
+amica_10000,"AMICA 10,000",24,16,-0.9893305272547364,0.9893305272547364,True,100052,rh,caudalanteriorcingulate-rh,,False
+amica_10000,"AMICA 10,000",25,30,0.994277975666838,0.994277975666838,False,55756,rh,bankssts-rh,,False
+amica_10000,"AMICA 10,000",26,27,0.9960089225249222,0.9960089225249222,False,109649,lh,medialorbitofrontal-lh,,False
+amica_10000,"AMICA 10,000",27,10,0.994069833647144,0.994069833647144,False,42874,rh,supramarginal-rh,,False
+amica_10000,"AMICA 10,000",28,13,-0.981736941902118,0.981736941902118,True,123078,lh,lateralorbitofrontal-lh,,False
+amica_10000,"AMICA 10,000",29,8,0.9959629652565132,0.9959629652565132,False,33499,rh,inferiortemporal-rh,,False
+amica_10000,"AMICA 10,000",30,11,-0.9884556168198819,0.9884556168198819,True,10118,rh,lingual-rh,,False
+amica_10000,"AMICA 10,000",31,18,0.9149987745426129,0.9149987745426129,False,2380,lh,pericalcarine-lh,,False
+picard,Picard,0,18,0.997731405780662,0.997731405780662,False,66297,rh,insula-rh,,False
+picard,Picard,1,31,-0.9978078127027132,0.9978078127027132,True,68980,rh,transversetemporal-rh,,False
+picard,Picard,2,4,-0.9983489037085104,0.9983489037085104,True,1492,rh,lateraloccipital-rh,,False
+picard,Picard,3,10,-0.9907039498762336,0.9907039498762336,True,106880,lh,entorhinal-lh,,False
+picard,Picard,4,14,0.9926769384067772,0.9926769384067772,False,48795,lh,posteriorcingulate-lh,,False
+picard,Picard,5,7,0.9949635102850755,0.9949635102850755,False,53054,rh,posteriorcingulate-rh,,False
+picard,Picard,6,29,-0.9952484735338941,0.9952484735338941,True,29946,lh,supramarginal-lh,,False
+picard,Picard,7,9,0.9974475555887138,0.9974475555887138,False,79918,lh,caudalmiddlefrontal-lh,,False
+picard,Picard,8,19,0.9885611895846702,0.9885611895846702,False,2281,rh,pericalcarine-rh,,False
+picard,Picard,9,27,-0.9974642583721255,0.9974642583721255,True,841,lh,superiorparietal-lh,,False
+picard,Picard,10,5,-0.9971513188097981,0.9971513188097981,True,30467,lh,middletemporal-lh,,False
+picard,Picard,11,13,0.9900716977428999,0.9900716977428999,False,152907,lh,frontalpole-lh,,False
+picard,Picard,12,22,0.9964264253990651,0.9964264253990651,False,36823,lh,inferiortemporal-lh,,False
+picard,Picard,13,2,0.9967911543785154,0.9967911543785154,False,95728,lh,caudalanteriorcingulate-lh,,False
+picard,Picard,14,11,0.9988019042072777,0.9988019042072777,False,19789,lh,postcentral-lh,,False
+picard,Picard,15,30,-0.9960947806016109,0.9960947806016109,True,107405,lh,parsopercularis-lh,,False
+picard,Picard,16,24,-0.9962476795868362,0.9962476795868362,True,38908,lh,isthmuscingulate-lh,,False
+picard,Picard,17,21,0.9994675221199092,0.9994675221199092,False,4773,rh,precuneus-rh,,False
+picard,Picard,18,0,-0.9788103998025033,0.9788103998025033,True,154179,rh,frontalpole-rh,0.9820881081865381,True
+picard,Picard,19,26,0.9762989486700687,0.9762989486700687,False,121283,lh,temporalpole-lh,0.9789897018396234,True
+picard,Picard,20,25,-0.9967628426286487,0.9967628426286487,True,105454,rh,rostralmiddlefrontal-rh,,False
+picard,Picard,21,28,0.9964261152354859,0.9964261152354859,False,66616,rh,parahippocampal-rh,,False
+picard,Picard,22,20,0.9918816825201826,0.9918816825201826,False,64096,lh,insula-lh,,False
+picard,Picard,23,15,0.9862953259382496,0.9862953259382496,False,64498,lh,parahippocampal-lh,0.986623157963923,True
+picard,Picard,24,16,-0.9912702933927351,0.9912702933927351,True,100052,rh,caudalanteriorcingulate-rh,,False
+picard,Picard,25,3,0.9991691864900623,0.9991691864900623,False,55756,rh,bankssts-rh,,False
+picard,Picard,26,1,-0.9983410194352544,0.9983410194352544,True,109649,lh,medialorbitofrontal-lh,,False
+picard,Picard,27,23,0.9941669923877299,0.9941669923877299,False,42874,rh,supramarginal-rh,,False
+picard,Picard,28,12,-0.988928917596293,0.988928917596293,True,123078,lh,lateralorbitofrontal-lh,,False
+picard,Picard,29,8,0.997952508486134,0.997952508486134,False,33499,rh,inferiortemporal-rh,,False
+picard,Picard,30,17,-0.9938982008555935,0.9938982008555935,True,10118,rh,lingual-rh,,False
+picard,Picard,31,6,0.9895457946337415,0.9895457946337415,False,2380,lh,pericalcarine-lh,,False
+extended_infomax,Ext. Infomax,0,9,-0.9977714730817914,0.9977714730817914,True,66297,rh,insula-rh,,False
+extended_infomax,Ext. Infomax,1,7,-0.997748748996868,0.997748748996868,True,68980,rh,transversetemporal-rh,,False
+extended_infomax,Ext. Infomax,2,2,-0.9983741310587904,0.9983741310587904,True,1492,rh,lateraloccipital-rh,,False
+extended_infomax,Ext. Infomax,3,18,0.9908095578793475,0.9908095578793475,False,106880,lh,entorhinal-lh,,False
+extended_infomax,Ext. Infomax,4,15,0.9925420158956044,0.9925420158956044,False,48795,lh,posteriorcingulate-lh,,False
+extended_infomax,Ext. Infomax,5,24,-0.9950427915034067,0.9950427915034067,True,53054,rh,posteriorcingulate-rh,,False
+extended_infomax,Ext. Infomax,6,16,0.9953078828616665,0.9953078828616665,False,29946,lh,supramarginal-lh,,False
+extended_infomax,Ext. Infomax,7,13,-0.9974149422916522,0.9974149422916522,True,79918,lh,caudalmiddlefrontal-lh,,False
+extended_infomax,Ext. Infomax,8,19,-0.9884683302021297,0.9884683302021297,True,2281,rh,pericalcarine-rh,,False
+extended_infomax,Ext. Infomax,9,22,0.9974179039541821,0.9974179039541821,False,841,lh,superiorparietal-lh,,False
+extended_infomax,Ext. Infomax,10,20,0.9970154047732901,0.9970154047732901,False,30467,lh,middletemporal-lh,,False
+extended_infomax,Ext. Infomax,11,17,-0.9901008318485127,0.9901008318485127,True,152907,lh,frontalpole-lh,,False
+extended_infomax,Ext. Infomax,12,26,0.9965636748951131,0.9965636748951131,False,36823,lh,inferiortemporal-lh,,False
+extended_infomax,Ext. Infomax,13,3,-0.9967839888080938,0.9967839888080938,True,95728,lh,caudalanteriorcingulate-lh,,False
+extended_infomax,Ext. Infomax,14,10,-0.9987733174673247,0.9987733174673247,True,19789,lh,postcentral-lh,,False
+extended_infomax,Ext. Infomax,15,28,-0.9959728232630425,0.9959728232630425,True,107405,lh,parsopercularis-lh,,False
+extended_infomax,Ext. Infomax,16,25,0.9960835496519259,0.9960835496519259,False,38908,lh,isthmuscingulate-lh,,False
+extended_infomax,Ext. Infomax,17,30,0.9994876208539232,0.9994876208539232,False,4773,rh,precuneus-rh,,False
+extended_infomax,Ext. Infomax,18,23,-0.9785875197422665,0.9785875197422665,True,154179,rh,frontalpole-rh,0.9820881081865381,True
+extended_infomax,Ext. Infomax,19,4,-0.9767117007679873,0.9767117007679873,True,121283,lh,temporalpole-lh,0.9789897018396234,True
+extended_infomax,Ext. Infomax,20,12,-0.9965845208746,0.9965845208746,True,105454,rh,rostralmiddlefrontal-rh,,False
+extended_infomax,Ext. Infomax,21,21,0.996313240796052,0.996313240796052,False,66616,rh,parahippocampal-rh,,False
+extended_infomax,Ext. Infomax,22,1,-0.9919384717222773,0.9919384717222773,True,64096,lh,insula-lh,,False
+extended_infomax,Ext. Infomax,23,0,-0.9863362008137974,0.9863362008137974,True,64498,lh,parahippocampal-lh,0.986623157963923,True
+extended_infomax,Ext. Infomax,24,31,0.9912243310513633,0.9912243310513633,False,100052,rh,caudalanteriorcingulate-rh,,False
+extended_infomax,Ext. Infomax,25,11,-0.9991895530303126,0.9991895530303126,True,55756,rh,bankssts-rh,,False
+extended_infomax,Ext. Infomax,26,27,-0.9983715085484711,0.9983715085484711,True,109649,lh,medialorbitofrontal-lh,,False
+extended_infomax,Ext. Infomax,27,29,-0.9941429908912973,0.9941429908912973,True,42874,rh,supramarginal-rh,,False
+extended_infomax,Ext. Infomax,28,6,0.9890776879458366,0.9890776879458366,False,123078,lh,lateralorbitofrontal-lh,,False
+extended_infomax,Ext. Infomax,29,5,-0.9978907236372517,0.9978907236372517,True,33499,rh,inferiortemporal-rh,,False
+extended_infomax,Ext. Infomax,30,14,0.9939301216247665,0.9939301216247665,False,10118,rh,lingual-rh,,False
+extended_infomax,Ext. Infomax,31,8,-0.9895528287552152,0.9895528287552152,True,2380,lh,pericalcarine-lh,,False
+fastica,FastICA,0,9,-0.9977392349920171,0.9977392349920171,True,66297,rh,insula-rh,,False
+fastica,FastICA,1,7,-0.9977234933126394,0.9977234933126394,True,68980,rh,transversetemporal-rh,,False
+fastica,FastICA,2,2,-0.998288106274332,0.998288106274332,True,1492,rh,lateraloccipital-rh,,False
+fastica,FastICA,3,18,0.9915518601028736,0.9915518601028736,False,106880,lh,entorhinal-lh,,False
+fastica,FastICA,4,15,0.9923593214704073,0.9923593214704073,False,48795,lh,posteriorcingulate-lh,,False
+fastica,FastICA,5,24,-0.9950059439438235,0.9950059439438235,True,53054,rh,posteriorcingulate-rh,,False
+fastica,FastICA,6,16,0.995589056516855,0.995589056516855,False,29946,lh,supramarginal-lh,,False
+fastica,FastICA,7,13,-0.9973315095424007,0.9973315095424007,True,79918,lh,caudalmiddlefrontal-lh,,False
+fastica,FastICA,8,19,-0.9893526712212397,0.9893526712212397,True,2281,rh,pericalcarine-rh,,False
+fastica,FastICA,9,22,0.9975570273117996,0.9975570273117996,False,841,lh,superiorparietal-lh,,False
+fastica,FastICA,10,20,0.9970277477006909,0.9970277477006909,False,30467,lh,middletemporal-lh,,False
+fastica,FastICA,11,17,-0.9899336051016248,0.9899336051016248,True,152907,lh,frontalpole-lh,,False
+fastica,FastICA,12,26,0.996224511422266,0.996224511422266,False,36823,lh,inferiortemporal-lh,,False
+fastica,FastICA,13,3,-0.997019772832511,0.997019772832511,True,95728,lh,caudalanteriorcingulate-lh,,False
+fastica,FastICA,14,10,-0.9986785557652021,0.9986785557652021,True,19789,lh,postcentral-lh,,False
+fastica,FastICA,15,28,-0.9967561097777633,0.9967561097777633,True,107405,lh,parsopercularis-lh,,False
+fastica,FastICA,16,25,0.9959732997883233,0.9959732997883233,False,38908,lh,isthmuscingulate-lh,,False
+fastica,FastICA,17,30,0.9993993194888899,0.9993993194888899,False,4773,rh,precuneus-rh,,False
+fastica,FastICA,18,23,-0.9820881081865381,0.9820881081865381,True,154179,rh,frontalpole-rh,0.9820881081865381,True
+fastica,FastICA,19,4,-0.9759716386227927,0.9759716386227927,True,121283,lh,temporalpole-lh,0.9789897018396234,True
+fastica,FastICA,20,12,-0.996484477704024,0.996484477704024,True,105454,rh,rostralmiddlefrontal-rh,,False
+fastica,FastICA,21,21,0.9952170512312063,0.9952170512312063,False,66616,rh,parahippocampal-rh,,False
+fastica,FastICA,22,1,-0.9924271000686009,0.9924271000686009,True,64096,lh,insula-lh,,False
+fastica,FastICA,23,0,-0.986623157963923,0.986623157963923,True,64498,lh,parahippocampal-lh,0.986623157963923,True
+fastica,FastICA,24,31,0.9915798554840295,0.9915798554840295,False,100052,rh,caudalanteriorcingulate-rh,,False
+fastica,FastICA,25,11,-0.9990450764393544,0.9990450764393544,True,55756,rh,bankssts-rh,,False
+fastica,FastICA,26,27,-0.9980466411407357,0.9980466411407357,True,109649,lh,medialorbitofrontal-lh,,False
+fastica,FastICA,27,29,-0.9940569134961964,0.9940569134961964,True,42874,rh,supramarginal-rh,,False
+fastica,FastICA,28,6,0.9869902627155307,0.9869902627155307,False,123078,lh,lateralorbitofrontal-lh,,False
+fastica,FastICA,29,5,-0.9980581376688498,0.9980581376688498,True,33499,rh,inferiortemporal-rh,,False
+fastica,FastICA,30,14,0.994267953921395,0.994267953921395,False,10118,rh,lingual-rh,,False
+fastica,FastICA,31,8,-0.9886494672126099,0.9886494672126099,True,2380,lh,pericalcarine-lh,,False

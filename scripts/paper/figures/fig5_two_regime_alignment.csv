@@ -1,0 +1,5 @@
+learned_model,true_regime,matched_source_correlation,mean_posterior,source
+1,1,0.998,0.986,legacy Supplementary Table S4 numerical audit
+1,2,0.645,0.006,legacy Supplementary Table S4 numerical audit
+2,1,0.764,0.014,legacy Supplementary Table S4 numerical audit
+2,2,0.980,0.994,legacy Supplementary Table S4 numerical audit

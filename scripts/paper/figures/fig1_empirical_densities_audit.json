@@ -1,0 +1,34 @@
+{
+  "purpose": "Figure 1 empirical adaptive-density miniatures",
+  "model_fit": "archived m1_reject0 ds004505 sub-01 JAX-GPU fit; no refit",
+  "selection_rule": "nearest components to prespecified mean-rho targets 1.04, 1.42, and 1.79",
+  "components": [
+    34,
+    7,
+    60
+  ],
+  "mean_rho": [
+    1.0376397047162462,
+    1.4205420042984873,
+    1.7660032018430276
+  ],
+  "histogram": "160 equal-width bins over +/-5 source standard deviations; density normalisation",
+  "inputs": {
+    "result_json": {
+      "path": "D:\\amica-validation-workspace\\ablation_results\\m1_reject0\\benchmark_sub-01_hp1.0hz_jax_gpu.json",
+      "sha256": "3f8f510dbba43daf37a91719a13f74d7a3a52e24cb06106ee3af2ea0dc99ceeb"
+    },
+    "ica_fif": {
+      "path": "D:\\amica-validation-workspace\\ablation_results\\m1_reject0\\benchmark_sub-01_hp1.0hz_jax_gpu_ica.fif",
+      "sha256": "f4e5ae75f2372b5911c30ce5a086664865a5abe9fddb471f2245db173feea24e"
+    },
+    "raw_fdt": {
+      "path": "D:\\amica-validation-workspace\\datasets\\ds004505\\raw_bids\\sub-01\\eeg\\sub-01_task-TableTennis_eeg.fdt",
+      "sha256": "b85b634675c619380c0ca8fe6420de2d8bb03151c3508c017e7011bb0cc971a6"
+    }
+  },
+  "output": {
+    "path": "D:\\amica-validation-workspace\\overleaf\\amica-preprint-6a15766c\\figures\\src\\fig1_empirical_densities.csv",
+    "sha256": "40152b7fa44ec10e1f3d30e14cc9c101caef0886e7c8272cedd1ba3ef8477503"
+  }
+}

@@ -1,0 +1,1520 @@
+{
+  "figure2": {
+    "inputs": {
+      "evidence": "D:\\amica-validation-workspace\\overleaf\\amica-preprint-6a15766c\\figures\\src\\fig2_reference_evidence.json",
+      "density": "D:\\amica-validation-workspace\\overleaf\\amica-preprint-6a15766c\\figures\\src\\fig2_reference_density.csv",
+      "backend_vector_audit": "D:\\amica-validation-workspace\\overleaf\\amica-preprint-6a15766c\\figures\\src\\fig2_backend_vector_audit.csv"
+    },
+    "panel_a": [
+      {
+        "label": "6-ch Laplacian\nK=1, Newton",
+        "relative_ll_difference_pct": 0.0002,
+        "worst_row_correlation": 0.9999,
+        "source": "archived numerical audit table"
+      },
+      {
+        "label": "6-ch Laplacian\nK=3, Newton",
+        "relative_ll_difference_pct": 2.451920911129377e-06,
+        "absolute_ll_difference": 5.0766779668975914e-08,
+        "worst_row_correlation": 0.9999999999404914,
+        "source": "results/fortran_parity/parity.json; fixed-initialisation rerun at package commit f3e0338c9e"
+      },
+      {
+        "label": "6-ch Laplacian\nK=3, natural gradient",
+        "relative_ll_difference_pct": 0.08,
+        "worst_row_correlation": 0.9995,
+        "source": "archived numerical audit table"
+      },
+      {
+        "label": "ds004505 sub-01\n64 PCs, 100 iterations",
+        "relative_ll_difference_pct": 0.0011,
+        "absolute_ll_difference": 0.00012,
+        "worst_row_correlation": 0.9996,
+        "mean_row_correlation": 0.99997,
+        "source": "archived real-EEG Fortran audit"
+      }
+    ],
+    "density_parameter_agreement": {
+      "alpha": {
+        "pearson_r": 0.9999999726591966,
+        "nrmse_over_iqr": 0.0001430811242271962,
+        "median_absolute_error": 3.0594888724311264e-05
+      },
+      "mu": {
+        "pearson_r": 0.9999999901348281,
+        "nrmse_over_iqr": 8.051515016439275e-05,
+        "median_absolute_error": 6.234362845081165e-06
+      },
+      "beta": {
+        "pearson_r": 0.9999999796037282,
+        "nrmse_over_iqr": 0.00013061488791997285,
+        "median_absolute_error": 6.95532690819789e-05
+      },
+      "rho": {
+        "pearson_r": 0.9999988310420341,
+        "nrmse_over_iqr": 0.0010559112575027876,
+        "median_absolute_error": 5.553145433601081e-05
+      }
+    },
+    "backend_worst_row_agreement": {
+      "jax_cpu_vs_numpy_cpu": {
+        "median_worst_row_correlation": 0.999907446,
+        "minimum_worst_row_correlation": 0.926952549
+      },
+      "jax_gpu_vs_numpy_cpu": {
+        "median_worst_row_correlation": 0.99986402,
+        "minimum_worst_row_correlation": 0.655999517
+      },
+      "jax_gpu_vs_jax_cpu": {
+        "median_worst_row_correlation": 0.999915025,
+        "minimum_worst_row_correlation": 0.656125305
+      }
+    },
+    "maximum_absolute_backend_mir_difference_kbits_s": 0.0048,
+    "chunking": {
+      "fixture": "MNE sample recording, 30 retained components, 166800 samples, 100 iterations, float64, chunk size 1024",
+      "absolute_final_ll_difference": 5.91657431492365e-07,
+      "unmixing_frobenius_relative_error": 0.0001448769887359409,
+      "sensor_unmixing_frobenius_relative_error": 0.00016841895262134987,
+      "mir_difference": null,
+      "source": "repos/amica-python-benchmark/results/mne_chunking/summary.json",
+      "source_sha256": "BC226D75BB14EE12FE1EFAECDCC98F01BFC4D8738844E0D073264758A8631813"
+    },
+    "mne": {
+      "same_seed_unmixing_frobenius_relative_difference": 0.0,
+      "transform_inverse_frobenius_relative_residual": 1.5e-15,
+      "python_ci_versions": "3.10-3.13",
+      "ci_operating_systems": 3,
+      "declared_mne_requirement": ">=1.0",
+      "exact_resolved_mne_versions_archived": false,
+      "mne_ica_save_reload_tested": false,
+      "iclabel_scope": "technical callability and one returned label per component; not scientific validation of labels",
+      "source": "repos/amica-python/tests/test_mne_real.py, .github/workflows/tests.yml, and archived MNE sample audit"
+    },
+    "limitations": [
+      "Raw backend parity result files are absent; Panel C preserves the committed vector figure values in a machine-readable audit table.",
+      "The K=1, natural-gradient-only, and real-EEG Fortran rows are traceable to the archived audit table rather than raw arrays in the current clone.",
+      "No MNE ICA save/reload test was found, and exact resolved MNE versions were not archived."
+    ]
+  },
+  "figure3": {
+    "input_files": {
+      "ds004505": {
+        "path": "figdata/synth/amica-capsule/benchmark/cc_benchmark/results/v3_paper_stage1_cluster/benchmark_results.csv",
+        "sha256": "6d87ff6912a41ccec6be225efc16d5dfab697319ef2cca6815d53df556167244"
+      },
+      "ds004504": {
+        "path": "figdata/synth/amica-capsule/benchmark/cc_benchmark/results/ds004504_v3/benchmark_results.csv",
+        "sha256": "f2e8a541039dd9404a3e9493c813b44483d6aec9f51ae2bc02be5c9ff01981ee"
+      },
+      "ds004621": {
+        "path": "figdata/synth/amica-capsule/benchmark/cc_benchmark/results/ds004621_v3/benchmark_results.csv",
+        "sha256": "ff01607bc88bd2f8c23530319010e829efca66a13458e1772e7705015f027b2f"
+      }
+    },
+    "amica_reference_row": "AMICA-Python (JAX-GPU)",
+    "comparators": [
+      "Picard",
+      "Infomax",
+      "FastICA"
+    ],
+    "dataset_configuration": {
+      "ds004505": {
+        "n_subjects": 25,
+        "subjects": [
+          "sub-01",
+          "sub-02",
+          "sub-03",
+          "sub-04",
+          "sub-05",
+          "sub-06",
+          "sub-07",
+          "sub-08",
+          "sub-09",
+          "sub-10",
+          "sub-11",
+          "sub-12",
+          "sub-13",
+          "sub-14",
+          "sub-15",
+          "sub-16",
+          "sub-17",
+          "sub-18",
+          "sub-19",
+          "sub-20",
+          "sub-21",
+          "sub-22",
+          "sub-23",
+          "sub-24",
+          "sub-25"
+        ],
+        "input_channel_count_range": [
+          270,
+          340
+        ],
+        "analysis_channel_counts": [
+          120
+        ],
+        "retained_component_counts": [
+          64
+        ],
+        "rank_metadata": [
+          120
+        ],
+        "iclabel_complete_rows": 150,
+        "total_method_rows": 150
+      },
+      "ds004504": {
+        "n_subjects": 29,
+        "subjects": [
+          "sub-37",
+          "sub-38",
+          "sub-39",
+          "sub-40",
+          "sub-41",
+          "sub-42",
+          "sub-43",
+          "sub-44",
+          "sub-45",
+          "sub-46",
+          "sub-47",
+          "sub-48",
+          "sub-49",
+          "sub-50",
+          "sub-51",
+          "sub-52",
+          "sub-53",
+          "sub-54",
+          "sub-55",
+          "sub-56",
+          "sub-57",
+          "sub-58",
+          "sub-59",
+          "sub-60",
+          "sub-61",
+          "sub-62",
+          "sub-63",
+          "sub-64",
+          "sub-65"
+        ],
+        "input_channel_count_range": [
+          19,
+          19
+        ],
+        "analysis_channel_counts": [
+          19
+        ],
+        "retained_component_counts": [
+          15
+        ],
+        "rank_metadata": [
+          19
+        ],
+        "iclabel_complete_rows": 116,
+        "total_method_rows": 116
+      },
+      "ds004621": {
+        "n_subjects": 42,
+        "subjects": [
+          "sub-01",
+          "sub-02",
+          "sub-03",
+          "sub-04",
+          "sub-05",
+          "sub-06",
+          "sub-07",
+          "sub-08",
+          "sub-09",
+          "sub-10",
+          "sub-11",
+          "sub-12",
+          "sub-13",
+          "sub-14",
+          "sub-15",
+          "sub-16",
+          "sub-17",
+          "sub-18",
+          "sub-19",
+          "sub-20",
+          "sub-21",
+          "sub-22",
+          "sub-23",
+          "sub-24",
+          "sub-25",
+          "sub-26",
+          "sub-27",
+          "sub-28",
+          "sub-29",
+          "sub-30",
+          "sub-31",
+          "sub-32",
+          "sub-33",
+          "sub-34",
+          "sub-35",
+          "sub-36",
+          "sub-37",
+          "sub-38",
+          "sub-39",
+          "sub-40",
+          "sub-41",
+          "sub-42"
+        ],
+        "input_channel_count_range": [
+          127,
+          127
+        ],
+        "analysis_channel_counts": [
+          127
+        ],
+        "retained_component_counts": [
+          64
+        ],
+        "rank_metadata": [
+          127
+        ],
+        "iclabel_complete_rows": 0,
+        "total_method_rows": 168
+      }
+    },
+    "n_subjects": 96,
+    "n_dataset_by_comparator_contrasts": 9,
+    "n_subject_comparator_contrasts": 288,
+    "positive_subject_comparator_contrasts": 288,
+    "all_mir_contrasts_positive": true,
+    "sign_convention": "amica minus comparator in every panel",
+    "endpoint_scope": "Complete MIR was evaluated in-sample on the recordings used to fit each decomposition, under the prespecified method configurations and optimisation budgets.",
+    "units": {
+      "mir": "kbits/s",
+      "remnant_pmi": "percentage points (difference of percentages)",
+      "near_dipolar_fraction": "percentage points (difference of percentages)"
+    },
+    "metric_definitions": {
+      "complete_mir": "sum marginal input entropies - sum marginal source entropies + log2|det(W)| in retained PCA-rank space; 100-bin histograms, +/-5 SD clipping, 20,000 samples, seed 42; converted from bits/sample to kbits/s with the sampling frequency",
+      "remnant_pmi": "100 * mean off-diagonal source pairwise MI / mean off-diagonal input pairwise MI; 32-bin two-dimensional histograms on row-wise z-scored data clipped to +/-5 SD, 20,000 samples, seed 42",
+      "dipolarity": "percentage of fitted component maps with equivalent-dipole residual variance <=5% or <=10%, using the Frank et al. four-shell sphere"
+    },
+    "bootstrap": {
+      "resampling_unit": "paired subjects within each dataset-by-comparator contrast",
+      "resamples": 10000,
+      "interval": "2.5th and 97.5th percentiles",
+      "rng_seed": 0
+    },
+    "contrasts": [
+      {
+        "dataset": "ds004505",
+        "comparator": "Picard",
+        "n": 25,
+        "positive_delta_mir": 25,
+        "paired_t_p": 5.3099123170165245e-12,
+        "holm_adjusted_p_across_nine_mir_contrasts": 3.716938621911567e-11,
+        "wilcoxon_p": 5.960464477539063e-08,
+        "delta_mir_mean_kbits_s": 0.45883763470401073,
+        "delta_mir_bootstrap_95_ci": [
+          0.3895777404208415,
+          0.5283277097310874
+        ],
+        "cohen_dz": 2.500757086201856,
+        "cohen_dz_bootstrap_95_ci": [
+          1.9895143962688537,
+          3.475127493423393
+        ],
+        "delta_remnant_pmi_mean_percentage_points": 0.35184889925822227,
+        "delta_remnant_pmi_bootstrap_95_ci": [
+          0.2512313935456894,
+          0.46538148809382124
+        ],
+        "delta_near_dipolar_rv5_mean_percentage_points": -0.3125,
+        "delta_near_dipolar_rv5_bootstrap_95_ci": [
+          -0.8125,
+          0.125
+        ],
+        "delta_near_dipolar_rv10_mean_percentage_points": -0.625,
+        "delta_near_dipolar_rv10_bootstrap_95_ci": [
+          -1.3125,
+          0.125
+        ]
+      },
+      {
+        "dataset": "ds004505",
+        "comparator": "Infomax",
+        "n": 25,
+        "positive_delta_mir": 25,
+        "paired_t_p": 3.483909612857365e-12,
+        "holm_adjusted_p_across_nine_mir_contrasts": 2.8572934248738896e-11,
+        "wilcoxon_p": 5.960464477539063e-08,
+        "delta_mir_mean_kbits_s": 0.47355719541983254,
+        "delta_mir_bootstrap_95_ci": [
+          0.4018726549079705,
+          0.544695944307414
+        ],
+        "cohen_dz": 2.5514953967415788,
+        "cohen_dz_bootstrap_95_ci": [
+          1.9993749707139559,
+          3.6658336644934972
+        ],
+        "delta_remnant_pmi_mean_percentage_points": 0.3463030901187966,
+        "delta_remnant_pmi_bootstrap_95_ci": [
+          0.24120483835368586,
+          0.46206273320451796
+        ],
+        "delta_near_dipolar_rv5_mean_percentage_points": -0.125,
+        "delta_near_dipolar_rv5_bootstrap_95_ci": [
+          -0.5,
+          0.25
+        ],
+        "delta_near_dipolar_rv10_mean_percentage_points": -0.5,
+        "delta_near_dipolar_rv10_bootstrap_95_ci": [
+          -1.3125,
+          0.3125
+        ]
+      },
+      {
+        "dataset": "ds004505",
+        "comparator": "FastICA",
+        "n": 25,
+        "positive_delta_mir": 25,
+        "paired_t_p": 5.631148146105636e-12,
+        "holm_adjusted_p_across_nine_mir_contrasts": 3.716938621911567e-11,
+        "wilcoxon_p": 5.960464477539063e-08,
+        "delta_mir_mean_kbits_s": 0.5079447496471243,
+        "delta_mir_bootstrap_95_ci": [
+          0.43078539969314444,
+          0.5859330528721441
+        ],
+        "cohen_dz": 2.4937455124830796,
+        "cohen_dz_bootstrap_95_ci": [
+          2.0057417379056557,
+          3.431911872357266
+        ],
+        "delta_remnant_pmi_mean_percentage_points": 0.30789693211389085,
+        "delta_remnant_pmi_bootstrap_95_ci": [
+          0.20187568884019727,
+          0.42660788790545207
+        ],
+        "delta_near_dipolar_rv5_mean_percentage_points": -0.1875,
+        "delta_near_dipolar_rv5_bootstrap_95_ci": [
+          -0.625,
+          0.25
+        ],
+        "delta_near_dipolar_rv10_mean_percentage_points": -0.3125,
+        "delta_near_dipolar_rv10_bootstrap_95_ci": [
+          -1.0625,
+          0.4375
+        ]
+      },
+      {
+        "dataset": "ds004504",
+        "comparator": "Picard",
+        "n": 29,
+        "positive_delta_mir": 29,
+        "paired_t_p": 0.00036398368064289167,
+        "holm_adjusted_p_across_nine_mir_contrasts": 0.0008114603224292476,
+        "wilcoxon_p": 3.725290298461914e-09,
+        "delta_mir_mean_kbits_s": 0.13568121598629465,
+        "delta_mir_bootstrap_95_ci": [
+          0.07896879223129262,
+          0.20632797316892382
+        ],
+        "cohen_dz": 0.7527178678220665,
+        "cohen_dz_bootstrap_95_ci": [
+          0.578474343942097,
+          1.0948375612746228
+        ],
+        "delta_remnant_pmi_mean_percentage_points": -0.27789686493648874,
+        "delta_remnant_pmi_bootstrap_95_ci": [
+          -0.45385945759839813,
+          -0.14100375335572296
+        ],
+        "delta_near_dipolar_rv5_mean_percentage_points": 1.1494252873563222,
+        "delta_near_dipolar_rv5_bootstrap_95_ci": [
+          -1.149425287356321,
+          3.4482758620689653
+        ],
+        "delta_near_dipolar_rv10_mean_percentage_points": -0.45977011494252884,
+        "delta_near_dipolar_rv10_bootstrap_95_ci": [
+          -3.218390804597702,
+          2.2988505747126444
+        ]
+      },
+      {
+        "dataset": "ds004504",
+        "comparator": "Infomax",
+        "n": 29,
+        "positive_delta_mir": 29,
+        "paired_t_p": 0.00027048677414308255,
+        "holm_adjusted_p_across_nine_mir_contrasts": 0.0008114603224292476,
+        "wilcoxon_p": 3.725290298461914e-09,
+        "delta_mir_mean_kbits_s": 0.1373279393887631,
+        "delta_mir_bootstrap_95_ci": [
+          0.08093404053761308,
+          0.20658642022888907
+        ],
+        "cohen_dz": 0.7731874875897805,
+        "cohen_dz_bootstrap_95_ci": [
+          0.5878711856961035,
+          1.1206316499550921
+        ],
+        "delta_remnant_pmi_mean_percentage_points": -0.29765264262822505,
+        "delta_remnant_pmi_bootstrap_95_ci": [
+          -0.47916047127288913,
+          -0.15044670891365441
+        ],
+        "delta_near_dipolar_rv5_mean_percentage_points": 2.988505747126437,
+        "delta_near_dipolar_rv5_bootstrap_95_ci": [
+          0.6896551724137929,
+          5.517241379310346
+        ],
+        "delta_near_dipolar_rv10_mean_percentage_points": 1.839080459770115,
+        "delta_near_dipolar_rv10_bootstrap_95_ci": [
+          -1.1494252873563222,
+          5.057471264367814
+        ]
+      },
+      {
+        "dataset": "ds004504",
+        "comparator": "FastICA",
+        "n": 29,
+        "positive_delta_mir": 29,
+        "paired_t_p": 0.0003465666386745261,
+        "holm_adjusted_p_across_nine_mir_contrasts": 0.0008114603224292476,
+        "wilcoxon_p": 3.725290298461914e-09,
+        "delta_mir_mean_kbits_s": 0.15233591615467973,
+        "delta_mir_bootstrap_95_ci": [
+          0.0890764714065875,
+          0.23204528279644335
+        ],
+        "cohen_dz": 0.7561047573445016,
+        "cohen_dz_bootstrap_95_ci": [
+          0.5853660311167986,
+          1.0910472902908372
+        ],
+        "delta_remnant_pmi_mean_percentage_points": -0.32066336435552895,
+        "delta_remnant_pmi_bootstrap_95_ci": [
+          -0.5222386209741242,
+          -0.16534479278925673
+        ],
+        "delta_near_dipolar_rv5_mean_percentage_points": 1.6091954022988502,
+        "delta_near_dipolar_rv5_bootstrap_95_ci": [
+          -0.6896551724137931,
+          4.137931034482758
+        ],
+        "delta_near_dipolar_rv10_mean_percentage_points": 1.1494252873563213,
+        "delta_near_dipolar_rv10_bootstrap_95_ci": [
+          -0.919540229885058,
+          3.4482758620689644
+        ]
+      },
+      {
+        "dataset": "ds004621",
+        "comparator": "Picard",
+        "n": 42,
+        "positive_delta_mir": 42,
+        "paired_t_p": 1.6280026894135364e-11,
+        "holm_adjusted_p_across_nine_mir_contrasts": 6.512010757654146e-11,
+        "wilcoxon_p": 4.547473508864641e-13,
+        "delta_mir_mean_kbits_s": 0.5344476534216475,
+        "delta_mir_bootstrap_95_ci": [
+          0.424587488103975,
+          0.648227532037896
+        ],
+        "cohen_dz": 1.4186778853693165,
+        "cohen_dz_bootstrap_95_ci": [
+          1.2087287624924656,
+          1.7417971573232545
+        ],
+        "delta_remnant_pmi_mean_percentage_points": 0.06770007688107164,
+        "delta_remnant_pmi_bootstrap_95_ci": [
+          -0.0060950122938166615,
+          0.13973921432390884
+        ],
+        "delta_near_dipolar_rv5_mean_percentage_points": 0.5952380952380952,
+        "delta_near_dipolar_rv5_bootstrap_95_ci": [
+          0.11160714285714286,
+          1.1160714285714286
+        ],
+        "delta_near_dipolar_rv10_mean_percentage_points": 1.4136904761904763,
+        "delta_near_dipolar_rv10_bootstrap_95_ci": [
+          0.6696428571428571,
+          2.1949404761904763
+        ]
+      },
+      {
+        "dataset": "ds004621",
+        "comparator": "Infomax",
+        "n": 42,
+        "positive_delta_mir": 42,
+        "paired_t_p": 3.1747704720820995e-12,
+        "holm_adjusted_p_across_nine_mir_contrasts": 2.8572934248738896e-11,
+        "wilcoxon_p": 4.547473508864641e-13,
+        "delta_mir_mean_kbits_s": 0.6155540515279642,
+        "delta_mir_bootstrap_95_ci": [
+          0.4947732920776285,
+          0.7378685988410498
+        ],
+        "cohen_dz": 1.5026889284280014,
+        "cohen_dz_bootstrap_95_ci": [
+          1.2823565675818245,
+          1.8501376147481923
+        ],
+        "delta_remnant_pmi_mean_percentage_points": -0.026214958881679414,
+        "delta_remnant_pmi_bootstrap_95_ci": [
+          -0.10439119293644825,
+          0.048961704381597464
+        ],
+        "delta_near_dipolar_rv5_mean_percentage_points": 1.1904761904761905,
+        "delta_near_dipolar_rv5_bootstrap_95_ci": [
+          0.6324404761904762,
+          1.7485119047619047
+        ],
+        "delta_near_dipolar_rv10_mean_percentage_points": 2.1949404761904763,
+        "delta_near_dipolar_rv10_bootstrap_95_ci": [
+          1.2648809523809523,
+          3.125
+        ]
+      },
+      {
+        "dataset": "ds004621",
+        "comparator": "FastICA",
+        "n": 42,
+        "positive_delta_mir": 42,
+        "paired_t_p": 1.214046530361899e-11,
+        "holm_adjusted_p_across_nine_mir_contrasts": 6.070232651809495e-11,
+        "wilcoxon_p": 4.547473508864641e-13,
+        "delta_mir_mean_kbits_s": 0.586712426092964,
+        "delta_mir_bootstrap_95_ci": [
+          0.4674586890236562,
+          0.7102021463753412
+        ],
+        "cohen_dz": 1.4336181595452906,
+        "cohen_dz_bootstrap_95_ci": [
+          1.224060424402941,
+          1.7555596906966933
+        ],
+        "delta_remnant_pmi_mean_percentage_points": 0.0426743324604988,
+        "delta_remnant_pmi_bootstrap_95_ci": [
+          -0.030985564693368137,
+          0.1164237841503843
+        ],
+        "delta_near_dipolar_rv5_mean_percentage_points": 0.8184523809523809,
+        "delta_near_dipolar_rv5_bootstrap_95_ci": [
+          0.37202380952380953,
+          1.3020833333333333
+        ],
+        "delta_near_dipolar_rv10_mean_percentage_points": 1.4136904761904763,
+        "delta_near_dipolar_rv10_bootstrap_95_ci": [
+          0.6315104166666675,
+          2.269345238095238
+        ]
+      }
+    ],
+    "synthetic": {
+      "audit_csv": "D:\\amica-validation-workspace\\overleaf\\amica-preprint-6a15766c\\figures\\src\\fig3_synthetic_recovery_audit.csv",
+      "n_runs_displayed": 300,
+      "regimes": [
+        "Heterogeneous mixture",
+        "Homogeneous Laplacian"
+      ],
+      "conditions": [
+        "clean",
+        "noise",
+        "noise_eog"
+      ],
+      "methods": [
+        "amica 3k",
+        "amica 10k",
+        "Picard",
+        "Infomax",
+        "FastICA"
+      ]
+    },
+    "seed_robustness": {
+      "source": "D:\\amica-validation-workspace\\phaseB_figures\\seed_robustness.csv",
+      "median_mir_sd_kbits_s": 0.00028
+    }
+  },
+  "figure4": {
+    "deployment_runtime": {
+      "AMICA-Python (JAX-GPU)": {
+        "n_subjects": 25,
+        "median_s": 133.898554874002,
+        "iqr_s": [
+          126.66148128197528,
+          139.25024606706577
+        ],
+        "requested_iteration_cap": 3000,
+        "actual_iteration_range": [
+          3000,
+          3000
+        ],
+        "n_reaching_cap": 25,
+        "hostnames": [
+          "fc10410",
+          "fc10411",
+          "fc10413",
+          "fc10505"
+        ]
+      },
+      "Picard": {
+        "n_subjects": 25,
+        "median_s": 150.064489366021,
+        "iqr_s": [
+          131.50897526391782,
+          181.09673671098423
+        ],
+        "requested_iteration_cap": 5000,
+        "actual_iteration_range": [
+          51,
+          107
+        ],
+        "n_reaching_cap": 0,
+        "hostnames": [
+          "fc20646",
+          "fc20654",
+          "fc20656",
+          "fc30103",
+          "fc30128",
+          "fc30151",
+          "fc30167",
+          "fc30228",
+          "fc30407",
+          "fc30441",
+          "fc30449",
+          "fc30467",
+          "fc30468",
+          "fc30470",
+          "fc30471",
+          "fc30501",
+          "fc30526",
+          "fc30623"
+        ]
+      },
+      "Infomax": {
+        "n_subjects": 25,
+        "median_s": 84.40122397604864,
+        "iqr_s": [
+          74.8156089130789,
+          99.5768435880309
+        ],
+        "requested_iteration_cap": 5000,
+        "actual_iteration_range": [
+          160,
+          5000
+        ],
+        "n_reaching_cap": 24,
+        "hostnames": [
+          "fc20643",
+          "fc20646",
+          "fc30103",
+          "fc30213",
+          "fc30218",
+          "fc30352",
+          "fc30353",
+          "fc30501",
+          "fc30503",
+          "fc30504",
+          "fc30526",
+          "fc30538",
+          "fc30540",
+          "fc30541",
+          "fc30611"
+        ]
+      },
+      "FastICA": {
+        "n_subjects": 25,
+        "median_s": 98.73255161300769,
+        "iqr_s": [
+          80.01974330400117,
+          117.7010385200847
+        ],
+        "requested_iteration_cap": 5000,
+        "actual_iteration_range": [
+          117,
+          578
+        ],
+        "n_reaching_cap": 0,
+        "hostnames": [
+          "fc20130",
+          "fc30441",
+          "fc30449",
+          "fc30467",
+          "fc30470",
+          "fc30471"
+        ]
+      },
+      "AMICA-Python (JAX-CPU)": {
+        "n_subjects": 25,
+        "median_s": 25270.466577974963,
+        "iqr_s": [
+          19139.430331017007,
+          26106.265071347934
+        ],
+        "requested_iteration_cap": 3000,
+        "actual_iteration_range": [
+          2944,
+          3000
+        ],
+        "n_reaching_cap": 24,
+        "hostnames": [
+          "fc30269",
+          "fc30325",
+          "fc30340",
+          "fc30430",
+          "fc30554",
+          "fc30558",
+          "fc30560",
+          "fc30561",
+          "fc30566",
+          "fc30572",
+          "fc30602",
+          "fc30604",
+          "fc30607",
+          "fc30610",
+          "fc30657"
+        ]
+      },
+      "AMICA-Python (NumPy-CPU)": {
+        "n_subjects": 25,
+        "median_s": 28392.123841651017,
+        "iqr_s": [
+          26274.28406813601,
+          29628.47250795702
+        ],
+        "requested_iteration_cap": 3000,
+        "actual_iteration_range": [
+          3000,
+          3000
+        ],
+        "n_reaching_cap": 25,
+        "hostnames": [
+          "fc20671",
+          "fc30340",
+          "fc30406",
+          "fc30425",
+          "fc30456",
+          "fc30561",
+          "fc30564",
+          "fc30571",
+          "fc30604",
+          "fc30614",
+          "fc30615",
+          "fc30617",
+          "fc30620",
+          "fc30622",
+          "fc30626",
+          "fc30634",
+          "fc30642",
+          "fc30643",
+          "fc30651",
+          "fc30654",
+          "fc30658",
+          "fc30665",
+          "fc30667"
+        ]
+      }
+    },
+    "deployment_runtime_definition": "Wall time of fit_ica (amica) or MNE ICA.fit (comparators): includes data extraction, pre-whitening/PCA, optimisation, MNE object construction, and any first-use JAX compilation; excludes file loading, filtering, dipole fitting, ICLabel, and downstream benchmark metrics.",
+    "fixed_workload_audit": {
+      "records": [
+        {
+          "display": "amica JAX-GPU (chunked)",
+          "implementation": "amica_python_jax_chunked",
+          "device": "gpu",
+          "n_components": 64,
+          "n_samples": 785328,
+          "n_iter": 100,
+          "fit_time_s": 33.791773909004405,
+          "ll_final": -1.1645367268974818,
+          "abs_ll_difference_vs_amica_jax_cpu": 2.019881299708537e-05,
+          "median_matched_row_correlation_vs_amica_jax_cpu": 0.9999999888425604,
+          "minimum_matched_row_correlation_vs_amica_jax_cpu": 0.9999983414667485,
+          "timing_boundary": "model.fit after shared PCA-array loading; first-use compilation included",
+          "n_process_repetitions": 1
+        },
+        {
+          "display": "amica JAX-CPU",
+          "implementation": "amica_python_jax",
+          "device": "cpu",
+          "n_components": 64,
+          "n_samples": 785328,
+          "n_iter": 100,
+          "fit_time_s": 218.67108280281536,
+          "ll_final": -1.1645165280844847,
+          "abs_ll_difference_vs_amica_jax_cpu": 0.0,
+          "median_matched_row_correlation_vs_amica_jax_cpu": 0.9999999999999999,
+          "minimum_matched_row_correlation_vs_amica_jax_cpu": 0.9999999999999992,
+          "timing_boundary": "model.fit after shared PCA-array loading; first-use compilation included",
+          "n_process_repetitions": 1
+        },
+        {
+          "display": "Scott\u2013Huberty amica-python 0.1.1",
+          "implementation": "scott_huberty_torch",
+          "device": "cpu",
+          "n_components": 64,
+          "n_samples": 785328,
+          "n_iter": 100,
+          "fit_time_s": 196.27535809599794,
+          "ll_final": -1.1635883556024822,
+          "abs_ll_difference_vs_amica_jax_cpu": 0.0009281724820024984,
+          "median_matched_row_correlation_vs_amica_jax_cpu": 0.999866474069883,
+          "minimum_matched_row_correlation_vs_amica_jax_cpu": 0.975675204357704,
+          "timing_boundary": "model.fit after shared PCA-array loading; first-use compilation included",
+          "n_process_repetitions": 1
+        },
+        {
+          "display": "PyAMICA 0.3.0",
+          "implementation": "pyamica_torch",
+          "device": "cpu",
+          "n_components": 64,
+          "n_samples": 785328,
+          "n_iter": 100,
+          "fit_time_s": 771.8509084980469,
+          "ll_final": -1.163748150057121,
+          "abs_ll_difference_vs_amica_jax_cpu": 0.0007683780273637364,
+          "median_matched_row_correlation_vs_amica_jax_cpu": 0.9998706453837731,
+          "minimum_matched_row_correlation_vs_amica_jax_cpu": 0.9544843451542103,
+          "timing_boundary": "model.fit after shared PCA-array loading; first-use compilation included",
+          "n_process_repetitions": 1
+        },
+        {
+          "display": "Fortran AMICA 1.7",
+          "implementation": "fortran_amica17",
+          "device": "cpu",
+          "n_components": 64,
+          "n_samples": 785328,
+          "n_iter": 100,
+          "fit_time_s": 670.1828239699826,
+          "ll_final": -1.1644305146343168,
+          "abs_ll_difference_vs_amica_jax_cpu": 8.601345016789885e-05,
+          "median_matched_row_correlation_vs_amica_jax_cpu": 0.9999349783695887,
+          "minimum_matched_row_correlation_vs_amica_jax_cpu": 0.9390616660774986,
+          "timing_boundary": "external executable; input serialisation excluded; initialisation and output writing included",
+          "n_process_repetitions": 1
+        }
+      ],
+      "scope": "one archived run per implementation on ds004505 sub-01; Python model.fit timing; Fortran external-executable timing; descriptive, not a repeated implementation ranking",
+      "missing_controlled_path": "No matched NumPy-CPU record or repeated Fortran process runs were archived for this fixture."
+    },
+    "paired_chunking_memory": {
+      "records": [
+        {
+          "subject": "sub-01",
+          "n_samples": 785328,
+          "n_iter": 100,
+          "full_peak_rss_gib": 11.391849517822266,
+          "chunked_peak_rss_gib": 6.639015197753906,
+          "total_peak_reduction_pct": 41.72135799926665
+        },
+        {
+          "subject": "sub-05",
+          "n_samples": 1038926,
+          "n_iter": 60,
+          "full_peak_rss_gib": 14.943519592285156,
+          "chunked_peak_rss_gib": 6.884010314941406,
+          "total_peak_reduction_pct": 53.933139563082634
+        },
+        {
+          "subject": "sub-06",
+          "n_samples": 1042909,
+          "n_iter": 60,
+          "full_peak_rss_gib": 14.973609924316406,
+          "chunked_peak_rss_gib": 6.912860870361328,
+          "total_peak_reduction_pct": 53.833037555391485
+        },
+        {
+          "subject": "sub-04",
+          "n_samples": 1057036,
+          "n_iter": 60,
+          "full_peak_rss_gib": 15.152301788330078,
+          "chunked_peak_rss_gib": 6.888519287109375,
+          "total_peak_reduction_pct": 54.53813299564334
+        },
+        {
+          "subject": "sub-03",
+          "n_samples": 1099796,
+          "n_iter": 60,
+          "full_peak_rss_gib": 15.753787994384766,
+          "chunked_peak_rss_gib": 6.929737091064453,
+          "total_peak_reduction_pct": 56.01224865070884
+        },
+        {
+          "subject": "sub-02",
+          "n_samples": 1364633,
+          "n_iter": 60,
+          "full_peak_rss_gib": 19.438316345214844,
+          "chunked_peak_rss_gib": 7.186878204345703,
+          "total_peak_reduction_pct": 63.02725978572261
+        }
+      ],
+      "median_total_peak_reduction_pct": 54.235636279362986,
+      "range_total_peak_reduction_pct": [
+        41.72135799926665,
+        63.02725978572261
+      ],
+      "memory_unit": "GiB (binary process RSS high-water mark)"
+    }
+  },
+  "figure5": {
+    "original_figure_audit": {
+      "native_assembly": "The current draft is already native, but its predecessor and filenames still reflect two separately generated source figures.",
+      "visual_hierarchy": "Synthetic and real rows are separated, but the real likelihood panel lacks variability and panel f is cramped at manuscript width.",
+      "panel_labels": "Continuous a-f in the current draft; legacy source PDFs duplicate a-c and use H/K notation.",
+      "aggregation": "Current real curves use cohort means without uncertainty; the revision uses medians and IQRs.",
+      "posterior_context": "Current panel identifies sub-04 and task onset but omits the 64-PC configuration and calls a predefined example representative.",
+      "scientific_scope": "The rejection ablation addresses a different intervention and remains supplementary."
+    },
+    "notation_consistency": {
+      "final_model_order": "M",
+      "true_generating_order": "M_true",
+      "posterior": "p(m | t)",
+      "model_prior": "pi_m",
+      "density_mixture_count": "K (only for adaptive source-density terms)",
+      "archived_legacy_notation": "The source JSON and runner use H; the final figure and manuscript translate this to M without altering values."
+    },
+    "dataset_channel_rank_audit": {
+      "ds004505_task_120ch": "120 selected scalp-EEG channels, reduced to 16 PCs for the model-order sweep.",
+      "ds004505_task_19ch": "19 name-matched 10-20 channels selected from ds004505, reduced to 16 PCs.",
+      "ds004504_rest_19ch": "19 EEG channels, reduced to 16 PCs.",
+      "ds004621_rest_127ch": "A nominal 128-channel system with 127 stored EEG channels because FCz was the online reference; reduced to 16 PCs.",
+      "posterior_demo": "ds004505 sub-04, 120 selected scalp channels reduced to 64 PCs, first 600 s."
+    },
+    "surrogate_method_audit": {
+      "stage": "Applied after PCA and per-component variance normalisation.",
+      "method": "One seed-0 Fourier surrogate per subject; a common random phase is applied at each positive frequency to every retained component, with DC and Nyquist unchanged and inverse rFFT preserving a real signal.",
+      "preserved": "Each component amplitude spectrum and the full cross-spectral matrix are preserved exactly up to floating-point error.",
+      "changed": "Fourier phase, and therefore the original temporal organisation, is randomised.",
+      "realisations": "Five ds004505 subjects and five ds004504 subjects; one surrogate realisation per subject, reused across M through the same seed/preprocessed input."
+    },
+    "aggregation": {
+      "real_and_phase_curves": "median across subjects",
+      "uncertainty": "interquartile range across subjects",
+      "synthetic": "single seed-0 simulation; no uncertainty available",
+      "likelihood_normalisation": "nats per retained component per sample",
+      "model_order_range": [
+        1,
+        10
+      ],
+      "maximum_iterations": 2000
+    },
+    "cohort_subject_counts_by_model_order": {
+      "ds004504_rest_19ch": {
+        "1": 29,
+        "2": 29,
+        "3": 29,
+        "4": 29,
+        "5": 29,
+        "6": 29,
+        "7": 29,
+        "8": 29,
+        "9": 29,
+        "10": 29
+      },
+      "ds004505_task_120ch": {
+        "1": 25,
+        "2": 25,
+        "3": 25,
+        "4": 25,
+        "5": 25,
+        "6": 25,
+        "7": 25,
+        "8": 25,
+        "9": 25,
+        "10": 25
+      },
+      "ds004505_task_19ch": {
+        "1": 14,
+        "2": 14,
+        "3": 14,
+        "4": 14,
+        "5": 14,
+        "6": 14,
+        "7": 14,
+        "8": 13,
+        "9": 13,
+        "10": 14
+      },
+      "ds004621_rest_127ch": {
+        "1": 25,
+        "2": 25,
+        "3": 25,
+        "4": 25,
+        "5": 25,
+        "6": 25,
+        "7": 25,
+        "8": 25,
+        "9": 25,
+        "10": 25
+      }
+    },
+    "m10_real_delta_ll_medians": {
+      "ds004504_rest_19ch": 0.03321655607871343,
+      "ds004505_task_120ch": 0.05999281859431638,
+      "ds004505_task_19ch": 0.047436968092598786,
+      "ds004621_rest_127ch": 0.059151838620586816
+    },
+    "m10_phase_surrogate_delta_ll_medians": {
+      "ds004504_phase_surrogate": 0.005540210202390261,
+      "ds004505_phase_surrogate": 0.00018272904704907944
+    },
+    "fit_integrity": {
+      "real_fit_rows": 928,
+      "phase_surrogate_fit_rows": 100,
+      "real_fits_stopping_before_2000": 8,
+      "early_stop_records": [
+        {
+          "dataset": "ds004504",
+          "subject": "sub-45",
+          "model_order": 9,
+          "n_iterations": 777.0
+        },
+        {
+          "dataset": "ds004504",
+          "subject": "sub-46",
+          "model_order": 10,
+          "n_iterations": 658.0
+        },
+        {
+          "dataset": "ds004504",
+          "subject": "sub-49",
+          "model_order": 10,
+          "n_iterations": 1618.0
+        },
+        {
+          "dataset": "ds004504",
+          "subject": "sub-53",
+          "model_order": 3,
+          "n_iterations": 1055.0
+        },
+        {
+          "dataset": "ds004621",
+          "subject": "sub-05",
+          "model_order": 8,
+          "n_iterations": 447.0
+        },
+        {
+          "dataset": "ds004621",
+          "subject": "sub-16",
+          "model_order": 10,
+          "n_iterations": 330.0
+        },
+        {
+          "dataset": "ds004621",
+          "subject": "sub-16",
+          "model_order": 4,
+          "n_iterations": 574.0
+        },
+        {
+          "dataset": "ds004621",
+          "subject": "sub-16",
+          "model_order": 6,
+          "n_iterations": 1136.0
+        }
+      ],
+      "missing_archives": 2,
+      "missing_records": [
+        {
+          "dataset": "ds004505",
+          "subject": "sub-14",
+          "model_order": 8
+        },
+        {
+          "dataset": "ds004505",
+          "subject": "sub-14",
+          "model_order": 9
+        }
+      ],
+      "weight_collapse_diagnostics": 2,
+      "weight_collapse_records": [
+        {
+          "dataset": "ds004504",
+          "subject": "sub-38",
+          "model_order": 10,
+          "neff": 1.0004171358090617
+        },
+        {
+          "dataset": "ds004504",
+          "subject": "sub-38",
+          "model_order": 8,
+          "neff": 1.0
+        }
+      ],
+      "failed_or_nonfinite_archived_fits": 0,
+      "posterior_normalisation_max_error": 1.842854544520378e-07
+    },
+    "representative_subject_selection": {
+      "label_used": "illustrative example",
+      "rule": "sub-04 was one of the two subjects predefined in submit_multimodel_demo.sh (array 1,4), before this figure revision; it was not selected from the cohort sweep by effect size.",
+      "smoothing": "2-s centred moving mean applied after posterior normalisation; the smoothed traces are renormalised to sum to one at each sample."
+    },
+    "model_complexity_audit": "No archived held-out or complexity-corrected likelihood result corresponds to these real-EEG model-order sweeps; panels d-e therefore retain explicitly labelled in-sample quantities.",
+    "task_decoding_audit": "Decoding utilities exist, but no committed cohort-level, leakage-audited decoding result with uncertainty was found for these fit archives; decoding is not promoted.",
+    "layout_comparison": {
+      "candidate_A_equal_2x3": "Balanced column alignment, readable axes, and a clear synthetic-versus-real row grammar.",
+      "candidate_B_wide_panel_d": "Gives panel d more width but makes N_eff and the posterior context too narrow and breaks cross-row column alignment.",
+      "candidate_C_direct_matrices": "Not prototyped because the two-regime matrix has no archived machine-readable result object; retaining it in Supplementary Table S3 avoids presenting copied values as a regenerated panel.",
+      "selected": "candidate_A_equal_2x3"
+    },
+    "supplementary_decisions": {
+      "fig_synthetic_stationarity_contrast.pdf": "Retained as an archived legacy output but superseded by panels a-c.",
+      "fig6_multimodel.pdf": "Retained for before/after review but retired from LaTeX after the new native figure is selected.",
+      "fig_multimodel_demo_sub04.pdf": "Retired from LaTeX because panel f promotes its interpretable content and the remaining single-subject likelihood panel duplicates panel d.",
+      "fig_ablation_ds004505.pdf": "Retained supplementary as a sensitivity analysis; not promoted.",
+      "Supplementary_Table_S2": "Retained for exact cohort/model-order mean values; Figure 5 uses medians and IQRs.",
+      "Supplementary_Table_S3": "Retained as explicitly single-configuration evidence; not promoted because its result object is not archived."
+    },
+    "provenance": {
+      "multimodel_generator_commit": "90654eb61e0e726c6d2ae0acd357eeb9e886e251",
+      "demo_repository_commit": "7c223685e7ec0bb89c57da8985d05aa4cd37cfdf",
+      "overleaf_base_commit": "e5151d3a15220c23e30cace5d9d08b9b1e88e2c1",
+      "synthetic_json": {
+        "path": "D:\\amica-validation-workspace\\figdata\\multimodel_synthetic_2000\\synthetic_summary.json",
+        "sha256": "d505e1becf23ae955621aa2a5e5a44b818f93378966af92d96351c2b3a8827d7"
+      },
+      "runner": {
+        "path": "D:\\amica-validation-workspace\\figdata\\synth\\amica-mm\\scripts\\cc_benchmark\\run_multimodel_benchmark.py",
+        "sha256": "f2b72c3181e1706cf391bd2ab3e52259a1fe1ae0b66bf17b36d4a5f06b3bd7b9"
+      },
+      "submission": {
+        "path": "D:\\amica-validation-workspace\\figdata\\synth\\amica-mm\\scripts\\cc_benchmark\\submit_multimodel_extra.sh",
+        "sha256": "b7619d9f9868091d8958900633e01f4e2adfa64b4e040b94b1818f3242f21622"
+      },
+      "synthetic_runner": {
+        "path": "D:\\amica-validation-workspace\\figdata\\synth\\amica-mm\\scripts\\cc_benchmark\\run_synthetic_multimodel.py",
+        "sha256": "62b81649e48c0dcb607ebabc26fa80b7d02bc0ac030d4e356f8af68e217150c7"
+      },
+      "demo_submission": {
+        "path": "D:\\amica-validation-workspace\\figdata\\synth\\amica-mm\\scripts\\cc_benchmark\\submit_multimodel_demo.sh",
+        "sha256": "665e4e5f8a8cfaacc80e411debeabbcd497198b0bb32111f43cf841aad2c9351"
+      },
+      "per_fit_source_hashes": "Stored row-wise in fig6_multimodel_integrity.csv."
+    },
+    "unresolved_issues": [
+      "The two-model recovery values in Supplementary Table S3 are reproducible from a unit test but have no archived result object; they were not redrawn.",
+      "The per-fit NPZ files do not store the random seed or exact early stopping reason; seed 0 is inferred from the unmodified runner/submission defaults, and early stops are labelled reason-not-archived.",
+      "The ds004505 19-channel archive contains 14 subjects, with sub-14 missing M=8 and M=9; no subject is silently imputed.",
+      "The synthetic sweep contains one seed, so its panels have no replication uncertainty.",
+      "Model labels are not aligned across subjects; only label-invariant cohort quantities are aggregated, and panel f is one fit."
+    ],
+    "two_regime_alignment": {
+      "source": "D:\\amica-validation-workspace\\overleaf\\amica-preprint-6a15766c\\figures\\src\\fig5_two_regime_alignment.csv",
+      "scope": "regime-averaged legacy numerical audit; full posterior time course was not archived",
+      "applies_to": "the superseded four-panel fig5_multimodel_stationarity rendering, which the manuscript does not include; retained for provenance only"
+    },
+    "main_figure_panels": [
+      "synthetic likelihood gain",
+      "synthetic source recovery",
+      "synthetic ground-truth map recovery",
+      "real and stationary-reference likelihood gain",
+      "real and surrogate effective model count",
+      "illustrative posterior model dynamics"
+    ],
+    "figure_generator": "figures/src/make_main_figures.py::make_figure5_multimodel_published (previously named _make_figure6_legacy and not called from main())",
+    "output_files": {
+      "pdf": "figures/fig6_multimodel_stationarity.pdf",
+      "png": "figures/fig6_multimodel_stationarity.png",
+      "png_dpi": 600,
+      "note": "The fig6_ stem is historical; this renders as Figure 5 in the manuscript and is the file zenodo.tex includes."
+    },
+    "panel_record_correction": "This block was previously populated by the four-panel generator that main() called, so it listed a two-regime alignment panel absent from the published figure and omitted its effective-model-count and posterior-dynamics panels. Corrected to the six published panels."
+  },
+  "supplementary_figure1": {
+    "ds004505": {
+      "source": {
+        "path": "figdata/synth/amica-capsule/benchmark/cc_benchmark/results/v3_paper_stage1_cluster/component_metrics.csv",
+        "sha256": "6ad377647e7c7123682a0ef91867541683a1de5d89b68502d58819e9f00ae486"
+      },
+      "n_subjects": 25,
+      "methods": [
+        "AMICA-Python (JAX-CPU)",
+        "AMICA-Python (JAX-GPU)",
+        "AMICA-Python (NumPy-CPU)",
+        "FastICA",
+        "Infomax",
+        "Picard"
+      ]
+    },
+    "ds004504": {
+      "source": {
+        "path": "results/ds004504_v3_50hz/component_metrics.csv",
+        "sha256": "cb20f03d246a9cede6ca7a26f759a651aec304dba2423b9ec00acf24ecc363d0"
+      },
+      "n_subjects": 29,
+      "methods": [
+        "AMICA-Python (JAX-GPU)",
+        "FastICA",
+        "Infomax",
+        "Picard"
+      ]
+    },
+    "ds004621": {
+      "source": {
+        "path": "results/ds004621_v3_50hz/component_metrics.csv",
+        "sha256": "68314a4ade02e063d61255f98e1d5177867f5a0875ca07b5d7472112ac331b11"
+      },
+      "n_subjects": 42,
+      "methods": [
+        "AMICA-Python (JAX-GPU)",
+        "FastICA",
+        "Infomax",
+        "Picard"
+      ]
+    }
+  },
+  "supplementary_figure2": {
+    "per_phase_source": {
+      "path": "phaseB_figures/perphase_runtime.csv",
+      "sha256": "a06ea31a144c6c763845c17f0f580c18dc0c838e7932bd1051392f16686d1fdf"
+    },
+    "cpu_scaling": [
+      {
+        "config": "chunk-1024_Tfull",
+        "mode": "chunked",
+        "chunk": 1024,
+        "n_samples": 785328,
+        "peak_rss_gib": 5.153228759765625,
+        "n_components": 64,
+        "n_channels": 120,
+        "n_iter": 60,
+        "hostname": "fc20559"
+      },
+      {
+        "config": "chunk-16384_Tfull",
+        "mode": "chunked",
+        "chunk": 16384,
+        "n_samples": 785328,
+        "peak_rss_gib": 5.152729034423828,
+        "n_components": 64,
+        "n_channels": 120,
+        "n_iter": 60,
+        "hostname": "fc20559"
+      },
+      {
+        "config": "chunk-4096_Tfull",
+        "mode": "chunked",
+        "chunk": 4096,
+        "n_samples": 785328,
+        "peak_rss_gib": 5.160388946533203,
+        "n_components": 64,
+        "n_channels": 120,
+        "n_iter": 60,
+        "hostname": "fc20559"
+      },
+      {
+        "config": "chunk-65536_Tfull",
+        "mode": "chunked",
+        "chunk": 65536,
+        "n_samples": 785328,
+        "peak_rss_gib": 5.781898498535156,
+        "n_components": 64,
+        "n_channels": 120,
+        "n_iter": 60,
+        "hostname": "fc20559"
+      },
+      {
+        "config": "Tfull_fullbatch",
+        "mode": "full",
+        "chunk": 0,
+        "n_samples": 785328,
+        "peak_rss_gib": 14.694072723388672,
+        "n_components": 64,
+        "n_channels": 120,
+        "n_iter": 60,
+        "hostname": "fc20559"
+      },
+      {
+        "config": "Tsec-150_fullbatch",
+        "mode": "full",
+        "chunk": 0,
+        "n_samples": 37500,
+        "peak_rss_gib": 1.3234329223632812,
+        "n_components": 64,
+        "n_channels": 120,
+        "n_iter": 60,
+        "hostname": "fc20559"
+      },
+      {
+        "config": "Tsec-300_fullbatch",
+        "mode": "full",
+        "chunk": 0,
+        "n_samples": 75000,
+        "peak_rss_gib": 1.9628486633300781,
+        "n_components": 64,
+        "n_channels": 120,
+        "n_iter": 60,
+        "hostname": "fc20559"
+      },
+      {
+        "config": "Tsec-600_fullbatch",
+        "mode": "full",
+        "chunk": 0,
+        "n_samples": 150000,
+        "peak_rss_gib": 3.3030548095703125,
+        "n_components": 64,
+        "n_channels": 120,
+        "n_iter": 60,
+        "hostname": "fc20559"
+      },
+      {
+        "config": "Tsec-60_fullbatch",
+        "mode": "full",
+        "chunk": 0,
+        "n_samples": 15000,
+        "peak_rss_gib": 0.9451484680175781,
+        "n_components": 64,
+        "n_channels": 120,
+        "n_iter": 60,
+        "hostname": "fc20559"
+      }
+    ],
+    "gpu_scaling": [
+      {
+        "n_samples": 37500,
+        "steady_iter_s": 0.002739397998084314,
+        "peak_vram_gib": 0.27452993392944336,
+        "source": "results/scaling/gpu/Tsec-150_C64/benchmark_sub-01_hp1.0hz_jax_gpu.json"
+      },
+      {
+        "n_samples": 75000,
+        "steady_iter_s": 0.003205352993973065,
+        "peak_vram_gib": 0.5430343151092529,
+        "source": "results/scaling/gpu/Tsec-300_C64/benchmark_sub-01_hp1.0hz_jax_gpu.json"
+      },
+      {
+        "n_samples": 150000,
+        "steady_iter_s": 0.004174700996372849,
+        "peak_vram_gib": 1.0800349712371826,
+        "source": "results/scaling/gpu/Tsec-600_C64/benchmark_sub-01_hp1.0hz_jax_gpu.json"
+      },
+      {
+        "n_samples": 15000,
+        "steady_iter_s": 0.002353042997128796,
+        "peak_vram_gib": 0.09322285652160645,
+        "source": "results/scaling/gpu/Tsec-60_C64/benchmark_sub-01_hp1.0hz_jax_gpu.json"
+      }
+    ],
+    "scope": "controlled single-subject engineering fixtures; descriptive, not formal complexity estimates"
+  },
+  "supplementary_figure3": {
+    "input_files": {
+      "iteration_trace": {
+        "path": "figdata/synth/amica-capsule/benchmark/cc_benchmark/results/v3_paper_stage1_cluster/iteration_trace.csv.gz",
+        "sha256": "b9bc29bbf4de94944cfb3b4d33743e0c0ca33ad3379d5aadb85bf091e9443a3a"
+      },
+      "benchmark_summary": {
+        "path": "figdata/synth/amica-capsule/benchmark/cc_benchmark/results/v3_paper_stage1_cluster/benchmark_results.csv",
+        "sha256": "6d87ff6912a41ccec6be225efc16d5dfab697319ef2cca6815d53df556167244"
+      }
+    },
+    "producer_files": {
+      "configuration": {
+        "path": "figdata/synth/amica-capsule/amica_python/config.py",
+        "sha256": "5ca7fd9166ba277ddf662ad5147176c299eeddde1d0045f629210b5c3d4e048b"
+      },
+      "solver_and_stopping_rule": {
+        "path": "figdata/synth/amica-capsule/amica_python/solver.py",
+        "sha256": "aeb2c5e75977b222e0f2920ce737e09d90004f9544f84ef132d4988b76c539aa"
+      },
+      "likelihood_normalisation": {
+        "path": "figdata/synth/amica-capsule/amica_python/likelihood.py",
+        "sha256": "2cc8410777bcb6576cd939181e2bdb92155daea74fc7b32df8c0750c3490732e"
+      },
+      "mne_fit_integration": {
+        "path": "figdata/synth/amica-capsule/amica_python/mne_integration.py",
+        "sha256": "78e601147500230349eb921dea96456b4cf3e5b478760844360b712deba07022"
+      },
+      "gpu_submission": {
+        "path": "figdata/synth/amica-capsule/benchmark/cc_benchmark/submit_jax_gpu_v3.sh",
+        "sha256": "254d754807cf4b14d0137355811c03417e1451c7878e1d7df8bf654a01b362ab"
+      }
+    },
+    "configuration": {
+      "lrate": 0.01,
+      "minlrate": 1e-08,
+      "lratefact": 0.5,
+      "rholrate": 0.05,
+      "rholratefact": 0.5,
+      "do_newton": true,
+      "newt_start": 50,
+      "newt_ramp": 10,
+      "newtrate": 1.0,
+      "min_dll": 1e-09,
+      "use_min_dll": true,
+      "max_decs": 3,
+      "max_incs": 10,
+      "benchmark_max_iter": 3000,
+      "retained_components": 64,
+      "random_seed": 42
+    },
+    "likelihood_definition": {
+      "normalisation": "mean log-likelihood divided by retained component count",
+      "unit": "nats per retained component per sample",
+      "iteration_numbering": "archive is 1-based; solver index is archive iteration minus one",
+      "iteration_zero": "the first stored objective is solver iteration 0 after its update; no separate pre-update objective is archived",
+      "delta": "raw signed difference between consecutive stored objectives"
+    },
+    "stopping_rule": {
+      "primary": "raw delta_ll < 1e-09 for 11 consecutive stored increments",
+      "implementation_detail": "numincs increments when raw delta_ll < min_dll and stops when numincs > max_incs (10)",
+      "reset": "numincs resets to zero when raw delta_ll >= min_dll",
+      "negative_increments": "count as below tolerance; no absolute value or relative normalisation is used",
+      "separate_learning_rate_stop": "after a preceding likelihood decrease, stop if lrate <= minlrate (1e-08)",
+      "newton_effect": "the configured Newton onset does not change the stopping criterion",
+      "cap_order": "the stopping checks occur inside each loop iteration; max_iter is reported only after the loop ends without a stop"
+    },
+    "display_statistics": {
+      "rolling_window": 25,
+      "rolling_definition": "trailing subject-level median of signed raw increments; first 24 values omitted",
+      "cohort_line": "median across subjects",
+      "cohort_band": "interquartile range across subjects",
+      "terminal_window": "archived iterations 2751-3000 inclusive",
+      "terminal_statistic": "within-subject median of signed raw increments",
+      "nonpositive_display": "retained without clipping or absolute value on symmetric-log axes"
+    },
+    "cohort": {
+      "n_subjects": 25,
+      "n_reaching_max_iter": 25,
+      "n_terminal_medians_above_tolerance": 22,
+      "terminal_median_cohort": 1.0905978009567718e-08,
+      "terminal_median_iqr": [
+        3.5047327262560657e-09,
+        3.185660812921043e-08
+      ],
+      "median_iteration_95pct_gain": 102.0,
+      "iqr_iteration_95pct_gain": [
+        94.0,
+        110.0
+      ],
+      "median_iteration_99pct_gain": 168.0,
+      "iqr_iteration_99pct_gain": [
+        157.0,
+        218.0
+      ],
+      "median_solver_iteration_99pct_gain": 167.0,
+      "iqr_solver_iteration_99pct_gain": [
+        156.0,
+        217.0
+      ],
+      "n_subjects_with_negative_raw_increments": 23,
+      "n_negative_raw_increments": 8199,
+      "n_subjects_with_negative_rolling_median": 7,
+      "n_negative_rolling_medians": 4277,
+      "maximum_consecutive_below_tolerance": 7,
+      "median_final_250_gain_fraction": 8.712212765141469e-06,
+      "iqr_final_250_gain_fraction": [
+        2.46590166569801e-06,
+        3.099241375946184e-05
+      ]
+    },
+    "audit_csv": "results/audit/fig5_convergence_subject_audit.csv",
+    "archive_limitations": [
+      "The iteration archive contains likelihood and timing only; step size, gradient norm, Newton-use flags, learning rates, and the live convergence counter are not retained.",
+      "The benchmark summary does not contain an explicit stopping_reason field; max_iter status is derived from n_iter_actual, max_iter, and converged_before_cap.",
+      "The source capsule .git file points to an unavailable cluster worktree, so its exact Git commit cannot be resolved locally; SHA-256 hashes are recorded for all source and result files."
+    ],
+    "selected_layout": "equal",
+    "output_files": {
+      "pdf": "D:\\amica-validation-workspace\\overleaf\\amica-preprint-6a15766c\\figures\\figS3_convergence.pdf",
+      "png": "D:\\amica-validation-workspace\\overleaf\\amica-preprint-6a15766c\\figures\\figS3_convergence.png",
+      "png_dpi": 600
+    }
+  }
+}

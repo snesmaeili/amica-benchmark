@@ -1,0 +1,6 @@
+panel,mean_offdiag_MI_bits,median_offdiag_MI_bits
+Scalp channels,0.48395,0.39303
+AMICA,0.16169,0.15721
+Picard,0.16687,0.16053
+ext. Infomax,0.16673,0.16007
+FastICA,0.16685,0.16044

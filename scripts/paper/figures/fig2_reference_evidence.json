@@ -1,0 +1,89 @@
+{
+  "figure": "Reference-implementation agreement and numerical interoperability",
+  "panel_a": [
+    {
+      "label": "6-ch Laplacian\nK=1, Newton",
+      "relative_ll_difference_pct": 0.0002,
+      "worst_row_correlation": 0.9999,
+      "source": "archived numerical audit table"
+    },
+    {
+      "label": "6-ch Laplacian\nK=3, Newton",
+      "relative_ll_difference_pct": 0.000002451920911129377,
+      "absolute_ll_difference": 5.0766779668975914e-08,
+      "worst_row_correlation": 0.9999999999404914,
+      "source": "results/fortran_parity/parity.json; fixed-initialisation rerun at package commit f3e0338c9e"
+    },
+    {
+      "label": "6-ch Laplacian\nK=3, natural gradient",
+      "relative_ll_difference_pct": 0.08,
+      "worst_row_correlation": 0.9995,
+      "source": "archived numerical audit table"
+    },
+    {
+      "label": "ds004505 sub-01\n64 PCs, 100 iterations",
+      "relative_ll_difference_pct": 0.0011,
+      "absolute_ll_difference": 0.00012,
+      "worst_row_correlation": 0.9996,
+      "mean_row_correlation": 0.99997,
+      "source": "archived real-EEG Fortran audit"
+    }
+  ],
+  "density": {
+    "file": "fig2_reference_density.csv",
+    "n_aligned_terms": 18,
+    "fixture": "six-channel Laplacian, K=3, Newton, fixed initialisation, 2000 iterations",
+    "package_commit": "f3e0338c9e04233f68cfd9657d49d8a105e6dbfe",
+    "row_scale_min": 0.999999997675632,
+    "row_scale_max": 1.0000000214681417,
+    "source": "aligned Python and Fortran outputs from the committed fixed-initialisation fixture"
+  },
+  "backend": {
+    "file": "fig2_backend_vector_audit.csv",
+    "n_subjects": 25,
+    "pairs": [
+      "JAX-GPU vs JAX-CPU",
+      "JAX-GPU vs NumPy-CPU",
+      "JAX-CPU vs NumPy-CPU"
+    ],
+    "maximum_absolute_mir_difference_kbits_s": 0.0048,
+    "matrix_reference_correlation": 0.9995,
+    "mir_reference_kbits_s": 0.005,
+    "affected_subjects": ["sub-01", "sub-20"],
+    "source": "subject points vector-extracted from committed figures/fig_backend_parity.pdf because the raw backend parity table is not present in this clone",
+    "source_pdf_sha256": "D251D45FEFF20D11899949A011F6B95C98E0E6400CCDE7565129892432C33FB7"
+  },
+  "chunking": {
+    "fixture": "MNE sample recording, 30 retained components, 166800 samples, 100 iterations, float64, chunk size 1024",
+    "absolute_final_ll_difference": 5.91657431492365e-07,
+    "unmixing_frobenius_relative_error": 0.0001448769887359409,
+    "sensor_unmixing_frobenius_relative_error": 0.00016841895262134987,
+    "mir_difference": null,
+    "source": "repos/amica-python-benchmark/results/mne_chunking/summary.json",
+    "source_sha256": "BC226D75BB14EE12FE1EFAECDCC98F01BFC4D8738844E0D073264758A8631813"
+  },
+  "mne": {
+    "same_seed_unmixing_frobenius_relative_difference": 0.0,
+    "transform_inverse_frobenius_relative_residual": 1.5e-15,
+    "python_ci_versions": "3.10-3.13",
+    "ci_operating_systems": 3,
+    "declared_mne_requirement": ">=1.0",
+    "exact_resolved_mne_versions_archived": false,
+    "mne_ica_save_reload_tested": false,
+    "iclabel_scope": "technical callability and one returned label per component; not scientific validation of labels",
+    "source": "repos/amica-python/tests/test_mne_real.py, .github/workflows/tests.yml, and archived MNE sample audit"
+  },
+  "seed_robustness": {
+    "subjects": 25,
+    "seeds_per_subject": 5,
+    "median_within_subject_mir_sd_kbits_s": 0.0003,
+    "maximum_within_subject_mir_sd_kbits_s": 0.0022,
+    "matched_mean_unmixing_row_correlation": 0.999,
+    "source": "figures/fig_seed_robustness.pdf and archived caption"
+  },
+  "limitations": [
+    "Raw backend parity result files are absent; Panel C preserves the committed vector figure values in a machine-readable audit table.",
+    "The K=1, natural-gradient-only, and real-EEG Fortran rows are traceable to the archived audit table rather than raw arrays in the current clone.",
+    "No MNE ICA save/reload test was found, and exact resolved MNE versions were not archived."
+  ]
+}

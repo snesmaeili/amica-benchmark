@@ -1,0 +1,16 @@
+loading + preprocessing ds004505 sub-01 ...
+Loading preprocessed reference file: D:\amica-validation-workspace\datasets\ds004505\raw_bids\sub-01\eeg\sub-01_task-TableTennis_eeg.set
+  raw: 120 ch @ 250.0 Hz, 50001 samples
+  computing sensor MI on (32, 50001) ...
+  sensor MI done
+  AMICA: ICA n_comp=64 ch=120 sfreq=250.0
+  AMICA: sources (64, 50001)  mean off-diag MI = 0.1617 bits
+  Picard: ICA n_comp=64 ch=120 sfreq=250.0
+  Picard: sources (64, 50001)  mean off-diag MI = 0.1669 bits
+  ext. Infomax: ICA n_comp=64 ch=120 sfreq=250.0
+  ext. Infomax: sources (64, 50001)  mean off-diag MI = 0.1667 bits
+  FastICA: ICA n_comp=64 ch=120 sfreq=250.0
+  FastICA: sources (64, 50001)  mean off-diag MI = 0.1669 bits
+wrote mi_offdiag.csv
+wrote fig_mi_heatmap.pdf/.png
+EXIT=0

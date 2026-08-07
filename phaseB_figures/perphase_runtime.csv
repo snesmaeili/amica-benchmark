@@ -1,0 +1,4 @@
+backend,n_subj,jit_overhead_s,jit_sem,steady_iter_s,steady_sem,natgrad_iter_s,newton_iter_s,total_fit_s,total_sem
+jax_gpu,25,0.4661,0.0331,0.03776,0.00091,0.02586,0.03776,113.2,2.7
+jax_cpu,25,0.0195,0.5448,7.59008,0.28430,6.07727,7.60332,23012.6,842.5
+numpy_cpu,25,-0.3290,0.3177,9.12115,0.22847,7.17671,9.13957,27858.7,651.7

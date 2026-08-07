@@ -1,0 +1,19 @@
+{
+  "archive": "/scratch/sesma/amica_figure2_topography/figure2_topography_fit_outputs.npz",
+  "manifest": "/scratch/sesma/amica_figure2_topography/figure2_topography_manifest.json",
+  "output_dir": "/scratch/sesma/amica_figure2_topography",
+  "n_channels": 59,
+  "n_sources": 32,
+  "methods": [
+    "amica_3000",
+    "amica_10000",
+    "picard",
+    "extended_infomax",
+    "fastica"
+  ],
+  "selected_sources": [
+    19,
+    18,
+    23
+  ]
+}

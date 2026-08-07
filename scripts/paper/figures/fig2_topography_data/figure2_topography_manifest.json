@@ -1,0 +1,595 @@
+{
+  "schema_version": "figure2-topography-v1",
+  "provenance": {
+    "hostname": "fc10514",
+    "python_version": "3.11.5",
+    "git_commit": "90f63b38503b8af461b23becf85b6d1cd9f19b95",
+    "slurm_job_id": "48954350",
+    "software_versions": {
+      "amica-python": "0.1.0",
+      "mne": "1.12.1",
+      "numpy": "2.4.2+computecanada",
+      "scipy": "1.17.0+computecanada",
+      "scikit-learn": "1.8.0+computecanada",
+      "python-picard": "0.8.2",
+      "jax": "0.9.1+computecanada",
+      "jaxlib": "0.9.1+computecanada"
+    }
+  },
+  "simulation": {
+    "dataset": "mne.datasets.sample",
+    "forward_solution": "sample_audvis-meg-eeg-oct-6-fwd.fif",
+    "forward_orientation": "fixed",
+    "condition": "clean",
+    "source_waveform": {
+      "kind": "laplacian",
+      "bandpass_hz": [
+        1.0,
+        40.0
+      ],
+      "amplitude_nAm": 50.0
+    },
+    "data_seed": 101,
+    "n_true_sources": 32,
+    "n_channels": 59,
+    "channel_names": [
+      "EEG 001",
+      "EEG 002",
+      "EEG 003",
+      "EEG 004",
+      "EEG 005",
+      "EEG 006",
+      "EEG 007",
+      "EEG 008",
+      "EEG 009",
+      "EEG 010",
+      "EEG 011",
+      "EEG 012",
+      "EEG 013",
+      "EEG 014",
+      "EEG 015",
+      "EEG 016",
+      "EEG 017",
+      "EEG 018",
+      "EEG 019",
+      "EEG 020",
+      "EEG 021",
+      "EEG 022",
+      "EEG 023",
+      "EEG 024",
+      "EEG 025",
+      "EEG 026",
+      "EEG 027",
+      "EEG 028",
+      "EEG 029",
+      "EEG 030",
+      "EEG 031",
+      "EEG 032",
+      "EEG 033",
+      "EEG 034",
+      "EEG 035",
+      "EEG 036",
+      "EEG 037",
+      "EEG 038",
+      "EEG 039",
+      "EEG 040",
+      "EEG 041",
+      "EEG 042",
+      "EEG 043",
+      "EEG 044",
+      "EEG 045",
+      "EEG 046",
+      "EEG 047",
+      "EEG 048",
+      "EEG 049",
+      "EEG 050",
+      "EEG 051",
+      "EEG 052",
+      "EEG 054",
+      "EEG 055",
+      "EEG 056",
+      "EEG 057",
+      "EEG 058",
+      "EEG 059",
+      "EEG 060"
+    ],
+    "sampling_rate_hz": 250.0,
+    "duration_seconds": 1200.0,
+    "n_samples": 300000,
+    "reference": "average, applied directly",
+    "highpass_hz": 1.0,
+    "ssp_projectors_active": false,
+    "vertex_records": [
+      {
+        "hemi": "rh",
+        "vertex_id": 66297,
+        "src_col_index": 5224,
+        "label_name": "insula-rh"
+      },
+      {
+        "hemi": "rh",
+        "vertex_id": 68980,
+        "src_col_index": 5306,
+        "label_name": "transversetemporal-rh"
+      },
+      {
+        "hemi": "rh",
+        "vertex_id": 1492,
+        "src_col_index": 3732,
+        "label_name": "lateraloccipital-rh"
+      },
+      {
+        "hemi": "lh",
+        "vertex_id": 106880,
+        "src_col_index": 2673,
+        "label_name": "entorhinal-lh"
+      },
+      {
+        "hemi": "lh",
+        "vertex_id": 48795,
+        "src_col_index": 1018,
+        "label_name": "posteriorcingulate-lh"
+      },
+      {
+        "hemi": "rh",
+        "vertex_id": 53054,
+        "src_col_index": 4829,
+        "label_name": "posteriorcingulate-rh"
+      },
+      {
+        "hemi": "lh",
+        "vertex_id": 29946,
+        "src_col_index": 557,
+        "label_name": "supramarginal-lh"
+      },
+      {
+        "hemi": "lh",
+        "vertex_id": 79918,
+        "src_col_index": 1934,
+        "label_name": "caudalmiddlefrontal-lh"
+      },
+      {
+        "hemi": "rh",
+        "vertex_id": 2281,
+        "src_col_index": 3740,
+        "label_name": "pericalcarine-rh"
+      },
+      {
+        "hemi": "lh",
+        "vertex_id": 841,
+        "src_col_index": 0,
+        "label_name": "superiorparietal-lh"
+      },
+      {
+        "hemi": "lh",
+        "vertex_id": 30467,
+        "src_col_index": 571,
+        "label_name": "middletemporal-lh"
+      },
+      {
+        "hemi": "lh",
+        "vertex_id": 152907,
+        "src_col_index": 3688,
+        "label_name": "frontalpole-lh"
+      },
+      {
+        "hemi": "lh",
+        "vertex_id": 36823,
+        "src_col_index": 717,
+        "label_name": "inferiortemporal-lh"
+      },
+      {
+        "hemi": "lh",
+        "vertex_id": 95728,
+        "src_col_index": 2395,
+        "label_name": "caudalanteriorcingulate-lh"
+      },
+      {
+        "hemi": "lh",
+        "vertex_id": 19789,
+        "src_col_index": 339,
+        "label_name": "postcentral-lh"
+      },
+      {
+        "hemi": "lh",
+        "vertex_id": 107405,
+        "src_col_index": 2684,
+        "label_name": "parsopercularis-lh"
+      },
+      {
+        "hemi": "lh",
+        "vertex_id": 38908,
+        "src_col_index": 764,
+        "label_name": "isthmuscingulate-lh"
+      },
+      {
+        "hemi": "rh",
+        "vertex_id": 4773,
+        "src_col_index": 3766,
+        "label_name": "precuneus-rh"
+      },
+      {
+        "hemi": "rh",
+        "vertex_id": 154179,
+        "src_col_index": 7452,
+        "label_name": "frontalpole-rh"
+      },
+      {
+        "hemi": "lh",
+        "vertex_id": 121283,
+        "src_col_index": 3007,
+        "label_name": "temporalpole-lh"
+      },
+      {
+        "hemi": "rh",
+        "vertex_id": 105454,
+        "src_col_index": 6378,
+        "label_name": "rostralmiddlefrontal-rh"
+      },
+      {
+        "hemi": "rh",
+        "vertex_id": 66616,
+        "src_col_index": 5234,
+        "label_name": "parahippocampal-rh"
+      },
+      {
+        "hemi": "lh",
+        "vertex_id": 64096,
+        "src_col_index": 1421,
+        "label_name": "insula-lh"
+      },
+      {
+        "hemi": "lh",
+        "vertex_id": 64498,
+        "src_col_index": 1438,
+        "label_name": "parahippocampal-lh"
+      },
+      {
+        "hemi": "rh",
+        "vertex_id": 100052,
+        "src_col_index": 6243,
+        "label_name": "caudalanteriorcingulate-rh"
+      },
+      {
+        "hemi": "rh",
+        "vertex_id": 55756,
+        "src_col_index": 4895,
+        "label_name": "bankssts-rh"
+      },
+      {
+        "hemi": "lh",
+        "vertex_id": 109649,
+        "src_col_index": 2737,
+        "label_name": "medialorbitofrontal-lh"
+      },
+      {
+        "hemi": "rh",
+        "vertex_id": 42874,
+        "src_col_index": 4578,
+        "label_name": "supramarginal-rh"
+      },
+      {
+        "hemi": "lh",
+        "vertex_id": 123078,
+        "src_col_index": 3052,
+        "label_name": "lateralorbitofrontal-lh"
+      },
+      {
+        "hemi": "rh",
+        "vertex_id": 33499,
+        "src_col_index": 4359,
+        "label_name": "inferiortemporal-rh"
+      },
+      {
+        "hemi": "rh",
+        "vertex_id": 10118,
+        "src_col_index": 3863,
+        "label_name": "lingual-rh"
+      },
+      {
+        "hemi": "lh",
+        "vertex_id": 2380,
+        "src_col_index": 12,
+        "label_name": "pericalcarine-lh"
+      }
+    ]
+  },
+  "shared_input": {
+    "n_components": 32,
+    "whitening_strategy": "one external covariance-eigendecomposition PCA whitener shared by every fit",
+    "initialization_id": "orthogonal_qr_seed_42",
+    "input_data_hash": "87c5f05dd994600bb4c746834cecef7e3f1c3c5591251f88b0b777fc1510c2f6",
+    "whitened_data_hash": "988ee9dbf8107e60620c55ed795d17dee5ba6f6baa6b02821be524dc0ea1966d",
+    "whitener_hash": "b7b886405a341635f5773e98a162e43d32aac5a29c419a2100583c4e2e649196",
+    "initial_weights_hash": "42abbbf82c854ee72973f4c99c25020149aefbce5eb2273a3c64e061fe747e5d",
+    "whitened_covariance_frobenius_error": 7.662114132760612e-12
+  },
+  "fits": {
+    "amica_3000": {
+      "display_name": "AMICA 3,000",
+      "software_package": "amica-python",
+      "software_version": "0.1.0",
+      "configuration": {
+        "random_seed": 42,
+        "max_iter": 3000,
+        "internal_whitening_enabled": false,
+        "stopping_parameter_name": "min_dll with consecutive-increment rule",
+        "stopping_parameter_value": 1e-09,
+        "secondary_stopping_parameters": {
+          "use_min_dll": true,
+          "max_incs": 10,
+          "minlrate": 1e-08,
+          "lrate": 0.01,
+          "lratefact": 0.5,
+          "rholrate": 0.05,
+          "rholratefact": 0.5,
+          "do_newton": true,
+          "newt_start": 50,
+          "newt_ramp": 10,
+          "do_mean": false,
+          "do_sphere": false,
+          "do_reject": false,
+          "density_initialisation": "AmicaConfig defaults with random_state=42"
+        }
+      },
+      "outcome": {
+        "actual_n_iter": 3000,
+        "runtime_seconds": 29.198358563007787,
+        "stopping_reason": "iteration cap",
+        "hit_iteration_cap": true,
+        "converged_flag": false,
+        "final_likelihood": -1.4179936512010072,
+        "final_likelihood_increment": 3.9909583593455977e-07,
+        "final_learning_rate": "not retained by AmicaResult",
+        "sensor_reconstruction_relative_residual": 1.3273051707348556e-15
+      },
+      "result_file": "/scratch/sesma/amica_figure2_topography/figure2_topography_fit_outputs.npz",
+      "notes": "Separate matched-initialisation fit; the 3,000 and 10,000 configurations are not checkpoints from one trajectory."
+    },
+    "amica_10000": {
+      "display_name": "AMICA 10,000",
+      "software_package": "amica-python",
+      "software_version": "0.1.0",
+      "configuration": {
+        "random_seed": 42,
+        "max_iter": 10000,
+        "internal_whitening_enabled": false,
+        "stopping_parameter_name": "min_dll with consecutive-increment rule",
+        "stopping_parameter_value": 1e-09,
+        "secondary_stopping_parameters": {
+          "use_min_dll": true,
+          "max_incs": 10,
+          "minlrate": 1e-08,
+          "lrate": 0.01,
+          "lratefact": 0.5,
+          "rholrate": 0.05,
+          "rholratefact": 0.5,
+          "do_newton": true,
+          "newt_start": 50,
+          "newt_ramp": 10,
+          "do_mean": false,
+          "do_sphere": false,
+          "do_reject": false,
+          "density_initialisation": "AmicaConfig defaults with random_state=42"
+        }
+      },
+      "outcome": {
+        "actual_n_iter": 10000,
+        "runtime_seconds": 34.55534883204382,
+        "stopping_reason": "iteration cap",
+        "hit_iteration_cap": true,
+        "converged_flag": false,
+        "final_likelihood": -1.4171590878255456,
+        "final_likelihood_increment": 2.2405937105673956e-09,
+        "final_learning_rate": "not retained by AmicaResult",
+        "sensor_reconstruction_relative_residual": 1.3462197668307707e-15
+      },
+      "result_file": "/scratch/sesma/amica_figure2_topography/figure2_topography_fit_outputs.npz",
+      "notes": "Separate matched-initialisation fit; the 3,000 and 10,000 configurations are not checkpoints from one trajectory."
+    },
+    "picard": {
+      "display_name": "Picard",
+      "software_package": "python-picard",
+      "software_version": "0.8.2",
+      "configuration": {
+        "random_seed": 42,
+        "max_iter": 5000,
+        "internal_whitening_enabled": false,
+        "stopping_parameter_name": "Picard gradient tolerance",
+        "stopping_parameter_value": 1e-06,
+        "secondary_stopping_parameters": {
+          "ortho": false,
+          "extended": true,
+          "fun": "tanh",
+          "m": 7,
+          "ls_tries": 10,
+          "lambda_min": 0.01,
+          "fastica_it": null,
+          "centering": false,
+          "whiten": false
+        }
+      },
+      "outcome": {
+        "actual_n_iter": 51,
+        "runtime_seconds": 15.924771133926697,
+        "stopping_reason": "Picard gradient tolerance",
+        "hit_iteration_cap": false,
+        "converged_flag": true,
+        "warning": "Whiten is set to false, ignoring parameter n_components",
+        "sensor_reconstruction_relative_residual": 1.618181592115404e-15
+      },
+      "result_file": "/scratch/sesma/amica_figure2_topography/figure2_topography_fit_outputs.npz",
+      "notes": "Non-orthogonal Picard (ortho=False, extended=True), not Picard-O."
+    },
+    "extended_infomax": {
+      "display_name": "Ext. Infomax",
+      "software_package": "MNE-Python",
+      "software_version": "1.12.1",
+      "configuration": {
+        "random_seed": 42,
+        "max_iter": 5000,
+        "internal_whitening_enabled": false,
+        "stopping_parameter_name": "weight change and consecutive small-angle criteria",
+        "stopping_parameter_value": 1e-07,
+        "secondary_stopping_parameters": {
+          "extended": true,
+          "w_change": 1e-07,
+          "n_small_angle": 20,
+          "anneal_deg": 60.0,
+          "anneal_step": 0.9,
+          "l_rate": 0.0014426950408889634,
+          "block": 316,
+          "n_subgauss": 1,
+          "kurt_size": 6000,
+          "ext_blocks": 1,
+          "use_bias": true
+        }
+      },
+      "outcome": {
+        "actual_n_iter": 82,
+        "library_returned_n_iter": 5000,
+        "runtime_seconds": 33.36124859703705,
+        "stopping_reason": "extended Infomax weight-change criterion",
+        "hit_iteration_cap": false,
+        "converged_flag": true,
+        "final_weight_change": 9e-08,
+        "final_angle_degrees": 88.6,
+        "sensor_reconstruction_relative_residual": 1.8757996470451912e-15
+      },
+      "result_file": "/scratch/sesma/amica_figure2_topography/figure2_topography_fit_outputs.npz",
+      "notes": "Native weight-change and consecutive small-angle stopping logic retained."
+    },
+    "fastica": {
+      "display_name": "FastICA",
+      "software_package": "scikit-learn",
+      "software_version": "1.8.0+computecanada",
+      "configuration": {
+        "random_seed": 42,
+        "max_iter": 5000,
+        "internal_whitening_enabled": false,
+        "stopping_parameter_name": "FastICA unmixing convergence tolerance",
+        "stopping_parameter_value": 1e-06,
+        "secondary_stopping_parameters": {
+          "algorithm": "parallel",
+          "fun": "logcosh",
+          "fun_args": null,
+          "whiten": false,
+          "whiten_solver": "svd"
+        }
+      },
+      "outcome": {
+        "actual_n_iter": 4,
+        "runtime_seconds": 0.19866218999959528,
+        "stopping_reason": "FastICA unmixing convergence tolerance",
+        "hit_iteration_cap": false,
+        "converged_flag": true,
+        "warning": "Ignoring n_components with whiten=False.",
+        "sensor_reconstruction_relative_residual": 6.214971951452173e-15
+      },
+      "result_file": "/scratch/sesma/amica_figure2_topography/figure2_topography_fit_outputs.npz",
+      "notes": "Parallel FastICA on the shared externally whitened input."
+    },
+    "picard_strict": {
+      "display_name": "Picard strict",
+      "software_package": "python-picard",
+      "software_version": "0.8.2",
+      "configuration": {
+        "random_seed": 42,
+        "max_iter": 10000,
+        "internal_whitening_enabled": false,
+        "stopping_parameter_name": "Picard gradient tolerance",
+        "stopping_parameter_value": 1e-08,
+        "secondary_stopping_parameters": {
+          "ortho": false,
+          "extended": true,
+          "fun": "tanh",
+          "m": 7,
+          "ls_tries": 10,
+          "lambda_min": 0.01,
+          "fastica_it": null,
+          "centering": false,
+          "whiten": false
+        }
+      },
+      "outcome": {
+        "actual_n_iter": 7,
+        "runtime_seconds": 1.0813209019834176,
+        "stopping_reason": "Picard gradient tolerance",
+        "hit_iteration_cap": false,
+        "converged_flag": true,
+        "warning": "Whiten is set to false, ignoring parameter n_components",
+        "sensor_reconstruction_relative_residual": 1.59323424914005e-15
+      },
+      "result_file": "/scratch/sesma/amica_figure2_topography/figure2_topography_fit_outputs.npz",
+      "notes": "Non-orthogonal Picard (ortho=False, extended=True), not Picard-O."
+    },
+    "extended_infomax_strict": {
+      "display_name": "Ext. Infomax strict",
+      "software_package": "MNE-Python",
+      "software_version": "1.12.1",
+      "configuration": {
+        "random_seed": 42,
+        "max_iter": 10000,
+        "internal_whitening_enabled": false,
+        "stopping_parameter_name": "weight change and consecutive small-angle criteria",
+        "stopping_parameter_value": 1e-09,
+        "secondary_stopping_parameters": {
+          "extended": true,
+          "w_change": 1e-09,
+          "n_small_angle": 40,
+          "anneal_deg": 60.0,
+          "anneal_step": 0.9,
+          "l_rate": 0.0014426950408889634,
+          "block": 316,
+          "n_subgauss": 1,
+          "kurt_size": 6000,
+          "ext_blocks": 1,
+          "use_bias": true
+        }
+      },
+      "outcome": {
+        "actual_n_iter": 96,
+        "library_returned_n_iter": 10000,
+        "runtime_seconds": 14.541728033102117,
+        "stopping_reason": "extended Infomax weight-change criterion",
+        "hit_iteration_cap": false,
+        "converged_flag": true,
+        "final_weight_change": 0.0,
+        "final_angle_degrees": 86.2,
+        "sensor_reconstruction_relative_residual": 1.3407867647620474e-15
+      },
+      "result_file": "/scratch/sesma/amica_figure2_topography/figure2_topography_fit_outputs.npz",
+      "notes": "Native weight-change and consecutive small-angle stopping logic retained."
+    },
+    "fastica_strict": {
+      "display_name": "FastICA strict",
+      "software_package": "scikit-learn",
+      "software_version": "1.8.0+computecanada",
+      "configuration": {
+        "random_seed": 42,
+        "max_iter": 10000,
+        "internal_whitening_enabled": false,
+        "stopping_parameter_name": "FastICA unmixing convergence tolerance",
+        "stopping_parameter_value": 1e-08,
+        "secondary_stopping_parameters": {
+          "algorithm": "parallel",
+          "fun": "logcosh",
+          "fun_args": null,
+          "whiten": false,
+          "whiten_solver": "svd"
+        }
+      },
+      "outcome": {
+        "actual_n_iter": 6,
+        "runtime_seconds": 0.2909625369356945,
+        "stopping_reason": "FastICA unmixing convergence tolerance",
+        "hit_iteration_cap": false,
+        "converged_flag": true,
+        "warning": "Ignoring n_components with whiten=False.",
+        "sensor_reconstruction_relative_residual": 4.177835628728147e-15
+      },
+      "result_file": "/scratch/sesma/amica_figure2_topography/figure2_topography_fit_outputs.npz",
+      "notes": "Parallel FastICA on the shared externally whitened input."
+    }
+  }
+}

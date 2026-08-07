@@ -63,6 +63,11 @@ pip install --no-index "torch>=2.12.1" 2>/dev/null || pip install "torch>=2.12.1
 echo "Installing pamica $PAMICA_TAG ($PAMICA_SHA) ..."
 pip install "git+https://github.com/sccn/pAMICA.git@${PAMICA_SHA}"
 
+# psutil is a dependency of the runner protocol (_common.py reads the process
+# high-water RSS through it), not of pamica, so nothing above pulls it in.
+echo "Installing runner dependencies ..."
+pip install --no-index psutil 2>/dev/null || pip install psutil
+
 # Optional: NVML neutral cross-check for the GPU comparison (enable with AMICA_MEM_NVML=1).
 pip install nvidia-ml-py 2>/dev/null || echo "(nvidia-ml-py not installed; NVML cross-check stays off)"
 

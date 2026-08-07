@@ -1,0 +1,269 @@
+{
+  "fields": {
+    "blas": {
+      "available": false,
+      "examples": [],
+      "n_records": 0
+    },
+    "cpu_model": {
+      "available": false,
+      "examples": [],
+      "n_records": 0
+    },
+    "cuda_version": {
+      "available": false,
+      "examples": [],
+      "n_records": 0
+    },
+    "driver_version": {
+      "available": false,
+      "examples": [],
+      "n_records": 0
+    },
+    "gpu_model": {
+      "available": false,
+      "examples": [],
+      "n_records": 0
+    },
+    "hostname": {
+      "available": true,
+      "examples": [
+        {
+          "key": "hostname",
+          "path": "results\\ds004505_sub-01_jax_gpu.json",
+          "value": "fc10116"
+        },
+        {
+          "key": "hostname",
+          "path": "results\\ds004505_sub-02_jax_gpu.json",
+          "value": "fc10116"
+        },
+        {
+          "key": "hostname",
+          "path": "results\\ds004505_sub-03_jax_gpu.json",
+          "value": "fc10116"
+        },
+        {
+          "key": "hostname",
+          "path": "results\\ds004505_sub-04_jax_gpu.json",
+          "value": "fc10505"
+        },
+        {
+          "key": "hostname",
+          "path": "results\\ds004505_sub-05_jax_gpu.json",
+          "value": "fc10505"
+        },
+        {
+          "key": "hostname",
+          "path": "results\\ds004505_sub-06_jax_gpu.json",
+          "value": "fc10420"
+        },
+        {
+          "key": "hostname",
+          "path": "results\\ds004505_sub-07_jax_gpu.json",
+          "value": "fc10505"
+        },
+        {
+          "key": "hostname",
+          "path": "results\\ds004505_sub-08_jax_gpu.json",
+          "value": "fc10420"
+        },
+        {
+          "key": "hostname",
+          "path": "results\\ds004505_sub-09_jax_gpu.json",
+          "value": "fc10505"
+        },
+        {
+          "key": "hostname",
+          "path": "results\\ds004505_sub-10_jax_gpu.json",
+          "value": "fc10503"
+        }
+      ],
+      "n_records": 25
+    },
+    "jax_version": {
+      "available": true,
+      "examples": [
+        {
+          "key": "jax_version",
+          "path": "results\\multimodel_cmir\\smoke_job_49020640\\mmc_ds004504_sub-37_M01_fitseed0_phase100037.json",
+          "value": "0.9.1"
+        },
+        {
+          "key": "jax_version",
+          "path": "results\\multimodel_cmir\\smoke_job_49020640\\mmc_ds004504_sub-37_M01_fitseed0_real.json",
+          "value": "0.9.1"
+        },
+        {
+          "key": "jax_version",
+          "path": "results\\multimodel_cmir\\smoke_job_49020640\\mmc_ds004504_sub-37_M10_fitseed0_phase100037.json",
+          "value": "0.9.1"
+        },
+        {
+          "key": "jax_version",
+          "path": "results\\multimodel_cmir\\smoke_job_49020640\\mmc_ds004504_sub-37_M10_fitseed0_real.json",
+          "value": "0.9.1"
+        },
+        {
+          "key": "jax_version",
+          "path": "results\\multimodel_cmir\\smoke_job_49020640\\mmc_ds004505_sub-01_M01_fitseed0_phase100001.json",
+          "value": "0.9.1"
+        },
+        {
+          "key": "jax_version",
+          "path": "results\\multimodel_cmir\\smoke_job_49020640\\mmc_ds004505_sub-01_M01_fitseed0_real.json",
+          "value": "0.9.1"
+        },
+        {
+          "key": "jax_version",
+          "path": "results\\multimodel_cmir\\smoke_job_49020640\\mmc_ds004505_sub-01_M10_fitseed0_phase100001.json",
+          "value": "0.9.1"
+        },
+        {
+          "key": "jax_version",
+          "path": "results\\multimodel_cmir\\smoke_job_49020640\\mmc_ds004505_sub-01_M10_fitseed0_real.json",
+          "value": "0.9.1"
+        },
+        {
+          "key": "jax_version",
+          "path": "results\\multimodel_cmir\\smoke_job_49020640\\mmc_ds004621_sub-01_M01_fitseed0_phase100001.json",
+          "value": "0.9.1"
+        },
+        {
+          "key": "jax_version",
+          "path": "results\\multimodel_cmir\\smoke_job_49020640\\mmc_ds004621_sub-01_M01_fitseed0_real.json",
+          "value": "0.9.1"
+        }
+      ],
+      "n_records": 12
+    },
+    "jaxlib_version": {
+      "available": false,
+      "examples": [],
+      "n_records": 0
+    },
+    "mkl_num_threads": {
+      "available": false,
+      "examples": [],
+      "n_records": 0
+    },
+    "mne_version": {
+      "available": false,
+      "examples": [],
+      "n_records": 0
+    },
+    "numpy_version": {
+      "available": false,
+      "examples": [],
+      "n_records": 0
+    },
+    "omp_num_threads": {
+      "available": false,
+      "examples": [],
+      "n_records": 0
+    },
+    "openblas_num_threads": {
+      "available": false,
+      "examples": [],
+      "n_records": 0
+    },
+    "platform": {
+      "available": true,
+      "examples": [
+        {
+          "key": "platform",
+          "path": "results\\multimodel_cmir\\smoke_job_49020640\\mmc_ds004504_sub-37_M01_fitseed0_phase100037.json",
+          "value": "Linux-5.14.0-611.54.3.el9_7.x86_64-x86_64-AMD_EPYC_9454_48-Core_Processor-with-glibc2.37"
+        },
+        {
+          "key": "platform",
+          "path": "results\\multimodel_cmir\\smoke_job_49020640\\mmc_ds004504_sub-37_M01_fitseed0_real.json",
+          "value": "Linux-5.14.0-611.54.3.el9_7.x86_64-x86_64-AMD_EPYC_9454_48-Core_Processor-with-glibc2.37"
+        },
+        {
+          "key": "platform",
+          "path": "results\\multimodel_cmir\\smoke_job_49020640\\mmc_ds004504_sub-37_M10_fitseed0_phase100037.json",
+          "value": "Linux-5.14.0-611.54.3.el9_7.x86_64-x86_64-AMD_EPYC_9454_48-Core_Processor-with-glibc2.37"
+        },
+        {
+          "key": "platform",
+          "path": "results\\multimodel_cmir\\smoke_job_49020640\\mmc_ds004504_sub-37_M10_fitseed0_real.json",
+          "value": "Linux-5.14.0-611.54.3.el9_7.x86_64-x86_64-AMD_EPYC_9454_48-Core_Processor-with-glibc2.37"
+        },
+        {
+          "key": "platform",
+          "path": "results\\multimodel_cmir\\smoke_job_49020640\\mmc_ds004505_sub-01_M01_fitseed0_phase100001.json",
+          "value": "Linux-5.14.0-611.54.3.el9_7.x86_64-x86_64-AMD_EPYC_9454_48-Core_Processor-with-glibc2.37"
+        },
+        {
+          "key": "platform",
+          "path": "results\\multimodel_cmir\\smoke_job_49020640\\mmc_ds004505_sub-01_M01_fitseed0_real.json",
+          "value": "Linux-5.14.0-611.54.3.el9_7.x86_64-x86_64-AMD_EPYC_9454_48-Core_Processor-with-glibc2.37"
+        },
+        {
+          "key": "platform",
+          "path": "results\\multimodel_cmir\\smoke_job_49020640\\mmc_ds004505_sub-01_M10_fitseed0_phase100001.json",
+          "value": "Linux-5.14.0-611.54.3.el9_7.x86_64-x86_64-AMD_EPYC_9454_48-Core_Processor-with-glibc2.37"
+        },
+        {
+          "key": "platform",
+          "path": "results\\multimodel_cmir\\smoke_job_49020640\\mmc_ds004505_sub-01_M10_fitseed0_real.json",
+          "value": "Linux-5.14.0-611.54.3.el9_7.x86_64-x86_64-AMD_EPYC_9454_48-Core_Processor-with-glibc2.37"
+        },
+        {
+          "key": "platform",
+          "path": "results\\multimodel_cmir\\smoke_job_49020640\\mmc_ds004621_sub-01_M01_fitseed0_phase100001.json",
+          "value": "Linux-5.14.0-611.54.3.el9_7.x86_64-x86_64-AMD_EPYC_9454_48-Core_Processor-with-glibc2.37"
+        },
+        {
+          "key": "platform",
+          "path": "results\\multimodel_cmir\\smoke_job_49020640\\mmc_ds004621_sub-01_M01_fitseed0_real.json",
+          "value": "Linux-5.14.0-611.54.3.el9_7.x86_64-x86_64-AMD_EPYC_9454_48-Core_Processor-with-glibc2.37"
+        }
+      ],
+      "n_records": 12
+    },
+    "python_version": {
+      "available": false,
+      "examples": [],
+      "n_records": 0
+    },
+    "scipy_version": {
+      "available": false,
+      "examples": [],
+      "n_records": 0
+    },
+    "xla_flags": {
+      "available": false,
+      "examples": [],
+      "n_records": 0
+    },
+    "xla_preallocate": {
+      "available": false,
+      "examples": [],
+      "n_records": 0
+    }
+  },
+  "interpretation": "A missing field cannot be reconstructed from the archived JSON alone. A later node probe must be labelled separately from historical run metadata.",
+  "json_files_read": 106,
+  "root": "D:\\amica-validation-workspace\\repos\\amica-python-benchmark\\results",
+  "schema_version": 1,
+  "unreadable": [],
+  "unresolved_required_fields": [
+    "cpu_model",
+    "gpu_model",
+    "python_version",
+    "mne_version",
+    "numpy_version",
+    "scipy_version",
+    "jaxlib_version",
+    "cuda_version",
+    "driver_version",
+    "blas",
+    "omp_num_threads",
+    "mkl_num_threads",
+    "openblas_num_threads",
+    "xla_flags",
+    "xla_preallocate"
+  ]
+}

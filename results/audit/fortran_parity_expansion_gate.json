@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "decision": "failed_strict_final_state_gate",
+  "manuscript_consequence": "Do not broaden Fortran agreement beyond the previously reported passing single-model fixtures.",
+  "cell": {
+    "cell_id": "single_K1_newton_no-reject",
+    "num_models": 1,
+    "num_mix": 1,
+    "do_newton": true,
+    "do_reject": false,
+    "seed": 42,
+    "max_iter": 200,
+    "n_channels": 6,
+    "n_samples": 12000,
+    "source_family": "deterministic mixed-density sources"
+  },
+  "alignment": {
+    "fortran_newt_start": 50,
+    "python_effective_newt_start": 49,
+    "reason": "Fortran controls are one-based; the Python iteration loop is zero-based."
+  },
+  "thresholds": {
+    "single_ll_relative": 0.001,
+    "single_worst_row_correlation": 0.999,
+    "density_nrmse": 0.01
+  },
+  "checkpoints": [
+    {
+      "n_iterations": 51,
+      "final_ll_relative_difference": 6.3822451583227365e-09,
+      "worst_matched_row_correlation": 0.9999999999999998,
+      "beta_nrmse": 2.9605947323337506e-16,
+      "rho_nrmse": 1.4432899320127035e-15
+    },
+    {
+      "n_iterations": 60,
+      "final_ll_relative_difference": 0.005509389636354764,
+      "worst_matched_row_correlation": 0.9168919668790504,
+      "beta_nrmse": 0.023724863724761108,
+      "rho_nrmse": 0.044177715015074316
+    },
+    {
+      "n_iterations": 100,
+      "final_ll_relative_difference": 0.0006730323182255963,
+      "worst_matched_row_correlation": 0.33240870316730164,
+      "beta_nrmse": 0.08257625767641442,
+      "rho_nrmse": 0.1383126948581205
+    },
+    {
+      "n_iterations": 200,
+      "final_ll_relative_difference": 0.00040061265910178406,
+      "worst_matched_row_correlation": 0.3959255805185006,
+      "beta_nrmse": 0.12525568070974372,
+      "rho_nrmse": 0.16634197513289828
+    }
+  ],
+  "final_checks": {
+    "likelihood": true,
+    "unmixing": false,
+    "density": false,
+    "overall": false
+  },
+  "campaign_action": "The remaining 17 prespecified parity cells were not run after the smoke gate failed.",
+  "provenance": {
+    "captured_utc": "2026-07-18T07:27:42.107332+00:00",
+    "slurm_job_id": "49449693",
+    "cluster": "fir",
+    "account": "def-kjerbi_cpu",
+    "partition": "cpubase_bycore_b2",
+    "node": "fc30555",
+    "benchmark_commit": "db6052962acb3a08db40f98d13c7977cd4de614a",
+    "package_commit": "7c223685e7ec0bb89c57da8985d05aa4cd37cfdf",
+    "fortran_binary": "/scratch/sesma/fortran_parity/amica17_mkl_build/amica17",
+    "remote_trajectory_record": "/scratch/sesma/amica-evidence-20260718-f8975b8-v2/outputs/parity-diagnostic/single_K1_trajectory_newton_aligned.json",
+    "remote_gate_record": "/scratch/sesma/amica-evidence-20260718-f8975b8-v2/outputs/parity-smoke-aligned/single_K1_newton_no-reject.json"
+  }
+}

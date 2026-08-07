@@ -1,22 +1,30 @@
-# amica-benchmark
+# paper_reproduction — point-in-time snapshot
 
-Validation and benchmarking suite for [amica-python](https://github.com/snesmaeili/amica-python).
+> **The repository root is canonical.** This directory is a snapshot of the
+> benchmark suite as it stood for an earlier paper-reproduction run, kept for
+> history. New work, and anything you intend to run, belongs at the root — see
+> [`../README.md`](../README.md). The two will drift; where they disagree, the
+> root is correct.
 
-This repo contains all scripts, Slurm job templates, and analysis pipelines used to validate amica-python against the reference Fortran AMICA 1.7 and benchmark it against Picard, Infomax, and FastICA on real EEG data.
+Validation and benchmarking suite for [`amica`](https://github.com/snesmaeili/amica).
+
+Scripts, Slurm job templates, and analysis pipelines used to validate `amica`
+against the reference Fortran AMICA 1.7 and to benchmark it against Picard,
+extended Infomax, and FastICA on real EEG data.
 
 ## Setup
 
 ### On Narval (Alliance HPC)
 
 ```bash
-git clone git@github.com:snesmaeili/amica-python-benchmark.git
+git clone git@github.com:snesmaeili/amica-benchmark.git
 cd amica-benchmark
 
 # Use existing virtual environment
 source conf/narval.env
 
-# Install amica-python (editable, from local clone)
-pip install -e ~/amica-python
+# Install the package being benchmarked
+pip install amica
 
 # Verify
 make check-env
@@ -26,7 +34,7 @@ make check-env
 
 ```bash
 pip install -e ".[jax-cpu]"
-pip install -e ~/amica-python  # or from GitHub
+pip install amica
 ```
 
 ## Benchmarking goals
@@ -73,5 +81,5 @@ results/        # Output directory (.gitignored except README)
 
 ## Related
 
-- [amica-python](https://github.com/snesmaeili/amica-python) — the package being benchmarked
+- [`amica`](https://github.com/snesmaeili/amica) — the package being benchmarked
 - [scott-huberty/amica-benchmark](https://github.com/scott-huberty/amica-benchmark) — reference benchmark repo

@@ -14,7 +14,7 @@ dependencies:
   - pyyaml>=6.0
   - tabulate>=0.9
   - pip:
-    - amica-python @ git+https://github.com/snesmaeili/amica-python.git
+    - amica>=0.1.0
     - mne>=1.0
     - mne-icalabel>=0.4
     - jax[cuda12]>=0.4

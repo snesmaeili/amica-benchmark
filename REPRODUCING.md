@@ -123,8 +123,8 @@ repository** because of size; the committed figures were rendered from the
 ## Step 0 — Install
 
 ```bash
-git clone https://github.com/snesmaeili/amica-python.git
-cd amica-python
+git clone https://github.com/snesmaeili/amica.git
+cd amica
 
 # CPU-only (figures 2 and 4; rendering from existing CSVs):
 pip install -e ".[all]"

@@ -12,7 +12,7 @@ AMICA (Adaptive Mixture ICA) ranked #1 out of 22 ICA algorithms for EEG source s
 
 I've now built a **pure Python/JAX, BSD-3-licensed** implementation that removes this blocker:
 
-- **Package:** [amica-python](https://github.com/snesmaeili/amica-python)
+- **Package:** [`amica`](https://github.com/snesmaeili/amica)
 - **License:** BSD-3-Clause (MNE-compatible)
 - **Install:** `pip install amica-python`
 

@@ -23,11 +23,24 @@ Two behaviours worth knowing when reading the numbers this writes:
   is identity, so this is directly comparable to the ``W`` the other runners
   report.
 
-Several algorithm constants below override pAMICA's own defaults (``newt_start``
-20, ``invsigmin`` 1e-4, ``invsigmax`` 1000.0) to match the configuration every
-other implementation in this comparison is run at. That matched configuration is
-the premise of the cross-implementation table; each override is a config key, so
-a caller can put the library defaults back and see what changes.
+**What "matched fixture" does and does not mean here.** The orchestrator imposes
+the shared experimental protocol on every implementation -- iteration budget,
+``n_mix``, ``lrate``, Newton on -- and that is what makes the rows comparable.
+It does not mean copying one library's internal tuning onto another. An earlier
+version of this runner did exactly that, carrying run_pyamica's ``newt_start=50``,
+``invsigmin=1e-8`` and ``invsigmax=100.0`` across, and it cost pamica most of its
+accuracy: worst matched row correlation against the amica JAX reference was
+0.8217, against 0.95-0.98 for the other implementations. Restoring pamica's own
+three constants, with the shared protocol unchanged, brings it to 0.9524 --
+level with pyamica's 0.9523 on the same input. The constants below are therefore
+pamica's documented defaults, and the difference is a measurement artefact worth
+remembering rather than a property of the implementation.
+
+Note that pamica's *full* library defaults are not the right comparison either:
+at ``do_newton=False`` and ``lrate=0.05`` it reaches only 0.1867 within a
+100-iteration budget, because that configuration is meant for the long
+Fortran-parity runs its documentation describes, not a short fixed budget. The
+shared protocol stays imposed.
 """
 from __future__ import annotations
 
@@ -75,14 +88,17 @@ def main() -> None:
         do_sphere=False,           # orchestrator already PCA-projected
         do_newton=cfg.get("do_newton", True),
         # --- passed through to the AMICATorchNG constructor ---
-        newt_start=cfg.get("newt_start", 50),
+        # pamica's own defaults. Do not substitute another implementation's
+        # values here: see the module docstring, it costs ~0.13 of matched row
+        # correlation and reads as pamica being inaccurate.
+        newt_start=cfg.get("newt_start", 20),
         newt_ramp=cfg.get("newt_ramp", 10),
         rho0=cfg.get("rho0", 1.5),
         minrho=cfg.get("minrho", 1.0),
         maxrho=cfg.get("maxrho", 2.0),
         rholrate=cfg.get("rholrate", 0.05),
-        invsigmin=cfg.get("invsigmin", 1e-8),
-        invsigmax=cfg.get("invsigmax", 100.0),
+        invsigmin=cfg.get("invsigmin", 1e-4),
+        invsigmax=cfg.get("invsigmax", 1000.0),
         doscaling=cfg.get("doscaling", True),
         seed=cfg.get("seed", 0),
         dtype=torch.float64,

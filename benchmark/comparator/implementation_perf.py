@@ -185,7 +185,8 @@ def preprocess_mne_sample(n_components: int = 30, seed: int = 0) -> tuple[np.nda
 
 
 def run_subprocess(python_exe: Path, runner: Path, input_path: Path, output_path: Path,
-                   config: dict, env_extra: dict | None = None) -> dict:
+                   config: dict, env_extra: dict | None = None,
+                   timeout_s: float = 3600.0) -> dict:
     env = os.environ.copy()
     env["JAX_PLATFORMS"] = "cpu"
     if env_extra:
@@ -200,9 +201,9 @@ def run_subprocess(python_exe: Path, runner: Path, input_path: Path, output_path
     print(f"[orchestrator] {python_exe.name} {runner.name} {env_extra or ''}")
     t0 = time.perf_counter()
     try:
-        cp = subprocess.run(cmd, env=env, capture_output=True, text=True, timeout=3600)
+        cp = subprocess.run(cmd, env=env, capture_output=True, text=True, timeout=timeout_s)
     except subprocess.TimeoutExpired:
-        return {"error": "timeout", "wall_s": 3600.0}
+        return {"error": "timeout", "wall_s": float(timeout_s)}
     wall = time.perf_counter() - t0
 
     if cp.returncode != 0:
@@ -278,6 +279,12 @@ def main() -> None:
     parser.add_argument("--include-fortran", action="store_true",
                         help="Also run Fortran AMICA 1.7 (run_fortran.py) on the same projected input "
                              "for the CPU/RSS comparison. Requires AMICA17_BIN + mpirun (cluster only).")
+    parser.add_argument("--runner-timeout", type=float, default=None,
+                        help="Per-runner wall-clock cap in seconds. Default scales with "
+                             "--max-iter (3600 s per 100 iterations), because a fixed one-hour "
+                             "cap silently drops the slowest implementation from a long run: at "
+                             "600 iterations pyamica needs ~3900 s and was recorded as "
+                             "'error: timeout' in a job that had seven hours left.")
     parser.add_argument("--include-neuromechanist-snapshot", action="store_true",
                         help="Also run the March-2025 pure-NumPy snapshot of neuromechanist/pyAMICA. "
                              "That repository is now sccn/pAMICA (same GitHub repo id), which runs by "
@@ -347,6 +354,15 @@ def main() -> None:
     input_path = run_dir / f"input_{subject_tag}.npz"
     np.savez(input_path, X=X, **{k: v for k, v in meta.items() if isinstance(v, (int, float))})
     print(f"[orchestrator]   X={X.shape}, sfreq={meta['sfreq']} Hz")
+
+    # Scale the per-runner cap with the requested work. A fixed 3600 s dropped
+    # pyamica from the 600-iteration CPU campaign -- it needs ~3900 s there --
+    # and recorded it as "error: timeout" while the job still had seven hours of
+    # wall clock left, which reads as the implementation failing rather than the
+    # harness cutting it off.
+    runner_timeout = (args.runner_timeout if args.runner_timeout is not None
+                      else 3600.0 * max(1.0, args.max_iter / 100.0))
+    print(f"[orchestrator]   per-runner timeout {runner_timeout:.0f}s")
 
     base_cfg = dict(
         max_iter=args.max_iter, n_mix=args.n_mix, lrate=args.lrate,
@@ -427,7 +443,8 @@ def main() -> None:
             if out_json.exists():
                 out_json.unlink()
             print(f"[orchestrator] {name} seed={seed} ...")
-            result = run_subprocess(py, runner, input_path, out_json, cfg_seeded, env_extra)
+            result = run_subprocess(py, runner, input_path, out_json, cfg_seeded, env_extra,
+                                    timeout_s=runner_timeout)
             result["seed_used"] = seed
             per_seed.append(result)
         summary["results"][name] = per_seed

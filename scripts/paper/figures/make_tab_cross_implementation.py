@@ -43,11 +43,14 @@ DISPLAY = {
     "amica_python_jax_chunked": r"\texttt{amica} (JAX, chunked)",
     "scott_huberty_torch": r"AMICA-Python (PyTorch)",
     "pyamica_torch": r"\texttt{pyamica} (PyTorch)",
+    "pamica_torch": r"\texttt{pAMICA} (PyTorch)",
     "fortran_amica17": r"Fortran AMICA~1.7",
 }
 CPU_ORDER = ["amica_python_jax", "amica_python_jax_chunked",
-             "scott_huberty_torch", "pyamica_torch", "fortran_amica17"]
-GPU_ORDER = ["amica_python_jax_chunked", "pyamica_torch", "scott_huberty_torch"]
+             "scott_huberty_torch", "pyamica_torch", "pamica_torch",
+             "fortran_amica17"]
+GPU_ORDER = ["amica_python_jax_chunked", "pyamica_torch", "scott_huberty_torch",
+             "pamica_torch"]
 
 
 def load_gpu(d: Path) -> dict[str, dict]:
@@ -134,8 +137,17 @@ def main() -> None:
     add(r"\midrule")
     add(r"\multicolumn{7}{l}{\emph{CPU, 100 iterations}}\\")
     add(r"\addlinespace[1pt]")
+    # Implementations added after the archived campaigns (pamica) are absent from
+    # older result trees. Skip a row whose measurement does not exist rather than
+    # dying, so this producer still regenerates the published table from the
+    # archive it was written against, and picks the new row up once its run
+    # lands. What is skipped is reported at the end, never silently dropped.
+    skipped: list[str] = []
     for k in CPU_ORDER:
-        r = cpu[k]
+        r = cpu.get(k)
+        if r is None:
+            skipped.append(f"cpu:{k}")
+            continue
         add(f"{DISPLAY[k]} & ${float(r['fit_time_s']):.1f}$ & -- & "
             f"${float(r['peak_rss_gb']):.2f}$ & -- & "
             f"{agree_cells(agree.get((k, 'cpu')))} \\\\")
@@ -144,12 +156,24 @@ def main() -> None:
     add(r"\multicolumn{7}{l}{\emph{GPU (one H100), 100-iteration run}}\\")
     add(r"\addlinespace[1pt]")
     for k in GPU_ORDER:
-        t1, t6 = g100[k]["fit_time_s"], g600[k]["fit_time_s"]
-        if k.startswith("amica_python_jax"):
-            per, mark = t6 / 600 * 1000, r"$^{\dagger}$"
+        if k not in g100:
+            skipped.append(f"gpu100:{k}")
+            continue
+        t1 = g100[k]["fit_time_s"]
+        # The per-iteration column needs the 600-iteration companion run. Report
+        # the fit time without it rather than omitting the implementation, since
+        # the fit time, RSS and VRAM are already measured and informative.
+        if k in g600:
+            t6 = g600[k]["fit_time_s"]
+            if k.startswith("amica_python_jax"):
+                per, mark = t6 / 600 * 1000, r"$^{\dagger}$"
+            else:
+                per, mark = (t6 - t1) / 500 * 1000, r"$^{\ddagger}$"
+            per_cell = f"${per:.1f}${mark}"
         else:
-            per, mark = (t6 - t1) / 500 * 1000, r"$^{\ddagger}$"
-        add(f"{DISPLAY[k]} & ${t1:.1f}$ & ${per:.1f}${mark} & "
+            skipped.append(f"gpu600:{k}")
+            per_cell = "--"
+        add(f"{DISPLAY[k]} & ${t1:.1f}$ & {per_cell} & "
             f"${g100[k]['peak_rss_gb']:.2f}$ & ${g100[k]['peak_vram_gb']:.2f}$ & "
             f"{agree_cells(agree.get((k, 'gpu')))} \\\\")
 
@@ -164,10 +188,19 @@ def main() -> None:
     DEST.write_text("\n".join(out) + "\n", encoding="utf-8", newline="\n")
     print(f"wrote {DEST}")
     for k in GPU_ORDER:
-        t1, t6 = g100[k]["fit_time_s"], g600[k]["fit_time_s"]
-        per = t6 / 600 * 1000 if k.startswith("amica_python_jax") else (t6 - t1) / 500 * 1000
-        print(f"  {DISPLAY[k]:34} T100={t1:6.2f}s  per-iter={per:6.2f}ms  "
+        if k not in g100:
+            continue
+        t1 = g100[k]["fit_time_s"]
+        if k in g600:
+            t6 = g600[k]["fit_time_s"]
+            per = t6 / 600 * 1000 if k.startswith("amica_python_jax") else (t6 - t1) / 500 * 1000
+            per_s = f"{per:6.2f}ms"
+        else:
+            per_s = "     n/a"
+        print(f"  {DISPLAY[k]:34} T100={t1:6.2f}s  per-iter={per_s}  "
               f"VRAM={g100[k]['peak_vram_gb']:.2f}GiB")
+    if skipped:
+        print("  measurements absent, rows/cells omitted: " + ", ".join(skipped))
 
 
 if __name__ == "__main__":

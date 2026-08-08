@@ -1717,8 +1717,23 @@ def load_fixed_workload_runtime_audit(*, write_output: bool = True) -> pd.DataFr
         "Scott–Huberty amica-python 0.1.1": cpu_root
         / "scott_huberty_torch_sub-01_seed0_result.json",
         "PyAMICA 0.3.0": cpu_root / "pyamica_torch_sub-01_seed0_result.json",
+        "pAMICA 0.3.1": cpu_root / "pamica_torch_sub-01_seed0_result.json",
         "Fortran AMICA 1.7": cpu_root / "fortran_amica17_sub-01_seed0_result.json",
     }
+    # pAMICA was benchmarked after this audit's archive was written, so its
+    # record is absent from older result trees. Tolerate the miss rather than
+    # failing the whole figure run: every other implementation predates it and
+    # is required, so only paths that postdate the archive may be skipped.
+    _OPTIONAL = {"pAMICA 0.3.1"}
+    missing = [lbl for lbl, p in paths.items() if not p.exists()]
+    if any(lbl not in _OPTIONAL for lbl in missing):
+        raise FileNotFoundError(
+            "fixed-workload audit is missing required records: "
+            + ", ".join(lbl for lbl in missing if lbl not in _OPTIONAL)
+        )
+    for lbl in missing:
+        print(f"  fixed-workload audit: {lbl} absent, omitted from the comparison")
+        paths.pop(lbl)
     records = {label: json.loads(path.read_text(encoding="utf-8")) for label, path in paths.items()}
     reference = records["amica JAX-CPU"]
     rows = []

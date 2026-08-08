@@ -31,8 +31,28 @@ DEST = out("tab_cross_implementation.tex")
 
 MEM_CSV = _WS / "results/mem_compare/mem_comparison_table.csv"
 CPU_JSON_DIR = _WS / "results/mem_compare/cpu/ds004505_sub-01_mem"
+CPU600 = _WS / "results/rt_cpu_600"
 GPU100 = _WS / "results/rt_gpu_100"
 GPU600 = _WS / "results/rt_gpu_600"
+
+
+def per_iteration_ms(t100: float, t600: float) -> tuple[float, str]:
+    """Steady-state per-iteration cost, and which estimator produced it.
+
+    The two-point form (T600-T100)/500 cancels fixed start-up cost -- import,
+    allocation, first-touch, compilation -- and is what a long fit actually
+    pays per iteration. It is undefined when a 600-iteration run finishes in
+    less wall time than its own 100-iteration run, which happens whenever a
+    compilation cache is reused; T600/600 is reported then instead.
+
+    Chosen from the measurements rather than by implementation name: the
+    condition is a property of the run, and hard-coding which backend is
+    expected to compile is how the table would keep reporting a cached estimator
+    for a backend that had stopped caching, or miss one that started.
+    """
+    if t600 > t100:
+        return (t600 - t100) / 500 * 1000, r"$^{\ddagger}$"
+    return t600 / 600 * 1000, r"$^{\dagger}$"
 # Numerical agreement on the same fixture. This used to be a separate table
 # (tab_fixed_workload) whose every fit time was already reported here; only the
 # two agreement columns were unique to it, so they are folded in and the
@@ -190,12 +210,20 @@ def main() -> None:
     # archive it was written against, and picks the new row up once its run
     # lands. What is skipped is reported at the end, never silently dropped.
     skipped: list[str] = []
+    c600 = load_gpu(CPU600)  # same shape: one *_result.json per implementation
     for k in CPU_ORDER:
         r = cpu.get(k)
         if r is None:
             skipped.append(f"cpu:{k}")
             continue
-        add(f"{DISPLAY[k]} & ${float(r['fit_time_s']):.1f}$ & -- & "
+        t1 = float(r["fit_time_s"])
+        if k in c600:
+            per, mark = per_iteration_ms(t1, float(c600[k]["fit_time_s"]))
+            per_cell = f"${per:.1f}${mark}"
+        else:
+            skipped.append(f"cpu600:{k}")
+            per_cell = "--"
+        add(f"{DISPLAY[k]} & ${t1:.1f}$ & {per_cell} & "
             f"${float(r['peak_rss_gb']):.2f}$ & -- & "
             f"{agree_cells(agree.get((k, 'cpu')))} \\\\")
 
@@ -211,11 +239,7 @@ def main() -> None:
         # the fit time without it rather than omitting the implementation, since
         # the fit time, RSS and VRAM are already measured and informative.
         if k in g600:
-            t6 = g600[k]["fit_time_s"]
-            if k.startswith("amica_python_jax"):
-                per, mark = t6 / 600 * 1000, r"$^{\dagger}$"
-            else:
-                per, mark = (t6 - t1) / 500 * 1000, r"$^{\ddagger}$"
+            per, mark = per_iteration_ms(t1, float(g600[k]["fit_time_s"]))
             per_cell = f"${per:.1f}${mark}"
         else:
             skipped.append(f"gpu600:{k}")
@@ -239,8 +263,7 @@ def main() -> None:
             continue
         t1 = g100[k]["fit_time_s"]
         if k in g600:
-            t6 = g600[k]["fit_time_s"]
-            per = t6 / 600 * 1000 if k.startswith("amica_python_jax") else (t6 - t1) / 500 * 1000
+            per, _ = per_iteration_ms(t1, float(g600[k]["fit_time_s"]))
             per_s = f"{per:6.2f}ms"
         else:
             per_s = "     n/a"

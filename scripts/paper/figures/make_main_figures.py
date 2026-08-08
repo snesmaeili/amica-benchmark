@@ -1860,6 +1860,9 @@ def _figure4_integrity_stats(
             "hostnames": sorted(rows.hardware.dropna().astype(str).unique().tolist()),
         }
 
+    # Every row that must be present for the figure to mean what its caption
+    # says. Kept as a hard requirement: a silently missing implementation is the
+    # failure this guard exists to catch.
     required_memory = {
         ("amica_python_jax", "cpu"),
         ("amica_python_jax_chunked", "cpu"),
@@ -1870,9 +1873,22 @@ def _figure4_integrity_stats(
         ("scott_huberty_torch", "gpu"),
         ("pyamica_torch", "gpu"),
     }
+    # Implementations benchmarked after this guard was written. Allowed, but not
+    # required, so the figure still builds from an older archive that predates
+    # them -- an equality test would reject either direction.
+    optional_memory = {
+        ("pamica_torch", "cpu"),
+        ("pamica_torch", "gpu"),
+    }
     present_memory = set(zip(memory.implementation, memory.device))
-    if present_memory != required_memory:
-        raise ValueError("Unexpected implementation/device set in the memory fixture")
+    missing = required_memory - present_memory
+    unexpected = present_memory - required_memory - optional_memory
+    if missing or unexpected:
+        raise ValueError(
+            "Unexpected implementation/device set in the memory fixture"
+            + (f"; missing {sorted(missing)}" if missing else "")
+            + (f"; unexpected {sorted(unexpected)}" if unexpected else "")
+        )
     if set(memory.n_components) != {64} or set(memory.n_samples) != {785328}:
         raise ValueError("Memory fixture metadata do not match ds004505 sub-01")
     if set(memory.n_iter) != {100} or set(memory.max_iter) != {100}:
@@ -2973,12 +2989,16 @@ def make_figure4() -> dict:
         color=GREY,
         va="bottom",
     )
+    # pAMICA is included from the 2026-08 campaign onward; a run absent from the
+    # audit is dropped below rather than raising, so this list stays valid
+    # against an older archive.
     order_b = [
         "amica JAX-GPU (chunked)",
         "amica JAX-CPU",
         "Scott–Huberty amica-python 0.1.1",
         "Fortran AMICA 1.7",
         "PyAMICA 0.3.0",
+        "pAMICA 0.3.1",
     ]
     label_b = {
         "amica JAX-GPU (chunked)": "amica JAX-GPU\n(chunked)",
@@ -2986,6 +3006,7 @@ def make_figure4() -> dict:
         "Scott–Huberty amica-python 0.1.1": "Scott–Huberty\n0.1.1 CPU",
         "Fortran AMICA 1.7": "Fortran AMICA\n1.7 CPU",
         "PyAMICA 0.3.0": "PyAMICA\n0.3.0 CPU",
+        "pAMICA 0.3.1": "pAMICA\n0.3.1 CPU",
     }
     color_b = {
         "amica JAX-GPU (chunked)": BLUE,
@@ -2993,6 +3014,7 @@ def make_figure4() -> dict:
         "Scott–Huberty amica-python 0.1.1": "#8C8C8C",
         "Fortran AMICA 1.7": "#525252",
         "PyAMICA 0.3.0": "#B0B0B0",
+        "pAMICA 0.3.1": "#6E6E6E",
     }
     marker_b = {
         "amica JAX-GPU (chunked)": "o",
@@ -3000,7 +3022,9 @@ def make_figure4() -> dict:
         "Scott–Huberty amica-python 0.1.1": "D",
         "Fortran AMICA 1.7": "^",
         "PyAMICA 0.3.0": "v",
+        "pAMICA 0.3.1": "P",
     }
+    order_b = [lbl for lbl in order_b if lbl in fixed_workload["display"].values]
     fixed = fixed_workload.set_index("display")
     for y, label in enumerate(order_b):
         value = float(fixed.loc[label, "fit_time_s"])

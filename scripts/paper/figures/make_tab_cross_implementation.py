@@ -30,6 +30,7 @@ _HERE = Path(__file__).resolve().parent
 DEST = out("tab_cross_implementation.tex")
 
 MEM_CSV = _WS / "results/mem_compare/mem_comparison_table.csv"
+CPU_JSON_DIR = _WS / "results/mem_compare/cpu/ds004505_sub-01_mem"
 GPU100 = _WS / "results/rt_gpu_100"
 GPU600 = _WS / "results/rt_gpu_600"
 # Numerical agreement on the same fixture. This used to be a separate table
@@ -58,16 +59,57 @@ def load_gpu(d: Path) -> dict[str, dict]:
             for p in d.glob("*_result.json")}
 
 
+def _matched_unmixing_summary(reference, candidate) -> tuple[float, float]:
+    """Median and minimum unsigned row correlation after Hungarian matching.
+
+    Same definition as the fixed-workload audit in make_main_figures.py; kept
+    identical on purpose so the two cannot report different numbers for the
+    same quantity.
+    """
+    import numpy as np
+    from scipy.optimize import linear_sum_assignment
+
+    reference = np.asarray(reference, dtype=float)
+    candidate = np.asarray(candidate, dtype=float)
+    reference = reference / np.linalg.norm(reference, axis=1, keepdims=True)
+    candidate = candidate / np.linalg.norm(candidate, axis=1, keepdims=True)
+    correlation = np.abs(reference @ candidate.T)
+    row, col = linear_sum_assignment(-correlation)
+    matched = correlation[row, col]
+    return float(np.median(matched)), float(np.min(matched))
+
+
 def load_agreement() -> dict[tuple[str, str], dict]:
     """Agreement against the amica JAX-CPU run, keyed by (implementation, device).
 
-    Not every row of the cost table has a matching agreement record -- the
-    chunked CPU run and the two PyTorch GPU runs were never audited this way --
-    so callers must tolerate a miss rather than assume coverage.
+    Computed here from the archived per-run JSONs rather than read out of
+    main_figure_stats.json. That file is the frozen artifact the manuscript was
+    written from, so it cannot contain a record for an implementation added
+    afterwards -- pamica would have shown a blank agreement column while its
+    unmixing sat in the same directory as everybody else's. Reading the runs
+    directly also keeps every cell in this table sourced from one campaign.
+
+    Rows whose run is absent are simply missing from the mapping; callers
+    tolerate a miss.
     """
-    audit = json.loads(AUDIT.read_text(encoding="utf-8"))
-    records = audit["figure4"]["fixed_workload_audit"]["records"]
-    return {(r["implementation"], r["device"]): r for r in records}
+    ref_path = CPU_JSON_DIR / "amica_python_jax_sub-01_seed0_result.json"
+    if not ref_path.exists():
+        return {}
+    ref = json.loads(ref_path.read_text(encoding="utf-8"))
+
+    out: dict[tuple[str, str], dict] = {}
+    for device, d in (("cpu", CPU_JSON_DIR), ("gpu", GPU100)):
+        for p in sorted(d.glob("*_result.json")):
+            rec = json.loads(p.read_text(encoding="utf-8"))
+            if "error" in rec or "W" not in rec:
+                continue
+            _, minimum_r = _matched_unmixing_summary(ref["W"], rec["W"])
+            out[(rec["implementation"], device)] = {
+                "abs_ll_difference_vs_amica_jax_cpu":
+                    abs(float(rec["ll_final"]) - float(ref["ll_final"])),
+                "minimum_matched_row_correlation_vs_amica_jax_cpu": minimum_r,
+            }
+    return out
 
 
 def sci(value: float, digits: int = 1) -> str:
@@ -103,8 +145,8 @@ def main() -> None:
     add(r"run per implementation on the PCA-projected Table tennis sub-01 array")
     add(r"($64\times785{,}328$), CPU rows at 100 iterations, GPU rows on one")
     add(r"H100. The two right-hand columns compare each decomposition with the")
-    add(r"\texttt{amica} JAX-CPU run; they are blank where no such audit was")
-    add(r"archived. \textbf{These are single runs, not repeated measurements}, and")
+    add(r"\texttt{amica} JAX-CPU run, Hungarian-matched and sign-aligned.")
+    add(r"\textbf{These are single runs, not repeated measurements}, and")
     add(r"the timing boundaries are not identical: the Python rows time the")
     add(r"model-fit call including first-use compilation, whereas the Fortran row")
     add(r"times the external executable including initialisation and output")
@@ -115,10 +157,15 @@ def main() -> None:
     add(r"100-iteration run, so the two-point form $(T_{600}-T_{100})/500$ is")
     add(r"undefined for it and $T_{600}/600$ is reported instead; the PyTorch")
     add(r"implementations use the two-point form. On the 100-iteration run the")
-    add(r"JAX implementation is the slowest of the three on GPU, because")
-    add(r"compilation dominates a short fit; the ordering reverses once the")
-    add(r"iteration budget is large enough for compilation to amortise, which is")
-    add(r"the regime AMICA fits actually occupy. Third-party revisions were not")
+    add(r"JAX implementation is slower on GPU than the two PyTorch")
+    add(r"implementations it is closest to, because compilation dominates a short")
+    add(r"fit; that ordering reverses once the iteration budget is large enough")
+    add(r"for compilation to amortise, which is the regime AMICA fits actually")
+    add(r"occupy. \texttt{pAMICA} is run with its own algorithm constants and the")
+    add(r"shared protocol (iteration budget, mixture count, learning rate, Newton")
+    add(r"enabled); its cost is not sensitive to its block size, which was swept")
+    add(r"from $1{,}533$ to $11$ blocks per iteration for a fit-time change under")
+    add(r"$7\%$. Third-party revisions were not")
     add(r"archived and these measurements predate the Anderson-accelerated")
     add(r"variant of AMICA-Python, so this is a descriptive comparison of one")
     add(r"configuration rather than a durable ranking of implementations.")

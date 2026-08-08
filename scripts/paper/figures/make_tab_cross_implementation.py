@@ -167,6 +167,10 @@ def main() -> None:
     add(r"a dual-socket AMD EPYC~9655 node (96 cores per socket) with thread")
     add(r"counts bound to the allocation; GPU rows on one H100. All rows of a")
     add(r"given device come from a single campaign on one machine.")
+    add(r"Within each device, rows are ordered by steady-state per-iteration")
+    add(r"cost, and \texttt{amica} is set in bold wherever that ordering places")
+    add(r"it. Rows whose 600-iteration companion run is unavailable have no")
+    add(r"per-iteration figure and are listed last.")
     add(r"The two right-hand columns compare each decomposition with the")
     add(r"\texttt{amica} JAX-CPU run, Hungarian-matched and sign-aligned.")
     add(r"\textbf{These are single runs, not repeated measurements}, and")
@@ -179,7 +183,11 @@ def main() -> None:
     add(r"compilation cache and finishes in less wall time than its own")
     add(r"100-iteration run, so the two-point form $(T_{600}-T_{100})/500$ is")
     add(r"undefined for it and $T_{600}/600$ is reported instead; the PyTorch")
-    add(r"implementations use the two-point form. On the 100-iteration run the")
+    add(r"implementations use the two-point form. The two runs entering that")
+    add(r"form were separate jobs and, on CPU, were scheduled onto different")
+    add(r"nodes of the same model; for the one implementation whose wall time")
+    add(r"varied appreciably between such nodes this shifts its per-iteration")
+    add(r"figure by around $10\%$. On the 100-iteration run the")
     add(r"JAX implementation is slower on GPU than the two PyTorch")
     add(r"implementations it is closest to, because compilation dominates a short")
     add(r"fit; that ordering reverses once the iteration budget is large enough")
@@ -214,42 +222,53 @@ def main() -> None:
     # lands. What is skipped is reported at the end, never silently dropped.
     skipped: list[str] = []
     c600 = load_gpu(CPU600)  # same shape: one *_result.json per implementation
-    for k in CPU_ORDER:
-        r = cpu.get(k)
-        if r is None:
-            skipped.append(f"cpu:{k}")
-            continue
-        t1 = float(r["fit_time_s"])
-        if k in c600:
-            per, mark = per_iteration_ms(t1, float(c600[k]["fit_time_s"]))
-            per_cell = f"${per:.1f}${mark}"
-        else:
-            skipped.append(f"cpu600:{k}")
-            per_cell = "--"
-        add(f"{DISPLAY[k]} & ${t1:.1f}$ & {per_cell} & "
-            f"${float(r['peak_rss_gb']):.2f}$ & -- & "
-            f"{agree_cells(agree.get((k, 'cpu')))} \\\\")
+
+    def build_rows(order, at100, at600, device, vram_cell):
+        """(sort key, label, cells) per implementation, ordered by per-iteration cost.
+
+        Sorting by the steady-state figure rather than by a fixed list makes the
+        column readable, and puts this package wherever the measurement puts it
+        instead of first by construction. Rows whose 600-iteration companion is
+        missing have no per-iteration figure and sort last: they cannot be
+        placed, and guessing a position for them would be the one thing a sorted
+        table must not do.
+        """
+        built = []
+        for k in order:
+            r = at100.get(k)
+            if r is None:
+                skipped.append(f"{device}100:{k}")
+                continue
+            t1 = float(r["fit_time_s"])
+            if k in at600:
+                per, mark = per_iteration_ms(t1, float(at600[k]["fit_time_s"]))
+                per_cell, key = f"${per:.1f}${mark}", per
+            else:
+                skipped.append(f"{device}600:{k}")
+                per_cell, key = "--", float("inf")
+            # This package is bolded so it stays findable once the order is the
+            # measurement's rather than the author's. The label only: bolding a
+            # row's numbers would put a thumb on the comparison the table exists
+            # to make.
+            label = DISPLAY[k]
+            if k.startswith("amica_python_"):
+                label = rf"\textbf{{{label}}}"
+            built.append((key, k, f"{label} & ${t1:.1f}$ & {per_cell} & "
+                                  f"${float(r['peak_rss_gb']):.2f}$ & {vram_cell(k)} & "
+                                  f"{agree_cells(agree.get((k, device)))} \\\\"))
+        built.sort(key=lambda b: b[0])
+        return built
+
+    for _, _, line in build_rows(CPU_ORDER, cpu, c600, "cpu", lambda k: "--"):
+        add(line)
 
     add(r"\midrule")
     add(r"\multicolumn{7}{l}{\emph{GPU (one H100), 100-iteration run}}\\")
     add(r"\addlinespace[1pt]")
-    for k in GPU_ORDER:
-        if k not in g100:
-            skipped.append(f"gpu100:{k}")
-            continue
-        t1 = g100[k]["fit_time_s"]
-        # The per-iteration column needs the 600-iteration companion run. Report
-        # the fit time without it rather than omitting the implementation, since
-        # the fit time, RSS and VRAM are already measured and informative.
-        if k in g600:
-            per, mark = per_iteration_ms(t1, float(g600[k]["fit_time_s"]))
-            per_cell = f"${per:.1f}${mark}"
-        else:
-            skipped.append(f"gpu600:{k}")
-            per_cell = "--"
-        add(f"{DISPLAY[k]} & ${t1:.1f}$ & {per_cell} & "
-            f"${g100[k]['peak_rss_gb']:.2f}$ & ${g100[k]['peak_vram_gb']:.2f}$ & "
-            f"{agree_cells(agree.get((k, 'gpu')))} \\\\")
+    for _, _, line in build_rows(
+            GPU_ORDER, g100, g600, "gpu",
+            lambda k: f"${g100[k]['peak_vram_gb']:.2f}$"):
+        add(line)
 
     add(r"\bottomrule")
     add(r"\end{tabular}")

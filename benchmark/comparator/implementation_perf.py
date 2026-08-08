@@ -77,7 +77,8 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 
-def preprocess_ds004505_subject(
+def preprocess_bids_subject(
+    dataset: str,
     subject_id: int,
     n_components: int = 64,
     duration_sec: float | None = None,
@@ -85,25 +86,35 @@ def preprocess_ds004505_subject(
     seed: int = 0,
     input_level: str = "bids",
 ) -> tuple[np.ndarray, dict]:
-    """Mirror yorguin's runner preprocessing for ds004505 and return (n_comp, n_samples).
+    """Mirror yorguin's runner preprocessing for one BIDS subject.
 
-    Pipeline: load .set (input_level: 'bids' = raw_bids/sub-NN, all 25 valid and what
-    BIDS_ROOT_DS4505 points to; 'merged' = sourcedata Merged, only sub-01..04) ->
-    exclude non-scalp channels -> apply analysis window (optional crop + resample)
-    -> 1-100 Hz bandpass + 60 Hz notch -> sklearn PCA to n_components -> per-component
+    Returns (n_comp, n_samples). Pipeline: load .set (input_level: 'bids' =
+    raw_bids/sub-NN, all 25 valid for ds004505 and what BIDS_ROOT_DS4505 points
+    to; 'merged' = sourcedata Merged, only sub-01..04) -> exclude non-scalp
+    channels -> apply analysis window (optional crop + resample) -> 1-100 Hz
+    bandpass + mains notch -> sklearn PCA to n_components -> per-component
     variance normalisation.
+
+    The notch frequency is taken from the runner's per-dataset table rather than
+    left at its 60 Hz default: ds004505 is a US recording, but ds004504 (Greece)
+    and ds004621 (Poland) are 50 Hz sites, and notching 60 Hz on those would
+    leave the mains line in and remove signal that is not there.
+
+    Every dataset is resampled to the same rate by default, since a fixture whose
+    sample count varies with the source file is not a matched workload.
     """
     from amica_python.benchmark import runner as amica_runner  # type: ignore
     from sklearn.decomposition import PCA
 
     raw, metadata = amica_runner.load_data(
-        "ds004505", subject_id, input_level=input_level, return_metadata=True
+        dataset, subject_id, input_level=input_level, return_metadata=True
     )
     if duration_sec is not None or resample_sfreq is not None:
         amica_runner.apply_analysis_window(
             raw, duration_sec=duration_sec, resample_sfreq=resample_sfreq
         )
-    raw = amica_runner.preprocess(raw)
+    line_freq = amica_runner.DATASET_LINE_FREQ.get(dataset, 60.0)
+    raw = amica_runner.preprocess(raw, line_freq=line_freq)
 
     data = raw.get_data().astype(np.float64)  # (n_ch, n_samples)
     n_ch, n_samples = data.shape
@@ -117,18 +128,24 @@ def preprocess_ds004505_subject(
     projected = projected / stds
 
     meta = {
-        "dataset": "ds004505",
+        "dataset": dataset,
         "subject": f"sub-{subject_id:02d}",
         "subject_id": int(subject_id),
         "n_channels": int(n_ch),
         "n_samples": int(n_samples),
         "n_components": int(n_comp),
         "sfreq": float(raw.info["sfreq"]),
+        "line_freq": float(line_freq),
         "input_file": str(metadata.get("input_file", "")),
         "input_level": str(metadata.get("input_level", "")),
         "n_loaded_channels": int(metadata.get("n_loaded_channels", n_ch)),
     }
     return projected, meta
+
+
+def preprocess_ds004505_subject(subject_id: int, **kwargs) -> tuple[np.ndarray, dict]:
+    """Back-compat shim for callers that predate the multi-dataset signature."""
+    return preprocess_bids_subject("ds004505", subject_id, **kwargs)
 
 
 def preprocess_mne_sample(n_components: int = 30, seed: int = 0) -> tuple[np.ndarray, dict]:
@@ -274,10 +291,14 @@ def main() -> None:
                         help="chunk_size for the amica_python_jax_chunked run (the frugal/GPU config): "
                              "'auto' (VRAM/RAM-aware) or an integer. Default 'auto'. The full-batch "
                              "amica_python_jax run always uses chunk_size=None.")
-    parser.add_argument("--dataset", choices=["mne_sample", "ds004505"], default="mne_sample",
-                        help="Source data: 'mne_sample' for 60-ch dev smoke or 'ds004505' for full pipeline.")
+    parser.add_argument("--dataset",
+                        choices=["mne_sample", "ds004505", "ds004504", "ds004621"],
+                        default="mne_sample",
+                        help="Source data: 'mne_sample' for a 60-ch dev smoke, or one of the "
+                             "three BIDS recordings for the full pipeline. The mains notch "
+                             "follows the recording site (ds004505 60 Hz; ds004504/ds004621 50 Hz).")
     parser.add_argument("--subject", type=int, default=4,
-                        help="ds004505 subject id (ignored for mne_sample)")
+                        help="BIDS subject id (ignored for mne_sample)")
     parser.add_argument("--input-level", choices=["bids", "merged"], default="bids",
                         help="ds004505 layout: 'bids' (raw_bids/sub-NN, all 25 valid, matches "
                              "BIDS_ROOT_DS4505) or 'merged' (sourcedata Merged, only sub-01..04). "
@@ -297,18 +318,19 @@ def main() -> None:
     # Resolve output directory: dataset-specific subdir under results/comparison/
     if args.out_tag:
         run_tag = args.out_tag
-    elif args.dataset == "ds004505":
-        run_tag = f"ds004505_sub-{args.subject:02d}"
+    elif args.dataset != "mne_sample":
+        run_tag = f"{args.dataset}_sub-{args.subject:02d}"
     else:
         run_tag = "mne_sample"
     run_dir = RESULTS_DIR / run_tag
     run_dir.mkdir(parents=True, exist_ok=True)
 
     # 1. Build the shared input (PCA seed = first seed for determinism)
-    if args.dataset == "ds004505":
-        print(f"[orchestrator] preprocessing ds004505 sub-{args.subject:02d} "
+    if args.dataset != "mne_sample":
+        print(f"[orchestrator] preprocessing {args.dataset} sub-{args.subject:02d} "
               f"(n_comp={args.n_components}, resample={args.resample_sfreq} Hz, PCA seed={seeds[0]})...")
-        X, meta = preprocess_ds004505_subject(
+        X, meta = preprocess_bids_subject(
+            dataset=args.dataset,
             subject_id=args.subject,
             n_components=args.n_components,
             duration_sec=args.duration_sec,
